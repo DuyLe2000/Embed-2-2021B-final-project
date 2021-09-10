@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\0_Library\CMSIS\Include;..\0_Library\NUC1xx-LB_002\Include;..\0_Library\NUC100Series\Include;..\0_Library\NuMakerLib\Include;..\0_Library\StdDriver\Include</IncludePath>
+              <IncludePath>..\..\..\2_Tutorial Keil Projects\0_Library\CMSIS\Include;..\..\..\2_Tutorial Keil Projects\0_Library\NUC1xx-LB_002\Include;..\..\..\2_Tutorial Keil Projects\0_Library\NUC100Series\Include;..\..\..\2_Tutorial Keil Projects\0_Library\NuMakerLib\Include;..\..\..\2_Tutorial Keil Projects\0_Library\StdDriver\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -386,37 +386,37 @@
             <File>
               <FileName>system_NUC100Series.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\0_Library\NUC100Series\Source\system_NUC100Series.c</FilePath>
+              <FilePath>..\..\..\2_Tutorial Keil Projects\0_Library\NUC100Series\Source\system_NUC100Series.c</FilePath>
             </File>
             <File>
               <FileName>startup_NUC100Series.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\0_Library\NUC100Series\Source\ARM\startup_NUC100Series.s</FilePath>
+              <FilePath>..\..\..\2_Tutorial Keil Projects\0_Library\NUC100Series\Source\ARM\startup_NUC100Series.s</FilePath>
             </File>
             <File>
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\0_Library\StdDriver\Source\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\0_Library\StdDriver\Source\gpio.c</FilePath>
+              <FilePath>..\..\..\2_Tutorial Keil Projects\0_Library\StdDriver\Source\spi.c</FilePath>
             </File>
             <File>
               <FileName>clk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\0_Library\StdDriver\Source\clk.c</FilePath>
+              <FilePath>..\..\..\2_Tutorial Keil Projects\0_Library\StdDriver\Source\clk.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\2_Tutorial Keil Projects\0_Library\StdDriver\Source\gpio.c</FilePath>
             </File>
             <File>
               <FileName>LCD.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\0_Library\NUC1xx-LB_002\Source\LCD.c</FilePath>
+              <FilePath>..\..\..\2_Tutorial Keil Projects\0_Library\NUC1xx-LB_002\Source\LCD.c</FilePath>
             </File>
             <File>
               <FileName>Draw2D.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\0_Library\NuMakerLib\Source\Draw2D.c</FilePath>
+              <FilePath>..\..\..\2_Tutorial Keil Projects\0_Library\NuMakerLib\Source\Draw2D.c</FilePath>
             </File>
           </Files>
         </Group>

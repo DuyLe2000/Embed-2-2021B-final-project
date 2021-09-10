@@ -182,7 +182,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\0_Library\NUC100Series\Source\system_NUC100Series.c</PathWithFileName>
+      <PathWithFileName>..\..\..\2_Tutorial Keil Projects\0_Library\NUC100Series\Source\system_NUC100Series.c</PathWithFileName>
       <FilenameWithoutPath>system_NUC100Series.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -194,7 +194,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\0_Library\NUC100Series\Source\ARM\startup_NUC100Series.s</PathWithFileName>
+      <PathWithFileName>..\..\..\2_Tutorial Keil Projects\0_Library\NUC100Series\Source\ARM\startup_NUC100Series.s</PathWithFileName>
       <FilenameWithoutPath>startup_NUC100Series.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -206,7 +206,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\0_Library\StdDriver\Source\spi.c</PathWithFileName>
+      <PathWithFileName>..\..\..\2_Tutorial Keil Projects\0_Library\StdDriver\Source\spi.c</PathWithFileName>
       <FilenameWithoutPath>spi.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -218,8 +218,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\0_Library\StdDriver\Source\gpio.c</PathWithFileName>
-      <FilenameWithoutPath>gpio.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\2_Tutorial Keil Projects\0_Library\StdDriver\Source\clk.c</PathWithFileName>
+      <FilenameWithoutPath>clk.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -230,8 +230,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\0_Library\StdDriver\Source\clk.c</PathWithFileName>
-      <FilenameWithoutPath>clk.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\2_Tutorial Keil Projects\0_Library\StdDriver\Source\gpio.c</PathWithFileName>
+      <FilenameWithoutPath>gpio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -242,7 +242,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\0_Library\NUC1xx-LB_002\Source\LCD.c</PathWithFileName>
+      <PathWithFileName>..\..\..\2_Tutorial Keil Projects\0_Library\NUC1xx-LB_002\Source\LCD.c</PathWithFileName>
       <FilenameWithoutPath>LCD.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -254,7 +254,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\0_Library\NuMakerLib\Source\Draw2D.c</PathWithFileName>
+      <PathWithFileName>..\..\..\2_Tutorial Keil Projects\0_Library\NuMakerLib\Source\Draw2D.c</PathWithFileName>
       <FilenameWithoutPath>Draw2D.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
