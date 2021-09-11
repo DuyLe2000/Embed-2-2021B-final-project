@@ -122,22 +122,22 @@ int main(void){
                     //case 1: dx =+1; dy =-1; break;
                     case 2:
                         dx = 0;
-                        dy = -1;
+                        dy = -3;
                         break;
                     //case 3: dx = +1; dy = -1; break;
                     case 4:
-                        dx = -1;
+                        dx = -3;
                         dy = 0;
                         break;
                     //case 5: break;
                     case 6:
-                        dx = +1;
+                        dx = +3;
                         dy = 0;
                         break;
                     //case 7: dx= -1; dy= +1; break;
                     case 8:
                         dx = 0;
-                        dy = +1;
+                        dy = +3;
                         break;
                     //case 9: dx=+1; dy=+1; break;
                     default:
@@ -165,7 +165,7 @@ int main(void){
                     x = x_reset;
                     y = y_reset;
                 }
-                if (hit > 1){
+                if (hit > 5){
                     hit = 0;
                     LCD_clear();
                     game_state = end_game;
