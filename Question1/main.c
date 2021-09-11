@@ -1,10 +1,12 @@
 //------------------------------------------- main.c CODE STARTS ---------------------------------------------------------------------------
 #include <stdio.h>
+
 #include "NUC100Series.h"
 #include "MCU_Init.h"
 #include "SYS_init.h"
 #include "LCD.h"
 #include "Draw2D.h"
+#include "picture.h"
 
 #define SYSTICK_DLAY_us 1000000
 #define Xmax 128
@@ -77,6 +79,7 @@ int main(void){
         switch (game_state){
             case welcome_screen:
                 //welcome state code here
+                draw_LCD(monster_128x64);
                 for (i = 0; i < 3; i++)
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
                 LCD_clear();

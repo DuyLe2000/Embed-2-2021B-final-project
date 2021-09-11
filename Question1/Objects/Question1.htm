@@ -1,11 +1,11 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html><head>
-<title>Static Call Graph - [.\Objects\MyProject.axf]</title></head>
+<title>Static Call Graph - [.\Objects\Question1.axf]</title></head>
 <body><HR>
-<H1>Static Call Graph for image .\Objects\MyProject.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Fri Sep 10 17:06:20 2021
+<H1>Static Call Graph for image .\Objects\Question1.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sat Sep 11 10:41:41 2021
 <BR><P>
-<H3>Maximum Stack Usage =        168 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        176 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 <P>
@@ -108,8 +108,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 72 + Unknown Stack Size
 <LI>Call Chain = _printf_d &rArr; _printf_int_dec &rArr; _printf_int_common
 </UL>
-<BR>[Calls]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_int_dec
-<LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_percent_end
+<BR>[Calls]<UL><LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_percent_end
+<LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_int_dec
 </UL>
 
 <P><STRONG><a name="[33]"></a>_printf_percent_end</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, _printf_percent_end.o(.ARM.Collect$$_printf_percent$$00000017))
@@ -201,11 +201,11 @@ Global Symbols
 <P><STRONG><a name="[7c]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[39]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
+<BR>[Calls]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
+<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[7d]"></a>__rt_entry_postli_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000C))
@@ -381,10 +381,10 @@ Global Symbols
 <P><STRONG><a name="[34]"></a>_printf_int_dec</STRONG> (Thumb, 90 bytes, Stack size 32 bytes, _printf_dec.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = _printf_int_dec &rArr; _printf_int_common
 </UL>
-<BR>[Calls]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_truncate_unsigned (Weak Reference)
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_truncate_signed (Weak Reference)
-<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_udiv10
+<BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_udiv10
 <LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_int_common
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_truncate_unsigned (Weak Reference)
+<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_truncate_signed (Weak Reference)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_d
 </UL>
@@ -559,33 +559,33 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = lcdSetAddr
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printC_5x7
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_Pixel
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_LCD
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_Pixel
 </UL>
 
 <P><STRONG><a name="[52]"></a>lcdWriteData</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, lcd.o(.text.lcdWriteData))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = lcdWriteData
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printC_5x7
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_Pixel
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_LCD
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_Pixel
 </UL>
 
-<P><STRONG><a name="[3a]"></a>main</STRONG> (Thumb, 708 bytes, Stack size 48 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
+<P><STRONG><a name="[3a]"></a>main</STRONG> (Thumb, 724 bytes, Stack size 56 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = main &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLK_SysTickDelay
+<LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printS_5x7
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_LCD
+<LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fill_Rectangle
+<LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;System_Config
 <LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI3_Config
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_start
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_clear
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyPadScanning
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyPadEnable
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLK_SysTickDelay
-<LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fill_Rectangle
-<LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printS_5x7
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_LCD
 </UL>
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
@@ -602,8 +602,8 @@ Global Symbols
 <P><STRONG><a name="[2d]"></a>printS_5x7</STRONG> (Thumb, 40 bytes, Stack size 24 bytes, lcd.o(.text.printS_5x7))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = printS_5x7 &rArr; printC_5x7 &rArr; lcdSetAddr
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printC_5x7
+<BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printC_5x7
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
