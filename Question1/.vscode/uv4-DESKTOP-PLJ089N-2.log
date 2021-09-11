@@ -1,0 +1,147 @@
+*** Using Compiler 'V6.14', folder: 'C:\Tom\Keil MDK\Program\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...../Library/CMSIS/Include\core_cm0.h(116): warning: In file included from...../Library/CMSIS/Include\core_cmInstr.h(406): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int32_t' (aka 'int') [-Wsign-conversion]
+  return(result);
+  ~~~~~~ ^~~~~~
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...../Library/CMSIS/Include\core_cm0.h(574): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    SCB->SHP[_SHP_IDX(IRQn)] = (SCB->SHP[_SHP_IDX(IRQn)] & ~(0xFF << _BIT_SHIFT(IRQn))) |
+                                                         ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Library/CMSIS/Include\core_cm0.h(577): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    NVIC->IP[_IP_IDX(IRQn)] = (NVIC->IP[_IP_IDX(IRQn)] & ~(0xFF << _BIT_SHIFT(IRQn))) |
+                                                       ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Library/CMSIS/Include\core_cm0.h(608): warning: function 'NVIC_SystemReset' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(11321): warning: anonymous unions are a C11 extension [-Wc11-extensions]
+    union
+    ^
+../Library/NUC100Series/Include\NUC100Series.h(13605): warning: non-portable path to file '"sys.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SYS.h"
+         ^~~~~~~
+         "sys.h"
+../Library/NUC100Series/Include\NUC100Series.h(13606): warning: non-portable path to file '"adc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "ADC.h"
+         ^~~~~~~
+         "adc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13607): warning: non-portable path to file '"fmc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "FMC.h"
+         ^~~~~~~
+         "fmc.h"
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13607): warning: In file included from...../Library/StdDriver/Include\FMC.h(314): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+    FMC->ISPADR = (u8index << 2);      /* Set UID Address. It must be word alignment. */
+                ~  ~~~~~~~~^~~~
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13608): warning: non-portable path to file '"gpio.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "GPIO.h"
+         ^~~~~~~~
+         "gpio.h"
+../Library/NUC100Series/Include\NUC100Series.h(13609): warning: non-portable path to file '"i2c.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "I2C.h"
+         ^~~~~~~
+         "i2c.h"
+../Library/NUC100Series/Include\NUC100Series.h(13610): warning: non-portable path to file '"pwm.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PWM.h"
+         ^~~~~~~
+         "pwm.h"
+../Library/NUC100Series/Include\NUC100Series.h(13611): warning: non-portable path to file '"spi.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SPI.h"
+         ^~~~~~~
+         "spi.h"
+../Library/NUC100Series/Include\NUC100Series.h(13612): warning: non-portable path to file '"crc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CRC.h"
+         ^~~~~~~
+         "crc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13613): warning: non-portable path to file '"timer.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "TIMER.h"
+         ^~~~~~~~~
+         "timer.h"
+../Library/NUC100Series/Include\NUC100Series.h(13614): warning: non-portable path to file '"wdt.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "WDT.h"
+         ^~~~~~~
+         "wdt.h"
+../Library/NUC100Series/Include\NUC100Series.h(13615): warning: non-portable path to file '"wwdt.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "WWDT.h"
+         ^~~~~~~~
+         "wwdt.h"
+../Library/NUC100Series/Include\NUC100Series.h(13616): warning: non-portable path to file '"rtc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "RTC.h"
+         ^~~~~~~
+         "rtc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13617): warning: non-portable path to file '"uart.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "UART.h"
+         ^~~~~~~~
+         "uart.h"
+../Library/NUC100Series/Include\NUC100Series.h(13618): warning: non-portable path to file '"i2s.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "I2S.h"
+         ^~~~~~~
+         "i2s.h"
+../Library/NUC100Series/Include\NUC100Series.h(13619): warning: non-portable path to file '"can.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CAN.h"
+         ^~~~~~~
+         "can.h"
+../Library/NUC100Series/Include\NUC100Series.h(13620): warning: non-portable path to file '"usbd.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "USBD.h"
+         ^~~~~~~~
+         "usbd.h"
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13620): warning: In file included from...../Library/StdDriver/Include\USBD.h(638): warning: variable 'u32CfgAddr' may be uninitialized when used here [-Wconditional-uninitialized]
+    return ((*((__IO uint32_t *)(u32CfgAddr))) & USBD_CFGP_SSTALL);
+                                 ^~~~~~~~~~
+../Library/StdDriver/Include\USBD.h(622): note: initialize the variable 'u32CfgAddr' to silence this warning
+    uint32_t u32CfgAddr;
+                       ^
+                        = 0
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13621): warning: non-portable path to file '"pdma.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PDMA.h"
+         ^~~~~~~~
+         "pdma.h"
+../Library/NUC100Series/Include\NUC100Series.h(13622): warning: non-portable path to file '"sc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SC.h"
+         ^~~~~~
+         "sc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13623): warning: non-portable path to file '"ps2.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PS2.h"
+         ^~~~~~~
+         "ps2.h"
+../Library/NUC100Series/Include\NUC100Series.h(13624): warning: non-portable path to file '"clk.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CLK.h"
+         ^~~~~~~
+         "clk.h"
+../Library/NUC100Series/Include\NUC100Series.h(13625): warning: non-portable path to file '"acmp.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "ACMP.h"
+         ^~~~~~~~
+         "acmp.h"
+main.c(128): error: redefinition of 'current_char'
+                int8_t current_char = 0;
+                       ^
+main.c(90): note: previous definition is here
+                int8_t current_char = 0;
+                       ^
+main.c(129): error: redefinition of 'key_display'
+                char key_display[6] = "______";
+                     ^
+main.c(91): note: previous definition is here
+                char key_display[6] = "______";
+                     ^
+main.c(130): error: redefinition of 'key_delay'
+                int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
+                       ^
+main.c(92): note: previous definition is here
+                int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
+                       ^
+main.c(172): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+            default:
+            ^
+main.c(220): warning: '&' within '|' [-Wbitwise-op-parentheses]
+    LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
+                     ~ ~~~~~~~~~~~~~~~~~~^~~~~
+main.c(220): note: place parentheses around the '&' expression to silence this warning
+    LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
+                                         ^
+                       (                      )
+main.c(361): warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+31 warnings and 3 errors generated.
+compiling main.c...
+".\Objects\Question1.axf" - 3 Error(s), 31 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

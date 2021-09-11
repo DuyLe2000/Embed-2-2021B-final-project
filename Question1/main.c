@@ -25,28 +25,28 @@ void LCD_clear(void);
 void LCD_SetAddress(uint8_t PageAddr, uint8_t ColumnAddr);
 void KeyPadEnable(void);
 uint8_t KeyPadScanning(void);
+int str_compare(char *str1, char *str2);
+void str_copy(char *str1, char *str2);
+int str_len(char *str);
 
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Main program
 //------------------------------------------------------------------------------------------------------------------------------------
 typedef enum{
-    welcome_screen,
-    game_rules,
-    game_background,
-    main_game,
-    end_game
+    option,
+    unlock,
+    change_key,
+    welcome,
+    wrong_key
 } STATES;
 
 
-int main(void){
-    STATES game_state;
-    uint8_t i, key_pressed = 0, game_pad = 0;
-    uint8_t x = 64, y = 32, dx = 0, dy = 0;
-    uint8_t x_steps, y_steps;
-    uint8_t x_reset, y_reset;
-    uint8_t hit;
-    char score_txt[] = "0";
+int main(void) {
+    STATES lock_state;
+    char password[6] = "757333";
+    char user_input[6] = "";
+    uint8_t key_press = 0;
     //--------------------------------
     //System initialization
     //--------------------------------
@@ -67,120 +67,107 @@ int main(void){
     //--------------------------------
     //LCD dynamic content
     //--------------------------------
-    game_state = welcome_screen;
-    x_steps = 2;
-    y_steps = 2;
-    x_reset = 64;
-    y_reset = 32;
-    hit = 0;
-    while (1){
-        switch (game_state){
-            case welcome_screen:
-                //welcome state code here
-                for (i = 0; i < 3; i++)
-                    CLK_SysTickDelay(SYSTICK_DLAY_us);
-                LCD_clear();
-                game_state = game_rules; // state transition
-                break;
-            case game_rules:
-                // game_rules state code here
-                printS_5x7(1, 0, "Use Keypad to control");
-                printS_5x7(1, 8, "2: UP 4: LEFT");
-                printS_5x7(1, 16, "6: RIGHT 8: DOWN");
-                printS_5x7(1, 32, "Eat all boxes to win");
-                printS_5x7(1, 56, "press any key to continue!");
-                while (key_pressed == 0)
-                    key_pressed = KeyPadScanning();
-                key_pressed = 0;
-                LCD_clear();
-                game_state = game_background;
-                break;
-            case game_background:
-                // static display information should be here
-                sprintf(score_txt, "%d", hit);
-                printS_5x7(48, 0, score_txt);
-                fill_Rectangle(8, 8, 8 + 6, 8 + 6, 1, 0);
-                fill_Rectangle(96, 8, 96 + 6, 8 + 6, 1, 0);
-                fill_Rectangle(8, 48, 8 + 6, 48 + 6, 1, 0);
-                fill_Rectangle(96, 48, 96 + 6, 48 + 6, 1, 0);
-                game_state = main_game;
-								break;
-            case main_game:
-                //main_game state code here
-                //draw objects
-                fill_Rectangle(x, y, x + 6, y + 6, 1, 0);
-                //delay for vision
-                while (game_pad == 0)
-                    game_pad = KeyPadScanning();
-                CLK_SysTickDelay(170000);
-                //erase the objects
-                fill_Rectangle(x, y, x + 6, y + 6, 0, 0);
-                //check changes
-                switch (game_pad){
-                    //case 1: dx =+1; dy =-1; break;
-                    case 2:
-                        dx = 0;
-                        dy = -1;
-                        break;
-                    //case 3: dx = +1; dy = -1; break;
-                    case 4:
-                        dx = -1;
-                        dy = 0;
-                        break;
-                    //case 5: break;
-                    case 6:
-                        dx = +1;
-                        dy = 0;
-                        break;
-                    //case 7: dx= -1; dy= +1; break;
-                    case 8:
-                        dx = 0;
-                        dy = +1;
-                        break;
-                    //case 9: dx=+1; dy=+1; break;
-                    default:
-                        dx = dy = 0;
-                        break;
+    lock_state = option;
+    while (1) {
+        switch (lock_state) {
+            case option:
+                // Option screen
+                printS_5x7(1, 1, "EEET2481 - Door Lock System");
+                printS_5x7(1, 10, "Please select");
+                printS_5x7(1, 19, "1: Unlock    2: Change key");
+                while (key_press != 1 && key_press != 2) {
+                    key_press = KeyPadScanning();
                 }
-                game_pad = 0;
-                //update object’s information (position, etc.)
-                x = x + (dx * x_steps);
-                y = y + (dy * y_steps);
-                //boundary condition
-                //wrap around on X
-                if (x < Xmin)
-                    x = Xmax - 7;
-                if (x > Xmax - 7)
-                    x = Xmin;
-                //wrap around on Y
-                if (y < Ymin)
-                    y = Ymax - 7;
-                if (y > Ymax - 7)
-                    y = Ymin;
-                //score conditions
-                if ((x - 8 < 6) && (y - 8 < 6)){
-                    hit++;
-                    x = x_reset;
-                    y = y_reset;
+                if (key_press == 2) {
+                    lock_state = unlock;
+                } else if (key_press == 1) {
+                    lock_state = change_key;
                 }
-                if (hit > 1){
-                    hit = 0;
-                    LCD_clear();
-                    game_state = end_game;
-                }
-                else
-                    game_state = game_background;
+                key_press = 0;
                 break;
-            case end_game:
-                //end_game code here
-                printS_5x7(1, 32, "press any key to replay!");
-                for (i = 0; i < 2; i++)
-                    CLK_SysTickDelay(SYSTICK_DLAY_us);
-                while (key_pressed == 0)
-                    key_pressed = KeyPadScanning();
-                key_pressed = 0;
-                LCD_clear();
-                game_state = welcome_screen;
+            case unlock: {
+                // Unlock enter key screen
+                int8_t current_char = 0;
+                char key_display[6] = "______";
+                int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
+                
+                printS_5x7(1, 1, "EEET2481 - Door Lock System");
+                printS_5x7(1, 9, "Please input your key");
+                printC_5x7(1, 17, key_display[0]);
+                printC_5x7(8, 17, key_display[1]);
+                printC_5x7(15, 17, key_display[2]);
+                printC_5x7(22, 17, key_display[3]);
+                printC_5x7(29, 17, key_display[4]);
+                printC_5x7(36, 17, key_display[5]);
+
+                if (!(PB->PIN & (1 << 15))) {
+                    lock_state = option;
+                    break;
+                }
+
+                key_press = KeyPadScanning();
+                if (key_press != 0) {
+                    key_display[current_char] = key_press + '0';
+                    user_input[current_char] = key_press + '0';
+                    current_char++;
+                }
+
+                if (current_char == 5) {
+                    if (str_compare(user_input, password)) {
+                        lock_state = welcome;
+                    } else {
+                        lock_state = wrong_key;
+                    }
+                }
+
+                key_press = 0;
+
+                break;
+            } case change_key: {
+                // Change key enter screen
+                int8_t current_char = 0;
+                char key_display[6] = "______";
+                int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
+
+                printS_5x7(1, 1, "EEET2481 - Door Lock System");
+                printS_5x7(1, 9, "Please input new 6-digit key");
+                printC_5x7(1, 17, key_display[0]);
+                printC_5x7(8, 17, key_display[1]);
+                printC_5x7(15, 17, key_display[2]);
+                printC_5x7(22, 17, key_display[3]);
+                printC_5x7(29, 17, key_display[4]);
+                printC_5x7(36, 17, key_display[5]);
+
+                key_press = KeyPadScanning();
+                if (key_press != 0) {
+                    key_display[current_char] = key_press + '0';
+                    user_input[current_char] = key_press + '0';
+                    current_char++;
+                }
+
+                if (current_char == 5) {
+                    str_copy(password, user_input);
+                }
+
+                if (!(PB->PIN & (1 << 15))) {
+                    lock_state = option;
+                }
+				break;
+            } case welcome:
+                // Unlock successful screen
+                printS_5x7(1, 1, "EEET2481 - Door Lock System");
+                printS_5x7(1, 9, "Welcome");
+                if (!(PB->PIN & (1 << 15))) {
+                    lock_state = option;
+                }
+                break;
+            case wrong_key:
+                // Unlock failed screen
+                printS_5x7(1, 1, "EEET2481 - Door Lock System");
+                printS_5x7(1, 9, "Wrong key");
+                if (!(PB->PIN & (1 << 15))) {
+                    lock_state = option;
+                }
                 break;
             default:
                 break;
@@ -190,7 +177,7 @@ int main(void){
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions definition
 //------------------------------------------------------------------------------------------------------------------------------------
-void LCD_start(void){
+void LCD_start(void) {
     LCD_command(0xE2); // Set system reset
     LCD_command(0xA1); // Set Frame rate 100 fps
     LCD_command(0xEB); // Set LCD bias ratio E8~EB for 6~9 (min~max)
@@ -201,54 +188,52 @@ void LCD_start(void){
 }
 
 
-void LCD_command(unsigned char temp){
+void LCD_command(unsigned char temp) {
     SPI3->SSR |= 1ul << 0;
     SPI3->TX[0] = temp;
     SPI3->CNTRL |= 1ul << 0;
-    while (SPI3->CNTRL & (1ul << 0))
-        ;
+    while (SPI3->CNTRL & (1ul << 0));
     SPI3->SSR &= ~(1ul << 0);
 }
 
 
-void LCD_data(unsigned char temp){
+void LCD_data(unsigned char temp) {
     SPI3->SSR |= 1ul << 0;
     SPI3->TX[0] = 0x0100 + temp;
     SPI3->CNTRL |= 1ul << 0;
-    while (SPI3->CNTRL & (1ul << 0))
-        ;
+    while (SPI3->CNTRL & (1ul << 0));
     SPI3->SSR &= ~(1ul << 0);
 }
 
 
-void LCD_clear(void){
+void LCD_clear(void) {
     int16_t i;
     LCD_SetAddress(0x0, 0x0);
-    for (i = 0; i < 132 * 8; i++)
-    {
+    for (i = 0; i < 132 * 8; i++) {
         LCD_data(0x00);
     }
 }
 
 
-void LCD_SetAddress(uint8_t PageAddr, uint8_t ColumnAddr){
+void LCD_SetAddress(uint8_t PageAddr, uint8_t ColumnAddr) {
     LCD_command(0xB0 | PageAddr);
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
     LCD_command(0x00 | (ColumnAddr & 0xF));
 }
 
 
-void KeyPadEnable(void){
+void KeyPadEnable(void) {
     GPIO_SetMode(PA, BIT0, GPIO_MODE_QUASI);
     GPIO_SetMode(PA, BIT1, GPIO_MODE_QUASI);
     GPIO_SetMode(PA, BIT2, GPIO_MODE_QUASI);
     GPIO_SetMode(PA, BIT3, GPIO_MODE_QUASI);
     GPIO_SetMode(PA, BIT4, GPIO_MODE_QUASI);
     GPIO_SetMode(PA, BIT5, GPIO_MODE_QUASI);
+    GPIO_SetMode(PB, BIT15, GPIO_MODE_INPUT);
 }
 
 
-uint8_t KeyPadScanning(void){
+uint8_t KeyPadScanning(void) {
     PA0 = 1;
     PA1 = 1;
     PA2 = 0;
@@ -285,11 +270,12 @@ uint8_t KeyPadScanning(void){
         return 6;
     if (PA5 == 0)
         return 9;
+    
     return 0;
 }
 
 
-void System_Config(void){
+void System_Config(void) {
     SYS_UnlockReg(); // Unlock protected registers
     // Enable clock sources
     //LXT - External Low frequency Crystal 32 kHz
@@ -316,7 +302,7 @@ void System_Config(void){
 }
 
 
-void SPI3_Config(void){
+void SPI3_Config(void) {
     SYS->GPD_MFP |= 1ul << 11;   //1: PD11 is configured for alternative function
     SYS->GPD_MFP |= 1ul << 9;    //1: PD9 is configured for alternative function
     SYS->GPD_MFP |= 1ul << 8;    //1: PD8 is configured for alternative function
@@ -331,4 +317,45 @@ void SPI3_Config(void){
     SPI3->CNTRL |= 9ul << 3;     //9: 9 bits transmitted/received per data transfer
     SPI3->CNTRL |= (1ul << 2);   //1: Transmit at negative edge of SPI CLK
     SPI3->DIVIDER = 0;           // SPI clock divider. SPI clock = HCLK / ((DIVIDER+1)*2). HCLK = 50 MHz
+}
+
+
+int str_compare(char *str1, char *str2) {
+    /*
+        Compare 2 string. Return 1 if equal, 0 if not equal
+    */
+    int str1_length = str_len(str1);
+    int str2_length = str_len(str2);
+    if (str1_length != str2_length) {
+        return 0;
+    }
+    for (int i = 0; i < str1_length; i++) {
+        if (*(str1 + i) != *(str2 + i)) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
+int str_len(char *str) {
+    /*
+        Find length of a given string. Return length of string
+    */
+    int str_lenght = 0;
+    for (int i = 0; *(str + i) != '\0'; i++) {
+        str_lenght++;
+    }
+    return str_lenght;
+}
+
+
+void str_copy(char *str1, char *str2) {
+    /*
+        Copy str2 into str1
+    */
+    int str2_lenght = str_len(str2);
+    for (int i = 0; i <= str2_lenght; i++) {
+        *(str1 + i) = *(str2 + i);
+    }
 }
