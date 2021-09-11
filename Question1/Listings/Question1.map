@@ -493,7 +493,6 @@ Removing Unused input sections from the image.
     Removing lcd.o(.ARM.exidx.text.draw_Bmp32x64), (8 bytes).
     Removing lcd.o(.text.draw_Bmp64x64), (136 bytes).
     Removing lcd.o(.ARM.exidx.text.draw_Bmp64x64), (8 bytes).
-    Removing lcd.o(.text.draw_LCD), (54 bytes).
     Removing lcd.o(.ARM.exidx.text.draw_LCD), (8 bytes).
     Removing lcd.o(.data.Font8x16), (1520 bytes).
     Removing lcd.o(.bss.DisplayBuffer), (1024 bytes).
@@ -527,6 +526,7 @@ Image Symbol Table
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
     ../Library/NUC100Series/Source/ARM/startup_NUC100Series.s 0x00000000   Number         0  startup_nuc100series.o ABSOLUTE
+    ../clib/../cmprslib/zerorunl2.c          0x00000000   Number         0  __dczerorl2.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit1.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit2.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit3.o ABSOLUTE
@@ -972,6 +972,7 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
 
+        86          0          0          0          0          0   __dczerorl2.o
          8          0          0          0          0         68   __main.o
          0          0          0          0          0          0   __rtentry.o
         12          0          0          0          0          0   __rtentry2.o
