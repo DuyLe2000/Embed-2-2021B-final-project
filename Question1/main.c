@@ -68,27 +68,35 @@ int main(void) {
     //LCD dynamic content
     //--------------------------------
     lock_state = option;
+
+    int8_t current_char = 0;
+    char key_display[6] = "______";
+
     while (1) {
         switch (lock_state) {
             case option:
                 // Option screen
                 printS_5x7(1, 1, "EEET2481 - Door Lock System");
                 printS_5x7(1, 10, "Please select");
-                printS_5x7(1, 19, "1: Unlock    2: Change key");
+                printS_5x7(1, 19, "1: Unlock | 2: Change key");
                 while (key_press != 1 && key_press != 2) {
                     key_press = KeyPadScanning();
                 }
-                if (key_press == 2) {
+                if (key_press == 1) {
+                    CLK_SysTickDelay(2000000);
+                    // Clear the screen
+                    LCD_clear();
                     lock_state = unlock;
-                } else if (key_press == 1) {
+                } else if (key_press == 2) {
+                    CLK_SysTickDelay(2000000);
+                    // Clear the screen
+                    LCD_clear();
                     lock_state = change_key;
                 }
                 key_press = 0;
                 break;
             case unlock: {
                 // Unlock enter key screen
-                int8_t current_char = 0;
-                char key_display[6] = "______";
                 int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
                 
                 printS_5x7(1, 1, "EEET2481 - Door Lock System");
@@ -105,17 +113,25 @@ int main(void) {
                     break;
                 }
 
+                // while (key_press == 0){
+                //     key_press = KeyPadScanning();
+                // }
+
                 key_press = KeyPadScanning();
+
                 if (key_press != 0) {
+                    CLK_SysTickDelay(2000000);
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
                     current_char++;
                 }
 
-                if (current_char == 5) {
+                if (current_char == 6) {
                     if (str_compare(user_input, password)) {
+                        printC_5x7(36, 17, key_display[5]);
                         lock_state = welcome;
                     } else {
+                        printC_5x7(36, 17, key_display[5]);
                         lock_state = wrong_key;
                     }
                 }
