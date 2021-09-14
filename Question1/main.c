@@ -58,10 +58,10 @@ int main(void) {
     TIMER0->TCSR |= (1 << 26); // Reset timer
     TIMER0->TCSR |= ~(3ul << 27); // One shot mode
     TIMER0->TCSR &= ~(0xFF << 0); // Set prescale to 0
+    TIMER0->TCSR &= ~(1 << 24);
     TIMER0->TCSR |= (1 << 16);
 
-    TIMER0->TCMPR &= ~(0xFFFFFFF << 0);
-    TIMER0->TCMPR |= 0x5B8D80; // 500 ms
+    TIMER0->TCMPR = 0x5B8D80; // 500 ms
 
     //--------------------------------
     //SPI3 initialization
@@ -99,7 +99,7 @@ int main(void) {
                 printS_5x7(1, 1, "EEET2481 - Door Lock System");
                 printS_5x7(1, 10, "Please select");
                 printS_5x7(1, 19, "1: Unlock | 2: Change key");
-                while (key_press != 1 && key_press != 2 && !(TIMER0->TCSR & (1 << 30))) {
+                while (key_press != 1 && key_press != 2) {
                     TIMER0->TCSR |= (1 << 30);
                     key_press = KeyPadScanning();
                 }
@@ -131,17 +131,13 @@ int main(void) {
                     break;
                 }
 
-                if (!(TIMER0->TCSR & (1 << 30))) {
+                key_press = KeyPadScanning();
+                if (key_press != 0 && !(TIMER0->TCSR & (1 << 30))) {
                     TIMER0->TCSR |= (1 << 30);
-                    key_press = KeyPadScanning();
-                }
-
-                if (key_press != 0) {
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
                     current_char++;
                 }
-                key_press = 0;
                 
                 if (current_char == 6) {
                     if (str_compare(user_input, password)) {
@@ -166,12 +162,9 @@ int main(void) {
                 printC_5x7(29, 17, key_display[4]);
                 printC_5x7(36, 17, key_display[5]);
 
-                if (!(TIMER0->TCSR & (1 << 30))) {
+                key_press = KeyPadScanning();
+                if (key_press != 0 && !(TIMER0->TCSR & (1 << 30))) {
                     TIMER0->TCSR |= (1 << 30);
-                    key_press = KeyPadScanning();
-                }
-
-                if (key_press != 0) {
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
                     current_char++;
@@ -344,6 +337,7 @@ void System_Config(void) {
     //enable clock of SPI3
     CLK->APBCLK |= 1ul << 15;
     // Set 12Mhz clock for timer 0
+    CLK->APBCLK | (1 << 2);
     CLK->CLKSEL1 &= ~(0b111 << 8);
     SYS_LockReg(); // Lock protected registers
 }
