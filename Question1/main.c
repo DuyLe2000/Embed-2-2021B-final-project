@@ -99,7 +99,7 @@ int main(void) {
                 printS_5x7(1, 1, "EEET2481 - Door Lock System");
                 printS_5x7(1, 10, "Please select");
                 printS_5x7(1, 19, "1: Unlock | 2: Change key");
-                while (key_press != 1 && key_press != 2 && !(TIMER0->TCSR & (1 << 25))) {
+                while (key_press != 1 && key_press != 2 && !(TIMER0->TCSR & (1 << 30))) {
                     TIMER0->TCSR |= (1 << 30);
                     key_press = KeyPadScanning();
                 }
@@ -131,7 +131,7 @@ int main(void) {
                     break;
                 }
 
-                if (!(TIMER0->TCSR & (1 << 25))) {
+                if (!(TIMER0->TCSR & (1 << 30))) {
                     TIMER0->TCSR |= (1 << 30);
                     key_press = KeyPadScanning();
                 }
@@ -166,7 +166,7 @@ int main(void) {
                 printC_5x7(29, 17, key_display[4]);
                 printC_5x7(36, 17, key_display[5]);
 
-                if (!(TIMER0->TCSR & (1 << 25))) {
+                if (!(TIMER0->TCSR & (1 << 30))) {
                     TIMER0->TCSR |= (1 << 30);
                     key_press = KeyPadScanning();
                 }
