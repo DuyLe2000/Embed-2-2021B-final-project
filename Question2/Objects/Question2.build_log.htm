@@ -1,0 +1,253 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.30.0.0
+Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: a b, c, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.30.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.14
+Assembler:       Armasm.exe V6.14
+Linker/Locator:  ArmLink.exe V6.14
+Library Manager: ArmAr.exe V6.14
+Hex Converter:   FromElf.exe V6.14
+CPU DLL:         SARMCM3.DLL V5.30.0.0
+Dialog DLL:      DARMCM1.DLL V1.19.3.0
+Target DLL:      NULink\Nu_Link.dll V3.02
+Dialog DLL:      TARMCM1.DLL V1.14.2.0
+ 
+<h2>Project:</h2>
+C:\Users\Duy\Desktop\RMIT\Sem 9\1_Embed 2 D and I\3_Assignments\4. Final\Code folder\Question2\Question2.uvprojx
+Project File Date:  09/14/2021
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.14', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+main.c(3): warning: In file included from...
+../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...
+../Library/CMSIS/Include\core_cm0.h(116): warning: In file included from...
+../Library/CMSIS/Include\core_cmInstr.h(406): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int32_t' (aka 'int') [-Wsign-conversion]
+  return(result);
+  ~~~~~~ ^~~~~~
+main.c(3): warning: In file included from...
+../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...
+../Library/CMSIS/Include\core_cm0.h(574): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    SCB->SHP[_SHP_IDX(IRQn)] = (SCB->SHP[_SHP_IDX(IRQn)] & ~(0xFF << _BIT_SHIFT(IRQn))) |
+                                                         ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Library/CMSIS/Include\core_cm0.h(577): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    NVIC->IP[_IP_IDX(IRQn)] = (NVIC->IP[_IP_IDX(IRQn)] & ~(0xFF << _BIT_SHIFT(IRQn))) |
+                                                       ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Library/CMSIS/Include\core_cm0.h(608): warning: function 'NVIC_SystemReset' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+main.c(3): warning: In file included from...
+../Library/NUC100Series/Include\NUC100Series.h(11321): warning: anonymous unions are a C11 extension [-Wc11-extensions]
+    union
+    ^
+../Library/NUC100Series/Include\NUC100Series.h(13605): warning: non-portable path to file '"sys.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SYS.h"
+         ^~~~~~~
+         "sys.h"
+../Library/NUC100Series/Include\NUC100Series.h(13606): warning: non-portable path to file '"adc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "ADC.h"
+         ^~~~~~~
+         "adc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13607): warning: non-portable path to file '"fmc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "FMC.h"
+         ^~~~~~~
+         "fmc.h"
+main.c(3): warning: In file included from...
+../Library/NUC100Series/Include\NUC100Series.h(13607): warning: In file included from...
+../Library/StdDriver/Include\FMC.h(314): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+    FMC->ISPADR = (u8index << 2);      /* Set UID Address. It must be word alignment. */
+                ~  ~~~~~~~~^~~~
+main.c(3): warning: In file included from...
+../Library/NUC100Series/Include\NUC100Series.h(13608): warning: non-portable path to file '"gpio.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "GPIO.h"
+         ^~~~~~~~
+         "gpio.h"
+../Library/NUC100Series/Include\NUC100Series.h(13609): warning: non-portable path to file '"i2c.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "I2C.h"
+         ^~~~~~~
+         "i2c.h"
+../Library/NUC100Series/Include\NUC100Series.h(13610): warning: non-portable path to file '"pwm.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PWM.h"
+         ^~~~~~~
+         "pwm.h"
+../Library/NUC100Series/Include\NUC100Series.h(13611): warning: non-portable path to file '"spi.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SPI.h"
+         ^~~~~~~
+         "spi.h"
+../Library/NUC100Series/Include\NUC100Series.h(13612): warning: non-portable path to file '"crc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CRC.h"
+         ^~~~~~~
+         "crc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13613): warning: non-portable path to file '"timer.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "TIMER.h"
+         ^~~~~~~~~
+         "timer.h"
+../Library/NUC100Series/Include\NUC100Series.h(13614): warning: non-portable path to file '"wdt.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "WDT.h"
+         ^~~~~~~
+         "wdt.h"
+../Library/NUC100Series/Include\NUC100Series.h(13615): warning: non-portable path to file '"wwdt.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "WWDT.h"
+         ^~~~~~~~
+         "wwdt.h"
+../Library/NUC100Series/Include\NUC100Series.h(13616): warning: non-portable path to file '"rtc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "RTC.h"
+         ^~~~~~~
+         "rtc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13617): warning: non-portable path to file '"uart.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "UART.h"
+         ^~~~~~~~
+         "uart.h"
+../Library/NUC100Series/Include\NUC100Series.h(13618): warning: non-portable path to file '"i2s.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "I2S.h"
+         ^~~~~~~
+         "i2s.h"
+../Library/NUC100Series/Include\NUC100Series.h(13619): warning: non-portable path to file '"can.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CAN.h"
+         ^~~~~~~
+         "can.h"
+../Library/NUC100Series/Include\NUC100Series.h(13620): warning: non-portable path to file '"usbd.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "USBD.h"
+         ^~~~~~~~
+         "usbd.h"
+main.c(3): warning: In file included from...
+../Library/NUC100Series/Include\NUC100Series.h(13620): warning: In file included from...
+../Library/StdDriver/Include\USBD.h(638): warning: variable 'u32CfgAddr' may be uninitialized when used here [-Wconditional-uninitialized]
+    return ((*((__IO uint32_t *)(u32CfgAddr))) & USBD_CFGP_SSTALL);
+                                 ^~~~~~~~~~
+../Library/StdDriver/Include\USBD.h(622): note: initialize the variable 'u32CfgAddr' to silence this warning
+    uint32_t u32CfgAddr;
+                       ^
+                        = 0
+main.c(3): warning: In file included from...
+../Library/NUC100Series/Include\NUC100Series.h(13621): warning: non-portable path to file '"pdma.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PDMA.h"
+         ^~~~~~~~
+         "pdma.h"
+../Library/NUC100Series/Include\NUC100Series.h(13622): warning: non-portable path to file '"sc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SC.h"
+         ^~~~~~
+         "sc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13623): warning: non-portable path to file '"ps2.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PS2.h"
+         ^~~~~~~
+         "ps2.h"
+../Library/NUC100Series/Include\NUC100Series.h(13624): warning: non-portable path to file '"clk.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CLK.h"
+         ^~~~~~~
+         "clk.h"
+../Library/NUC100Series/Include\NUC100Series.h(13625): warning: non-portable path to file '"acmp.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "ACMP.h"
+         ^~~~~~~~
+         "acmp.h"
+main.c(9): warning: In file included from...
+./picture.h(1): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char archer_32x48[32 * 48] = {
+                     ^
+./picture.h(1): warning: no previous extern declaration for non-static variable 'archer_32x48' [-Wmissing-variable-declarations]
+./picture.h(1): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char archer_32x48[32 * 48] = {
+       ^
+./picture.h(9): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char archer_release_32x48[32 * 48] = {
+                     ^
+./picture.h(9): warning: no previous extern declaration for non-static variable 'archer_release_32x48' [-Wmissing-variable-declarations]
+./picture.h(9): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char archer_release_32x48[32 * 48] = {
+       ^
+./picture.h(17): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char arrow_32x16[32 * 16] = {
+                     ^
+./picture.h(17): warning: no previous extern declaration for non-static variable 'arrow_32x16' [-Wmissing-variable-declarations]
+./picture.h(17): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char arrow_32x16[32 * 16] = {
+       ^
+./picture.h(21): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char diamond_16x16[16 * 16] = {
+                     ^
+./picture.h(21): warning: no previous extern declaration for non-static variable 'diamond_16x16' [-Wmissing-variable-declarations]
+./picture.h(21): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char diamond_16x16[16 * 16] = {
+       ^
+./picture.h(25): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char monster_128x64[128 * 64] = {
+                     ^
+./picture.h(25): warning: no previous extern declaration for non-static variable 'monster_128x64' [-Wmissing-variable-declarations]
+./picture.h(25): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char monster_128x64[128 * 64] = {
+       ^
+./picture.h(35): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char gameover_128x64[] = {
+                     ^
+./picture.h(35): warning: no previous extern declaration for non-static variable 'gameover_128x64' [-Wmissing-variable-declarations]
+./picture.h(35): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char gameover_128x64[] = {
+       ^
+main.c(10): warning: In file included from...
+./game_controller.h(1): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void control_game();
+                 ^
+                  void
+./game_controller.h(1): warning: no newline at end of file [-Wnewline-eof]
+void control_game();
+                    ^
+main.c(131): warning: implicit conversion changes signedness: 'int' to 'uint8_t' (aka 'unsigned char') [-Wsign-conversion]
+                        dy = -1;
+                           ~ ^~
+main.c(135): warning: implicit conversion changes signedness: 'int' to 'uint8_t' (aka 'unsigned char') [-Wsign-conversion]
+                        dx = -1;
+                           ~ ^~
+main.c(195): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+            default:
+            ^
+main.c(111): warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+            case main_game:
+            ^
+main.c(111): note: insert '__attribute__((fallthrough));' to silence this warning
+            case main_game:
+            ^
+            __attribute__((fallthrough)); 
+main.c(111): note: insert 'break;' to avoid fall-through
+            case main_game:
+            ^
+            break; 
+main.c(246): warning: '&' within '|' [-Wbitwise-op-parentheses]
+    LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
+                     ~ ~~~~~~~~~~~~~~~~~~^~~~~
+main.c(246): note: place parentheses around the '&' expression to silence this warning
+    LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
+                                         ^
+                       (                      )
+main.c(347): warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+48 warnings generated.
+compiling main.c...
+linking...
+Program Size: Code=3000 RO-data=704 RW-data=8236 ZI-data=2144  
+".\Objects\Question2.axf" - 0 Error(s), 48 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Nuvoton
+                http://www.nuvoton.com/hq/enu/Documents/KEILSoftwarePack/Nuvoton.NuMicro_DFP.1.3.5.pack
+                Nuvoton.NuMicro_DFP.1.3.5
+                Nuvoton ARM Cortex-M NuMicro Family Device Support
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_Target_1
+  C:\Users\Duy\AppData\Local\Arm\Packs\Nuvoton\NuMicro_DFP\1.3.5\Device\NUC100\Include
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

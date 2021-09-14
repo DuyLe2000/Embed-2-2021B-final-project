@@ -10,6 +10,7 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>6140000::V6.14::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -431,9 +432,33 @@
         </Group>
         <Group>
           <GroupName>User Sources</GroupName>
+          <Files>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>game_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\game_controller.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>User Headers</GroupName>
+          <Files>
+            <File>
+              <FileName>picture.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\picture.h</FilePath>
+            </File>
+            <File>
+              <FileName>game_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\game_controller.h</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
