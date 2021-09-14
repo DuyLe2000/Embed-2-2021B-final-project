@@ -1,1 +1,0 @@
-void control_game();

@@ -7,13 +7,32 @@
 #include "Draw2D.h"
 
 #include "picture.h"
-#include "game_controller.h"
 
 #define SYSTICK_DLAY_us 1000000
 #define Xmax 128
 #define Ymax 64
 #define Xmin 1
 #define Ymin 1
+
+//------------------------------------------------------------------------------------------------------------------------------------
+// Global variables
+//------------------------------------------------------------------------------------------------------------------------------------
+typedef enum{
+    welcome_screen,
+    game_rules,
+    game_background,
+    main_game,
+    end_game
+} STATES;
+
+
+STATES game_state;
+int i, key_pressed = 0, game_pad = 0;
+int x = 64, y = 32, dx = 0, dy = 0;
+int x_steps, y_steps;
+int x_reset, y_reset;
+int hit;
+char score_txt[] = "0";
 
 
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -25,177 +44,11 @@ void LCD_start(void);
 void LCD_command(unsigned char temp);
 void LCD_data(unsigned char temp);
 void LCD_clear(void);
-void LCD_SetAddress(uint8_t PageAddr, uint8_t ColumnAddr);
+void LCD_SetAddress(int PageAddr, int ColumnAddr);
 void KeyPadEnable(void);
-uint8_t KeyPadScanning(void);
+int KeyPadScanning(void);
 
 
-//------------------------------------------------------------------------------------------------------------------------------------
-// Main program
-//------------------------------------------------------------------------------------------------------------------------------------
-typedef enum{
-    welcome_screen,
-    game_rules,
-    game_background,
-    main_game,
-    end_game
-} STATES;
-
-
-int main(void){
-    STATES game_state;
-    uint8_t i, key_pressed = 0, game_pad = 0;
-    uint8_t x = 64, y = 32, dx = 0, dy = 0;
-    uint8_t x_steps, y_steps;
-    uint8_t x_reset, y_reset;
-    uint8_t hit;
-    char score_txt[] = "0";
-    //--------------------------------
-    //System initialization
-    //--------------------------------
-    System_Config();
-    KeyPadEnable();
-    //--------------------------------
-    //SPI3 initialization
-    //--------------------------------
-    SPI3_Config();
-    //--------------------------------
-    //LCD initialization
-    //--------------------------------
-    LCD_start();
-    LCD_clear();
-    //--------------------------------
-    //LCD static content
-    //--------------------------------
-    //--------------------------------
-    //LCD dynamic content
-    //--------------------------------
-    game_state = welcome_screen;
-    x_steps = 2;
-    y_steps = 2;
-    x_reset = 64;
-    y_reset = 32;
-    hit = 0;
-    while (1){
-        switch (game_state){
-            case welcome_screen:
-                //welcome state code here
-                draw_LCD(monster_128x64);
-                for (i = 0; i < 3; i++)
-                    CLK_SysTickDelay(SYSTICK_DLAY_us);
-                LCD_clear();
-                game_state = game_rules; // state transition
-                break;
-            case game_rules:
-                // game_rules state code here
-                printS_5x7(1, 0, "Use Keypad to control");
-                printS_5x7(1, 8, "2: UP 4: LEFT");
-                printS_5x7(1, 16, "6: RIGHT 8: DOWN");
-                printS_5x7(1, 32, "Eat all boxes to win");
-                printS_5x7(1, 56, "press any key to continue!");
-                while (key_pressed == 0)
-                    key_pressed = KeyPadScanning();
-                key_pressed = 0;
-                LCD_clear();
-                game_state = game_background;
-                break;
-            case game_background:
-                // static display information should be here
-                sprintf(score_txt, "%d", hit);
-                printS_5x7(48, 0, score_txt);
-                fill_Rectangle(8, 8, 8 + 6, 8 + 6, 1, 0);
-                fill_Rectangle(96, 8, 96 + 6, 8 + 6, 1, 0);
-                fill_Rectangle(8, 48, 8 + 6, 48 + 6, 1, 0);
-                fill_Rectangle(96, 48, 96 + 6, 48 + 6, 1, 0);
-                game_state = main_game;
-            case main_game:               
-                //main_game state code here
-                //draw objects
-                fill_Rectangle(x, y, x + 6, y + 6, 1, 0);
-                //delay for vision
-                while (game_pad == 0)
-                    game_pad = KeyPadScanning();
-                CLK_SysTickDelay(170000);
-
-
-                //erase the objects
-                fill_Rectangle(x, y, x + 6, y + 6, 0, 0);
-
-
-                // Controll movement 
-                switch (game_pad){
-                    //case 1: dx =+1; dy =-1; break;
-                    case 2:
-                        dx = 0;
-                        dy = -1;
-                        break;
-                    //case 3: dx = +1; dy = -1; break;
-                    case 4:
-                        dx = -1;
-                        dy = 0;
-                        break;
-                    //case 5: break;
-                    case 6:
-                        dx = +1;
-                        dy = 0;
-                        break;
-                    //case 7: dx= -1; dy= +1; break;
-                    case 8:
-                        dx = 0;
-                        dy = +1;
-                        break;
-                    //case 9: dx=+1; dy=+1; break;
-                    default:
-                        dx = dy = 0;
-                        break;
-                }   
-                game_pad = 0;
-
-
-                //update object�s information (position, etc.)
-                x = x + (dx * x_steps);
-                y = y + (dy * y_steps);
-                //boundary condition
-                //wrap around on X
-                if (x < Xmin)
-                    x = Xmax - 7;
-                if (x > Xmax - 7)
-                    x = Xmin;
-                //wrap around on Y
-                if (y < Ymin)
-                    y = Ymax - 7;
-                if (y > Ymax - 7)
-                    y = Ymin;
-                //score conditions
-                if ((x - 8 < 6) && (y - 8 < 6)){
-                    hit++;
-                    x = x_reset;
-                    y = y_reset;
-                }
-                if (hit > 1){
-                    hit = 0;
-                    LCD_clear();
-                    game_state = end_game;
-                }
-                else
-                    game_state = game_background;
-                break;
-            case end_game:
-                //end_game code here
-                printS_5x7(1, 32, "press any key to replay!");
-                for (i = 0; i < 2; i++)
-                    CLK_SysTickDelay(SYSTICK_DLAY_us);
-                while (key_pressed == 0)
-                    key_pressed = KeyPadScanning();
-                key_pressed = 0;
-                LCD_clear();
-                game_state = welcome_screen;
-                break;
-            default:
-                break;
-        }
-    }
-}
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions definition
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -240,7 +93,7 @@ void LCD_clear(void){
 }
 
 
-void LCD_SetAddress(uint8_t PageAddr, uint8_t ColumnAddr){
+void LCD_SetAddress(int PageAddr, int ColumnAddr){
     LCD_command(0xB0 | PageAddr);
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
     LCD_command(0x00 | (ColumnAddr & 0xF));
@@ -257,7 +110,7 @@ void KeyPadEnable(void){
 }
 
 
-uint8_t KeyPadScanning(void){
+int KeyPadScanning(void){
     PA0 = 1;
     PA1 = 1;
     PA2 = 0;
@@ -343,4 +196,183 @@ void SPI3_Config(void){
     SPI3->CNTRL |= 9ul << 3;     //9: 9 bits transmitted/received per data transfer
     SPI3->CNTRL |= (1ul << 2);   //1: Transmit at negative edge of SPI CLK
     SPI3->DIVIDER = 0;           // SPI clock divider. SPI clock = HCLK / ((DIVIDER+1)*2). HCLK = 50 MHz
+}
+
+//------------------------------------------------------------------------------------------------------------------------------------
+// Game related definition
+//------------------------------------------------------------------------------------------------------------------------------------
+
+void generate_food(){
+    /*
+        Brief: This function uses random to generate food on the map
+        Params: none 
+    */
+
+    
+}
+
+void control_game(){
+    /*
+        Brief: This function controls the main behaviors of the game
+        Params: none
+    */
+
+    int object_speed = 3; // This defines the movement speed of the main object
+
+    //draw objects
+    fill_Rectangle(x, y, x + 6, y + 6, 1, 0);
+    //delay for vision
+    while (game_pad == 0)
+        game_pad = KeyPadScanning();
+    CLK_SysTickDelay(170000);
+
+
+    //erase the objects
+    fill_Rectangle(x, y, x + 6, y + 6, 0, 0);
+
+
+    //check changes
+    switch (game_pad){
+        //case 1: dx =+1; dy =-1; break;
+        case 2:
+            dx = 0;
+            dy = -object_speed;
+            break;
+        //case 3: dx = +1; dy = -1; break;
+        case 4:
+            dx = -object_speed;
+            dy = 0;
+            break;
+        //case 5: break;
+        case 6:
+            dx = +object_speed;
+            dy = 0;
+            break;
+        //case 7: dx= -1; dy= +1; break;
+        case 8:
+            dx = 0;
+            dy = +object_speed;
+            break;
+        //case 9: dx=+1; dy=+1; break;
+        default:
+            dx = dy = 0;
+            break;
+    }   
+    game_pad = 0;
+
+
+    //update objects information (position, etc.)
+    x = x + (dx * x_steps);
+    y = y + (dy * y_steps);
+    //boundary condition
+    //wrap around on X
+    if (x < Xmin)
+        x = Xmax - 7;
+    if (x > Xmax - 7)
+        x = Xmin;
+    //wrap around on Y
+    if (y < Ymin)
+        y = Ymax - 7;
+    if (y > Ymax - 7)
+        y = Ymin;
+    //score conditions
+    if ((x - 8 < 6) && (y - 8 < 6)){
+        hit++;
+        x = x_reset;
+        y = y_reset;
+    }
+    if (hit > 5){
+        hit = 0;
+        LCD_clear();
+        game_state = end_game;
+    }
+    else
+        game_state = game_background;
+}
+
+//------------------------------------------------------------------------------------------------------------------------------------
+// Main program
+//------------------------------------------------------------------------------------------------------------------------------------
+int main(void){
+    game_state = welcome_screen; // The initial state of the game
+    x_steps = 2;
+    y_steps = 2;
+    x_reset = 64;
+    y_reset = 32;
+    hit = 0;
+    //--------------------------------
+    //System initialization
+    //--------------------------------
+    System_Config();
+    KeyPadEnable();
+    //--------------------------------
+    //SPI3 initialization
+    //--------------------------------
+    SPI3_Config();
+    //--------------------------------
+    //LCD initialization
+    //--------------------------------
+    LCD_start();
+    LCD_clear();
+    //--------------------------------
+    //LCD static content
+    //--------------------------------
+    //--------------------------------
+    //LCD dynamic content
+    //--------------------------------
+    while (1){
+        switch (game_state){
+            case welcome_screen:
+                //welcome state code here
+                draw_LCD(monster_128x64);
+                for (i = 0; i < 3; i++)
+                    CLK_SysTickDelay(SYSTICK_DLAY_us);
+                LCD_clear();
+                game_state = game_rules; // state transition
+                break;
+            case game_rules:
+                // game_rules state code here
+                printS_5x7(1, 0, "Use Keypad to control");
+                printS_5x7(1, 8, "2: UP 4: LEFT");
+                printS_5x7(1, 16, "6: RIGHT 8: DOWN");
+                printS_5x7(1, 32, "Eat all boxes to win");
+                printS_5x7(1, 56, "press any key to continue!");
+                while (key_pressed == 0)
+                    key_pressed = KeyPadScanning();
+                key_pressed = 0;
+                LCD_clear();
+                game_state = game_background;
+                break;
+            case game_background:
+                // static display information should be here
+                sprintf(score_txt, "%d", hit);
+                printS_5x7(48, 0, score_txt);
+                fill_Rectangle(0, 0, 0 + 6, 0 + 6, 1, 0);
+                fill_Rectangle(96, 8, 96 + 6, 8 + 6, 1, 0);
+                fill_Rectangle(8, 48, 8 + 6, 48 + 6, 1, 0);
+                fill_Rectangle(96, 48, 96 + 6, 48 + 6, 1, 0);
+                game_state = main_game;
+            case main_game: 
+                /*
+                    The main control of the game
+                    is now defined in the function below
+                    for easier development, testing and implementation
+                */  
+                control_game(); 
+                break;
+            case end_game:
+                //end_game code here
+                printS_5x7(1, 32, "press any key to replay!");
+                for (i = 0; i < 2; i++)
+                    CLK_SysTickDelay(SYSTICK_DLAY_us);
+                while (key_pressed == 0)
+                    key_pressed = KeyPadScanning();
+                key_pressed = 0;
+                LCD_clear();
+                game_state = welcome_screen;
+                break;
+            default:
+                break;
+        }
+    }
 }

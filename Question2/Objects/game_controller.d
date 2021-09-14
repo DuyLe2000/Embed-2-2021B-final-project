@@ -21,4 +21,4 @@
   ..\Library\NuMakerLib\Include\MCU_Init.h \
   ..\Library\NuMakerLib\Include\SYS_init.h \
   ..\Library\NUC1xx-LB_002\Include\LCD.h \
-  ..\Library\NuMakerLib\Include\Draw2D.h
+  ..\Library\NuMakerLib\Include\Draw2D.h function.h

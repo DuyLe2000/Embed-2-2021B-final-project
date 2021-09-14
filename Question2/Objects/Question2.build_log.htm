@@ -191,49 +191,132 @@ extern unsigned char gameover_128x64[] = {
 ./picture.h(35): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 extern unsigned char gameover_128x64[] = {
        ^
-main.c(10): warning: In file included from...
-./game_controller.h(1): warning: this function declaration is not a prototype [-Wstrict-prototypes]
-void control_game();
-                 ^
-                  void
-./game_controller.h(1): warning: no newline at end of file [-Wnewline-eof]
-void control_game();
+main.c(30): warning: no previous extern declaration for non-static variable 'key_pressed' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+       ^
+main.c(30): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
+^
+main.c(30): warning: no previous extern declaration for non-static variable 'game_pad' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+                        ^
+main.c(30): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
+^
+main.c(31): warning: no previous extern declaration for non-static variable 'x' [-Wmissing-variable-declarations]
+int x = 64, y = 32, dx = 0, dy = 0;
+    ^
+main.c(31): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x = 64, y = 32, dx = 0, dy = 0;
+^
+main.c(31): warning: no previous extern declaration for non-static variable 'y' [-Wmissing-variable-declarations]
+int x = 64, y = 32, dx = 0, dy = 0;
+            ^
+main.c(31): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x = 64, y = 32, dx = 0, dy = 0;
+^
+main.c(31): warning: no previous extern declaration for non-static variable 'dx' [-Wmissing-variable-declarations]
+int x = 64, y = 32, dx = 0, dy = 0;
                     ^
-main.c(131): warning: implicit conversion changes signedness: 'int' to 'uint8_t' (aka 'unsigned char') [-Wsign-conversion]
-                        dy = -1;
-                           ~ ^~
-main.c(135): warning: implicit conversion changes signedness: 'int' to 'uint8_t' (aka 'unsigned char') [-Wsign-conversion]
-                        dx = -1;
-                           ~ ^~
-main.c(195): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
-            default:
+main.c(31): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x = 64, y = 32, dx = 0, dy = 0;
+^
+main.c(31): warning: no previous extern declaration for non-static variable 'dy' [-Wmissing-variable-declarations]
+int x = 64, y = 32, dx = 0, dy = 0;
+                            ^
+main.c(31): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x = 64, y = 32, dx = 0, dy = 0;
+^
+main.c(35): warning: no previous extern declaration for non-static variable 'score_txt' [-Wmissing-variable-declarations]
+char score_txt[] = "0";
+     ^
+main.c(35): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char score_txt[] = "0";
+^
+main.c(87): warning: declaration shadows a variable in the global scope [-Wshadow]
+    int16_t i;
             ^
-main.c(111): warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
-            case main_game:
-            ^
-main.c(111): note: insert '__attribute__((fallthrough));' to silence this warning
-            case main_game:
-            ^
-            __attribute__((fallthrough)); 
-main.c(111): note: insert 'break;' to avoid fall-through
-            case main_game:
-            ^
-            break; 
-main.c(246): warning: '&' within '|' [-Wbitwise-op-parentheses]
+main.c(30): note: previous declaration is here
+int i, key_pressed = 0, game_pad = 0;
+    ^
+main.c(97): warning: implicit conversion loses integer precision: 'int' to 'unsigned char' [-Wimplicit-int-conversion]
+    LCD_command(0xB0 | PageAddr);
+    ~~~~~~~~~~~ ~~~~~^~~~~~~~~~
+main.c(98): warning: '&' within '|' [-Wbitwise-op-parentheses]
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
                      ~ ~~~~~~~~~~~~~~~~~~^~~~~
-main.c(246): note: place parentheses around the '&' expression to silence this warning
+main.c(98): note: place parentheses around the '&' expression to silence this warning
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
                                          ^
                        (                      )
-main.c(347): warning: no newline at end of file [-Wnewline-eof]
-}
- ^
-48 warnings generated.
+main.c(205): warning: no previous prototype for function 'control_game' [-Wmissing-prototypes]
+void control_game(){
+     ^
+main.c(205): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void control_game(){
+^
+static 
+main.c(365): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+            default:
+            ^
+main.c(346): warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+            case main_game: 
+            ^
+main.c(346): note: insert '__attribute__((fallthrough));' to silence this warning
+            case main_game: 
+            ^
+            __attribute__((fallthrough)); 
+main.c(346): note: insert 'break;' to avoid fall-through
+            case main_game: 
+            ^
+            break; 
+main.c(29): warning: no previous extern declaration for non-static variable 'game_state' [-Wmissing-variable-declarations]
+STATES game_state;
+       ^
+main.c(29): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+STATES game_state;
+^
+main.c(30): warning: no previous extern declaration for non-static variable 'i' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+    ^
+main.c(30): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
+^
+main.c(32): warning: no previous extern declaration for non-static variable 'x_steps' [-Wmissing-variable-declarations]
+int x_steps, y_steps;
+    ^
+main.c(32): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x_steps, y_steps;
+^
+main.c(32): warning: no previous extern declaration for non-static variable 'y_steps' [-Wmissing-variable-declarations]
+int x_steps, y_steps;
+             ^
+main.c(32): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x_steps, y_steps;
+^
+main.c(33): warning: no previous extern declaration for non-static variable 'x_reset' [-Wmissing-variable-declarations]
+int x_reset, y_reset;
+    ^
+main.c(33): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x_reset, y_reset;
+^
+main.c(33): warning: no previous extern declaration for non-static variable 'y_reset' [-Wmissing-variable-declarations]
+int x_reset, y_reset;
+             ^
+main.c(33): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x_reset, y_reset;
+^
+main.c(34): warning: no previous extern declaration for non-static variable 'hit' [-Wmissing-variable-declarations]
+int hit;
+    ^
+main.c(34): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int hit;
+^
+60 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=3000 RO-data=704 RW-data=8236 ZI-data=2144  
-".\Objects\Question2.axf" - 0 Error(s), 48 Warning(s).
+Program Size: Code=3064 RO-data=704 RW-data=8248 ZI-data=2192  
+".\Objects\Question2.axf" - 0 Error(s), 60 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -247,7 +330,7 @@ Package Vendor: Nuvoton
   C:\Users\Duy\AppData\Local\Arm\Packs\Nuvoton\NuMicro_DFP\1.3.5\Device\NUC100\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
