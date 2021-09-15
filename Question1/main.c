@@ -90,9 +90,9 @@ int main(void) {
                 TIMER1->TCSR |= (1 << 26);
                 TIMER2->TCSR |= (1 << 26);
 
-                printS_5x7(1, 1, "EEET2481-Door Lock System");
-                printS_5x7(1, 10, "Please select");
-                printS_5x7(1, 19, "1: Unlock | 2: Change key");
+                printS_5x7(0, 0, "EEET2481-Door Lock System");
+                printS_5x7(0, 8, "Please select");
+                printS_5x7(0, 16, "1: Unlock | 2: Change key");
                 while (key_press != 1 && key_press != 2) {
                     key_press = KeyPadScanning();
                     TIMER0->TCSR |= (1 << 30);
@@ -113,14 +113,14 @@ int main(void) {
                 break;
             } case unlock: {
                 // Unlock enter key screen
-                printS_5x7(1, 1, "EEET2481-Door Lock System");
-                printS_5x7(1, 9, "Please input your key");
-                printC_5x7(1, 17, key_display[0]);
-                printC_5x7(8, 17, key_display[1]);
-                printC_5x7(15, 17, key_display[2]);
-                printC_5x7(22, 17, key_display[3]);
-                printC_5x7(29, 17, key_display[4]);
-                printC_5x7(36, 17, key_display[5]);
+                printS_5x7(0, 0, "EEET2481-Door Lock System");
+                printS_5x7(0, 8, "Please input your key");
+                printC_5x7(1, 16, key_display[0]);
+                printC_5x7(8, 16, key_display[1]);
+                printC_5x7(15, 16, key_display[2]);
+                printC_5x7(22, 16, key_display[3]);
+                printC_5x7(29, 16, key_display[4]);
+                printC_5x7(36, 16, key_display[5]);
 
                 if (!(PB->PIN & (1 << 15))) {
                     lock_state = option;
@@ -166,14 +166,14 @@ int main(void) {
                 break;
             } case change_key: {
                 // Change key enter screen
-                printS_5x7(1, 1, "EEET2481-Door Lock System");
-                printS_5x7(1, 9, "Please input new key");
-                printC_5x7(1, 17, key_display[0]);
-                printC_5x7(8, 17, key_display[1]);
-                printC_5x7(15, 17, key_display[2]);
-                printC_5x7(22, 17, key_display[3]);
-                printC_5x7(29, 17, key_display[4]);
-                printC_5x7(36, 17, key_display[5]);
+                printS_5x7(1, 0, "EEET2481-Door Lock System");
+                printS_5x7(1, 8, "Please input new key");
+                printC_5x7(1, 16, key_display[0]);
+                printC_5x7(8, 16, key_display[1]);
+                printC_5x7(15, 16, key_display[2]);
+                printC_5x7(22, 16, key_display[3]);
+                printC_5x7(29, 16, key_display[4]);
+                printC_5x7(36, 16, key_display[5]);
 
                 // Turning key already pressed into star
                 // for (int i = 0; i < current_char; i++) {
@@ -203,9 +203,9 @@ int main(void) {
                 if (current_char == 6) {
                     str_copy(password, user_input);
                     LCD_clear();
-                    printS_5x7(1, 1, "EEET2481-Door Lock System");
-                    printS_5x7(1, 9, "Your key has been changed");
-                    printS_5x7(1, 17, "THANK YOU!");
+                    printS_5x7(1, 0, "EEET2481-Door Lock System");
+                    printS_5x7(1, 8, "Your key has been changed");
+                    printS_5x7(1, 16, "THANK YOU!");
                     CLK_SysTickDelay(800000);
                     LCD_clear();
                     lock_state = option;
@@ -217,8 +217,8 @@ int main(void) {
 				break;
             } case welcome:
                 // Unlock successful screen
-                printS_5x7(1, 1, "EEET2481 - Door Lock System");
-                printS_5x7(1, 9, "Welcome");
+                printS_5x7(0, 0, "EEET2481 - Door Lock System");
+                printS_5x7(0, 8, "Welcome");
                 if (!(PB->PIN & (1 << 15))) {
                     LCD_clear();
                     lock_state = option;
@@ -226,10 +226,10 @@ int main(void) {
                 break;
             case wrong_key:
                 // Unlock failed screen
-                printS_5x7(1, 1, "EEET2481-Door Lock System");
-                printS_5x7(1, 9, "The key is wrong");
-                printS_5x7(1, 17, "System restart in 1 second");
-                printS_5x7(1, 15, "Thank you!");
+                printS_5x7(0, 0, "EEET2481-Door Lock System");
+                printS_5x7(0, 8, "The key is wrong");
+                printS_5x7(0, 16, "System restart in 1 second");
+                printS_5x7(0, 24, "Thank you!");
 
                 if (!(TIMER2->TCSR & (1 << 30))) {
                     LCD_clear();
