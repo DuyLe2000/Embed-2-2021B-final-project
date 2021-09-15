@@ -191,8 +191,14 @@ int snake_width = 3; // Snake and food block width is defined by the size of 3 +
 */
 void generate_food(){
     // Generate random food coordinates 
-    food_x_coor = rand() % (Xmax + snake_width - 1);
-    food_y_coor = rand() % (Ymax + snake_width - 1);
+    // rand() in range: rand() % (max_number + 1 - minimum_number) + minimum_number
+    int max_x = (Xmax - 1) - (snake_width - 1);
+    int min_x = Xmin + 1;
+    int max_y = (Ymax - 1) - (snake_width - 1);
+    int min_y = Ymin + 1;
+
+    food_x_coor = rand() % (max_x + 1 - min_x) + min_x;
+    food_y_coor = rand() % (max_y + 1 - min_y) + min_y;
 
     // Generate food with those coordinates
     fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 1, 0);
@@ -290,70 +296,73 @@ int main(void){
     //--------------------------------
     //LCD static content for testing and debugging 
     //--------------------------------
-    // while (1){
-    //     clear_LCD();
-    //     generate_food();
-    //     for (i = 0; i < 5; i++){
-    //         CLK_SysTickDelay(SYSTICK_DLAY_us);
-    //     }
-    // }
+    draw_Rectangle(Xmin, Ymin, Xmax, Ymax, 1, 0); // Draw the playable field boundary 
+    while (1){
+        //erase the objects
+        fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 0, 0);
+        generate_food();
+        draw_Rectangle(Xmin, Ymin, Xmax, Ymax, 1, 0); // Draw the playable field boundary
+        for (i = 0; i < 2; i++){
+            CLK_SysTickDelay(SYSTICK_DLAY_us);
+        }
+    }
 
     //--------------------------------
     //LCD dynamic content
     //--------------------------------
-    while (1){
-        switch (game_state){
-            case welcome_screen:
-                //welcome state code here
-                draw_LCD(snake_game_intro);
-                for (i = 0; i < 5; i++){
-                    CLK_SysTickDelay(SYSTICK_DLAY_us);
-                }
-                LCD_clear();
-                game_state = game_rules; // state transition
-                break;
-            case game_rules:
-                // game_rules state code here
-                printS_5x7(1, 0, "Use Keypad to control");
-                printS_5x7(1, 8, "2: UP 4: LEFT");
-                printS_5x7(1, 16, "6: RIGHT 8: DOWN");
-                printS_5x7(1, 32, "Eat all boxes to win");
-                printS_5x7(1, 56, "press any key to continue!");
-                while (key_pressed == 0)
-                    key_pressed = KeyPadScanning();
-                key_pressed = 0;
-                LCD_clear();
-                game_state = game_background;
-                break;
-            case game_background:
-                // static display information should be here
-                sprintf(score_txt, "%d", hit);
-                printS_5x7(5, 0, "Score: ");
-                printS_5x7(48, 0, score_txt);
-                draw_Rectangle(Xmin, Ymin, Xmax, Ymax, 1, 0); // Draw the playable field boundary 
-                game_state = main_game;
-            case main_game: 
-                /*
-                    The main control of the game
-                    is now defined in the function below
-                    for easier development, testing and implementation
-                */  
-                control_game(); 
-                break;
-            case end_game:
-                //end_game code here
-                //printS_5x7(1, 32, "press any key to replay!");
-                draw_LCD(gameover_128x64);
-                for (i = 0; i < 2; i++)
-                    CLK_SysTickDelay(SYSTICK_DLAY_us);
-                while (key_pressed == 0)
-                    key_pressed = KeyPadScanning();
-                key_pressed = 0;
-                LCD_clear();
-                game_state = welcome_screen;
-                break;
-            default:
-                break;
-        }
-    }
+    // while (1){
+    //     switch (game_state){
+    //         case welcome_screen:
+    //             //welcome state code here
+    //             draw_LCD(snake_game_intro);
+    //             for (i = 0; i < 5; i++){
+    //                 CLK_SysTickDelay(SYSTICK_DLAY_us);
+    //             }
+    //             LCD_clear();
+    //             game_state = game_rules; // state transition
+    //             break;
+    //         case game_rules:
+    //             // game_rules state code here
+    //             printS_5x7(1, 0, "Use Keypad to control");
+    //             printS_5x7(1, 8, "2: UP 4: LEFT");
+    //             printS_5x7(1, 16, "6: RIGHT 8: DOWN");
+    //             printS_5x7(1, 32, "Eat all boxes to win");
+    //             printS_5x7(1, 56, "press any key to continue!");
+    //             while (key_pressed == 0)
+    //                 key_pressed = KeyPadScanning();
+    //             key_pressed = 0;
+    //             LCD_clear();
+    //             game_state = game_background;
+    //             break;
+    //         case game_background:
+    //             // static display information should be here
+    //             sprintf(score_txt, "%d", hit);
+    //             printS_5x7(5, 0, "Score: ");
+    //             printS_5x7(48, 0, score_txt);
+    //             draw_Rectangle(Xmin, Ymin, Xmax, Ymax, 1, 0); // Draw the playable field boundary 
+    //             game_state = main_game;
+    //         case main_game: 
+    //             /*
+    //                 The main control of the game
+    //                 is now defined in the function below
+    //                 for easier development, testing and implementation
+    //             */  
+    //             control_game(); 
+    //             break;
+    //         case end_game:
+    //             //end_game code here
+    //             //printS_5x7(1, 32, "press any key to replay!");
+    //             draw_LCD(gameover_128x64);
+    //             for (i = 0; i < 2; i++)
+    //                 CLK_SysTickDelay(SYSTICK_DLAY_us);
+    //             while (key_pressed == 0)
+    //                 key_pressed = KeyPadScanning();
+    //             key_pressed = 0;
+    //             LCD_clear();
+    //             game_state = welcome_screen;
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
 }
