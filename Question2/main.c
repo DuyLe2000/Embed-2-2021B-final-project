@@ -9,10 +9,10 @@
 #include "picture.h"
 
 #define SYSTICK_DLAY_us 1000000
-#define Xmax 127
-#define Ymax 63
-#define Xmin 0
-#define Ymin 8
+#define SCREEN_X_MAX 127
+#define SCREEN_Y_MAX 63
+#define SCREEN_X_MIN 0
+#define SCREEN_Y_MIN 8
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions declaration
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -177,39 +177,56 @@ typedef enum{
 
 STATES game_state;
 int i, key_pressed = 0, game_pad = 0;
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
 int food_x_coor, food_y_coor;
-int snake_step = 4; // Determine how many pixels the snake moves in one step 
 int x_reset, y_reset;
 int hit;
 char score_txt[] = "0";
-int snake_width = 3; // Snake and food block width is defined by the size of 3 + 1 = 4 pixels
+const int snake_width = 5; // Snake and food block width is defined by the size of width + 1 
+int snake_step = snake_width + 1; // Determine how many pixels the snake moves in one step
 
 
 /**
 * This function uses rand() to generate food on the map
 */
 void generate_food(){
+    // Delete old food at old coordinates
+    fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 0, 0);
+
     // Generate random food coordinates 
     // rand() in range: rand() % (max_number + 1 - minimum_number) + minimum_number
-    int max_x = (Xmax - 1) - (snake_width - 1);
-    int min_x = Xmin + 1;
-    int max_y = (Ymax - 1) - (snake_width - 1);
-    int min_y = Ymin + 1;
+    int max_x = (SCREEN_X_MAX - 1) - (snake_width - 1);
+    int min_x = SCREEN_X_MIN + 1;
+    int max_y = (SCREEN_Y_MAX - 1) - (snake_width - 1);
+    int min_y = SCREEN_Y_MIN + 1;
 
     food_x_coor = rand() % (max_x + 1 - min_x) + min_x;
     food_y_coor = rand() % (max_y + 1 - min_y) + min_y;
 
-    // Generate food with those coordinates
+    // Generate food with new coordinates
     fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 1, 0);
+
+    //Redraw the boundary. For some reason the boundary is erase together with the food that is close to the boundary
+    draw_Rectangle(SCREEN_X_MIN, SCREEN_Y_MIN, SCREEN_X_MAX, SCREEN_Y_MAX, 1, 0);
 }
 
+
+/**
+ * This function updates the score based on the food eaten
+ */
+// void update_score(){
+//     if ((snake_head_x_coor < ) 
+//         || ()
+//         || ){
+        
+//     }
+// }
 
 /**
  * This is the final main game control function
  */
 void control_game(){
-    //draw objects
+    // Draw the initial snake head
     fill_Rectangle(snake_head_x_coor, snake_head_y_coor, snake_head_x_coor + snake_width, snake_head_y_coor + snake_width, 1, 0);
     //delay for vision
     while (game_pad == 0)
@@ -217,11 +234,11 @@ void control_game(){
     CLK_SysTickDelay(170000);
 
 
-    //erase the objects
+    // Erase snake head upon movement
     fill_Rectangle(snake_head_x_coor, snake_head_y_coor, snake_head_x_coor + snake_width, snake_head_y_coor + snake_width, 0, 0);
 
 
-    //check changes
+    // Check direction changes
     switch (game_pad){
         case 2:
             dx = 0;
@@ -249,19 +266,47 @@ void control_game(){
     //update objects information (position, etc.)
     snake_head_x_coor = snake_head_x_coor + (dx * snake_step);
     snake_head_y_coor = snake_head_y_coor + (dy * snake_step);
-    //boundary condition
-    //wrap around on X
-    if (snake_head_x_coor < Xmin)
-        snake_head_x_coor = Xmax - snake_width + 1;
-    if (snake_head_x_coor > Xmax - snake_width + 1)
-        snake_head_x_coor = Xmin;
-    //wrap around on Y
-    if (snake_head_y_coor < Ymin)
-        snake_head_y_coor = Ymax - snake_width + 1;
-    if (snake_head_y_coor > Ymax - 7)
-        snake_head_y_coor = Ymin;
-    //score conditions
+
+
+    // //boundary condition for edge continuation
+    // //wrap around on X
+    // if (snake_head_x_coor < SCREEN_X_MIN)
+    //     snake_head_x_coor = SCREEN_X_MAX - snake_width + 1;
+    // if (snake_head_x_coor > SCREEN_X_MAX - snake_width + 1)
+    //     snake_head_x_coor = SCREEN_X_MIN;
+    // //wrap around on Y
+    // if (snake_head_y_coor < SCREEN_Y_MIN)
+    //     snake_head_y_coor = SCREEN_Y_MAX - snake_width + 1;
+    // if (snake_head_y_coor > SCREEN_Y_MAX - 7)
+    //     snake_head_y_coor = SCREEN_Y_MIN;
+
+
+    // Boundary condition for edge prevention
+    // Stops at X edge
+    if (snake_head_x_coor < SCREEN_X_MIN + 1){
+        snake_head_x_coor = SCREEN_X_MIN + 1;
+    }
+    if (snake_head_x_coor >= SCREEN_X_MAX - 1 - snake_width){
+        snake_head_x_coor = SCREEN_X_MAX - 1 - snake_width;
+    }
+    // Stops at Y edge
+    if (snake_head_y_coor > SCREEN_Y_MAX - 1 - snake_width){
+        snake_head_y_coor = SCREEN_Y_MAX - 1 - snake_width;
+    }
+    if (snake_head_y_coor < SCREEN_Y_MIN + 1){
+        snake_head_y_coor = SCREEN_Y_MIN + 1;
+    }
     
+    // // Generate food 
+    // while (1){
+    //     generate_food();
+    //     for (i = 0; i < 2; i++){
+    //         CLK_SysTickDelay(SYSTICK_DLAY_us);
+    //     }
+    // } 
+
+
+    //score conditions
     if (hit > 5){
         hit = 0;
         LCD_clear();
@@ -296,73 +341,63 @@ int main(void){
     //--------------------------------
     //LCD static content for testing and debugging 
     //--------------------------------
-    draw_Rectangle(Xmin, Ymin, Xmax, Ymax, 1, 0); // Draw the playable field boundary 
-    while (1){
-        //erase the objects
-        fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 0, 0);
-        generate_food();
-        draw_Rectangle(Xmin, Ymin, Xmax, Ymax, 1, 0); // Draw the playable field boundary
-        for (i = 0; i < 2; i++){
-            CLK_SysTickDelay(SYSTICK_DLAY_us);
-        }
-    }
 
     //--------------------------------
     //LCD dynamic content
     //--------------------------------
-    // while (1){
-    //     switch (game_state){
-    //         case welcome_screen:
-    //             //welcome state code here
-    //             draw_LCD(snake_game_intro);
-    //             for (i = 0; i < 5; i++){
-    //                 CLK_SysTickDelay(SYSTICK_DLAY_us);
-    //             }
-    //             LCD_clear();
-    //             game_state = game_rules; // state transition
-    //             break;
-    //         case game_rules:
-    //             // game_rules state code here
-    //             printS_5x7(1, 0, "Use Keypad to control");
-    //             printS_5x7(1, 8, "2: UP 4: LEFT");
-    //             printS_5x7(1, 16, "6: RIGHT 8: DOWN");
-    //             printS_5x7(1, 32, "Eat all boxes to win");
-    //             printS_5x7(1, 56, "press any key to continue!");
-    //             while (key_pressed == 0)
-    //                 key_pressed = KeyPadScanning();
-    //             key_pressed = 0;
-    //             LCD_clear();
-    //             game_state = game_background;
-    //             break;
-    //         case game_background:
-    //             // static display information should be here
-    //             sprintf(score_txt, "%d", hit);
-    //             printS_5x7(5, 0, "Score: ");
-    //             printS_5x7(48, 0, score_txt);
-    //             draw_Rectangle(Xmin, Ymin, Xmax, Ymax, 1, 0); // Draw the playable field boundary 
-    //             game_state = main_game;
-    //         case main_game: 
-    //             /*
-    //                 The main control of the game
-    //                 is now defined in the function below
-    //                 for easier development, testing and implementation
-    //             */  
-    //             control_game(); 
-    //             break;
-    //         case end_game:
-    //             //end_game code here
-    //             //printS_5x7(1, 32, "press any key to replay!");
-    //             draw_LCD(gameover_128x64);
-    //             for (i = 0; i < 2; i++)
-    //                 CLK_SysTickDelay(SYSTICK_DLAY_us);
-    //             while (key_pressed == 0)
-    //                 key_pressed = KeyPadScanning();
-    //             key_pressed = 0;
-    //             LCD_clear();
-    //             game_state = welcome_screen;
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
+    while (1){
+        switch (game_state){
+            case welcome_screen:
+                //welcome state code here
+                draw_LCD(snake_game_intro);
+                for (i = 0; i < 5; i++){
+                    CLK_SysTickDelay(SYSTICK_DLAY_us);
+                }
+                LCD_clear();
+                game_state = game_rules; // state transition
+                break;
+            case game_rules:
+                // game_rules state code here
+                printS_5x7(1, 0, "Use Keypad to control");
+                printS_5x7(1, 8, "2: UP 4: LEFT");
+                printS_5x7(1, 16, "6: RIGHT 8: DOWN");
+                printS_5x7(1, 32, "Eat all boxes to win");
+                printS_5x7(1, 56, "press any key to continue!");
+                while (key_pressed == 0)
+                    key_pressed = KeyPadScanning();
+                key_pressed = 0;
+                LCD_clear();
+                game_state = game_background;
+                break;
+            case game_background:
+                // static display information should be here
+                sprintf(score_txt, "%d", hit);
+                printS_5x7(5, 0, "Score: ");
+                printS_5x7(48, 0, score_txt);
+                draw_Rectangle(SCREEN_X_MIN, SCREEN_Y_MIN, SCREEN_X_MAX, SCREEN_Y_MAX, 1, 0); // Draw the playable field boundary 
+                game_state = main_game;
+            case main_game: 
+                /*
+                    The main control of the game
+                    is now defined in the function below
+                    for easier development, testing and implementation
+                */  
+                control_game(); 
+                break;
+            case end_game:
+                //end_game code here
+                //printS_5x7(1, 32, "press any key to replay!");
+                draw_LCD(gameover_128x64);
+                for (i = 0; i < 2; i++)
+                    CLK_SysTickDelay(SYSTICK_DLAY_us);
+                while (key_pressed == 0)
+                    key_pressed = KeyPadScanning();
+                key_pressed = 0;
+                LCD_clear();
+                game_state = welcome_screen;
+                break;
+            default:
+                break;
+        }
+    }
 }

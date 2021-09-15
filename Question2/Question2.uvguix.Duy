@@ -103,8 +103,8 @@
       <NormalPosition>
         <Top>-8</Top>
         <Left>-8</Left>
-        <Right>1927</Right>
-        <Bottom>697</Bottom>
+        <Right>1928</Right>
+        <Bottom>1088</Bottom>
       </NormalPosition>
     </WindowPosition>
     <MDIClientArea>
@@ -1865,9 +1865,9 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\main.c</Name>
-        <ColumnNumber>15</ColumnNumber>
-        <TopLine>210</TopLine>
-        <CurrentLine>224</CurrentLine>
+        <ColumnNumber>0</ColumnNumber>
+        <TopLine>281</TopLine>
+        <CurrentLine>283</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>

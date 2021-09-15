@@ -176,7 +176,13 @@ const unsigned char snake_game_intro [] = {
 ./picture.h(91): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 const unsigned char snake_game_intro [] = {
       ^
-./picture.h(156): warning: no newline at end of file [-Wnewline-eof]
+./picture.h(158): warning: no previous extern declaration for non-static variable 'sky_fall_logo' [-Wmissing-variable-declarations]
+const unsigned char sky_fall_logo[]  = {
+                    ^
+./picture.h(158): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+const unsigned char sky_fall_logo[]  = {
+      ^
+./picture.h(223): warning: no newline at end of file [-Wnewline-eof]
 };
   ^
 main.c(66): warning: implicit conversion loses integer precision: 'int' to 'unsigned char' [-Wimplicit-int-conversion]
@@ -202,48 +208,48 @@ main.c(179): note: declare 'static' if the variable is not intended to be used o
 int i, key_pressed = 0, game_pad = 0;
 ^
 main.c(180): warning: no previous extern declaration for non-static variable 'snake_head_x_coor' [-Wmissing-variable-declarations]
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
     ^
 main.c(180): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
 ^
 main.c(180): warning: no previous extern declaration for non-static variable 'snake_head_y_coor' [-Wmissing-variable-declarations]
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
                            ^
 main.c(180): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
 ^
 main.c(180): warning: no previous extern declaration for non-static variable 'dx' [-Wmissing-variable-declarations]
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
-                                                  ^
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
+                                                   ^
 main.c(180): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
 ^
 main.c(180): warning: no previous extern declaration for non-static variable 'dy' [-Wmissing-variable-declarations]
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
-                                                          ^
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
+                                                           ^
 main.c(180): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
+int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
 ^
-main.c(182): warning: no previous extern declaration for non-static variable 'snake_step' [-Wmissing-variable-declarations]
-int snake_step = 4; // Determine how many pixels the snake moves in one step 
-    ^
-main.c(182): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int snake_step = 4; // Determine how many pixels the snake moves in one step 
-^
-main.c(185): warning: no previous extern declaration for non-static variable 'score_txt' [-Wmissing-variable-declarations]
+main.c(184): warning: no previous extern declaration for non-static variable 'score_txt' [-Wmissing-variable-declarations]
 char score_txt[] = "0";
      ^
-main.c(185): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+main.c(184): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 char score_txt[] = "0";
 ^
-main.c(186): warning: no previous extern declaration for non-static variable 'snake_width' [-Wmissing-variable-declarations]
-int snake_width = 3; // Snake and food block width is defined by the size of 3 + 1 = 4 pixels
+main.c(185): warning: no previous extern declaration for non-static variable 'snake_width' [-Wmissing-variable-declarations]
+const int snake_width = 5; // Snake and food block width is defined by the size of width + 1 
+          ^
+main.c(185): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+const int snake_width = 5; // Snake and food block width is defined by the size of width + 1 
+      ^
+main.c(186): warning: no previous extern declaration for non-static variable 'snake_step' [-Wmissing-variable-declarations]
+int snake_step = snake_width + 1; // Determine how many pixels the snake moves in one step
     ^
 main.c(186): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int snake_width = 3; // Snake and food block width is defined by the size of 3 + 1 = 4 pixels
+int snake_step = snake_width + 1; // Determine how many pixels the snake moves in one step
 ^
-main.c(200): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+main.c(203): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
     food_x_coor = rand() % (max_x + 1 - min_x) + min_x;
                   ^
 main.c(192): warning: no previous prototype for function 'generate_food' [-Wmissing-prototypes]
@@ -253,13 +259,33 @@ main.c(192): note: declare 'static' if the function is not intended to be used o
 void generate_food(){
 ^
 static 
-main.c(211): warning: no previous prototype for function 'control_game' [-Wmissing-prototypes]
+main.c(228): warning: no previous prototype for function 'control_game' [-Wmissing-prototypes]
 void control_game(){
      ^
-main.c(211): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(228): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void control_game(){
 ^
 static 
+main.c(352): warning: passing 'const unsigned char [1024]' to parameter of type 'unsigned char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                draw_LCD(snake_game_intro);
+                         ^~~~~~~~~~~~~~~~
+../Library/NUC1xx-LB_002/Include\LCD.h(40): note: passing argument to parameter 'buffer' here
+extern void draw_LCD(unsigned char *buffer);
+                                    ^
+main.c(399): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+            default:
+            ^
+main.c(379): warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+            case main_game: 
+            ^
+main.c(379): note: insert '__attribute__((fallthrough));' to silence this warning
+            case main_game: 
+            ^
+            __attribute__((fallthrough)); 
+main.c(379): note: insert 'break;' to avoid fall-through
+            case main_game: 
+            ^
+            break; 
 main.c(178): warning: no previous extern declaration for non-static variable 'game_state' [-Wmissing-variable-declarations]
 STATES game_state;
        ^
@@ -284,29 +310,29 @@ int food_x_coor, food_y_coor;
 main.c(181): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 int food_x_coor, food_y_coor;
 ^
-main.c(183): warning: no previous extern declaration for non-static variable 'x_reset' [-Wmissing-variable-declarations]
+main.c(182): warning: no previous extern declaration for non-static variable 'x_reset' [-Wmissing-variable-declarations]
 int x_reset, y_reset;
     ^
-main.c(183): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+main.c(182): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 int x_reset, y_reset;
 ^
-main.c(183): warning: no previous extern declaration for non-static variable 'y_reset' [-Wmissing-variable-declarations]
+main.c(182): warning: no previous extern declaration for non-static variable 'y_reset' [-Wmissing-variable-declarations]
 int x_reset, y_reset;
              ^
-main.c(183): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+main.c(182): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 int x_reset, y_reset;
 ^
-main.c(184): warning: no previous extern declaration for non-static variable 'hit' [-Wmissing-variable-declarations]
+main.c(183): warning: no previous extern declaration for non-static variable 'hit' [-Wmissing-variable-declarations]
 int hit;
     ^
-main.c(184): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+main.c(183): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 int hit;
 ^
-57 warnings generated.
+61 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=2128 RO-data=224 RW-data=52 ZI-data=2424  
-".\Objects\Question2.axf" - 0 Error(s), 57 Warning(s).
+Program Size: Code=3096 RO-data=1728 RW-data=1080 ZI-data=2192  
+".\Objects\Question2.axf" - 0 Error(s), 61 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -320,7 +346,7 @@ Package Vendor: Nuvoton
   C:\Users\Duy\AppData\Local\Arm\Packs\Nuvoton\NuMicro_DFP\1.3.5\Device\NUC100\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
