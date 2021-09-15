@@ -137,12 +137,12 @@ int main(void) {
                 //         key_delay[i] = STAR;
                 //     }
                 // }
-                if (TIMER1->TDR >= 0x249F00 - 2) {
-                    key_display[current_char] = '*';
+                if (!(TIMER1->TCSR & (1 << 30)) && current_char != 0) {
+                    key_display[current_char - 1] = '*';
                 }
 
                 key_press = KeyPadScanning();
-                if (key_press != 0 && !(TIMER0->TCSR & (1 << 25))) {
+                if (key_press != 0 && !(TIMER0->TCSR & (1 << 30))) {
                     TIMER0->TCSR |= (1 << 30);
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
@@ -185,8 +185,8 @@ int main(void) {
                 //         key_delay[i] = STAR;
                 //     }
                 // }
-                if (TIMER1->TDR >= 0x249F00 - 2) {
-                    key_display[current_char] = '*';
+                if (!(TIMER1->TCSR & (1 << 30)) && current_char != 0) {
+                    key_display[current_char - 1] = '*';
                 }
 
                 key_press = KeyPadScanning();
