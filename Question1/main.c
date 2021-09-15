@@ -390,11 +390,11 @@ void timer_config(void) {
 
     // Config timer for protecting password - TIMER1 in periodic
     TIMER1->TCSR |= (1 << 26); // Reset timer
-    TIMER1->TCSR |= ~(1ul << 27); // Periodic mode
+    TIMER1->TCSR |= (1ul << 27); // Periodic mode
     TIMER1->TCSR &= ~(0xFFu << 0); // Set prescale to 0
     TIMER1->TCSR &= ~(1u << 24);   
     TIMER1->TCSR |= (1 << 16);
-    TIMER1->TCMPR = 0x249F00 - 1; // 500 ms
+    TIMER1->TCMPR = 0x249F00 - 1; // 200 ms
 
     // Config timer for state transition - TIMER2 in one shot mode
     TIMER2->TCSR |= (1 << 26); // Reset timer
