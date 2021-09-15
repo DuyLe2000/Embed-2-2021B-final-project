@@ -9,32 +9,10 @@
 #include "picture.h"
 
 #define SYSTICK_DLAY_us 1000000
-#define Xmax 128
-#define Ymax 64
-#define Xmin 1
-#define Ymin 1
-
-//------------------------------------------------------------------------------------------------------------------------------------
-// Global variables
-//------------------------------------------------------------------------------------------------------------------------------------
-typedef enum{
-    welcome_screen,
-    game_rules,
-    game_background,
-    main_game,
-    end_game
-} STATES;
-
-
-STATES game_state;
-int i, key_pressed = 0, game_pad = 0;
-int x = 64, y = 32, dx = 0, dy = 0;
-int x_steps, y_steps;
-int x_reset, y_reset;
-int hit;
-char score_txt[] = "0";
-
-
+#define Xmax 127
+#define Ymax 63
+#define Xmin 0
+#define Ymin 8
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions declaration
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -48,7 +26,6 @@ void LCD_SetAddress(int PageAddr, int ColumnAddr);
 void KeyPadEnable(void);
 int KeyPadScanning(void);
 
-
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions definition
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -61,8 +38,6 @@ void LCD_start(void){
     LCD_command(0xC0);
     LCD_command(0xAF); // Set Display Enable
 }
-
-
 void LCD_command(unsigned char temp){
     SPI3->SSR |= 1ul << 0;
     SPI3->TX[0] = temp;
@@ -71,8 +46,6 @@ void LCD_command(unsigned char temp){
         ;
     SPI3->SSR &= ~(1ul << 0);
 }
-
-
 void LCD_data(unsigned char temp){
     SPI3->SSR |= 1ul << 0;
     SPI3->TX[0] = 0x0100 + temp;
@@ -81,8 +54,6 @@ void LCD_data(unsigned char temp){
         ;
     SPI3->SSR &= ~(1ul << 0);
 }
-
-
 void LCD_clear(void){
     int16_t i;
     LCD_SetAddress(0x0, 0x0);
@@ -91,15 +62,11 @@ void LCD_clear(void){
         LCD_data(0x00);
     }
 }
-
-
 void LCD_SetAddress(int PageAddr, int ColumnAddr){
     LCD_command(0xB0 | PageAddr);
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
     LCD_command(0x00 | (ColumnAddr & 0xF));
 }
-
-
 void KeyPadEnable(void){
     GPIO_SetMode(PA, BIT0, GPIO_MODE_QUASI);
     GPIO_SetMode(PA, BIT1, GPIO_MODE_QUASI);
@@ -108,8 +75,6 @@ void KeyPadEnable(void){
     GPIO_SetMode(PA, BIT4, GPIO_MODE_QUASI);
     GPIO_SetMode(PA, BIT5, GPIO_MODE_QUASI);
 }
-
-
 int KeyPadScanning(void){
     PA0 = 1;
     PA1 = 1;
@@ -149,8 +114,6 @@ int KeyPadScanning(void){
         return 9;
     return 0;
 }
-
-
 void System_Config(void){
     SYS_UnlockReg(); // Unlock protected registers
     // Enable clock sources
@@ -179,8 +142,6 @@ void System_Config(void){
     CLK->APBCLK |= 1ul << 15;
     SYS_LockReg(); // Lock protected registers
 }
-
-
 void SPI3_Config(void){
     SYS->GPD_MFP |= 1ul << 11;   //1: PD11 is configured for alternative function
     SYS->GPD_MFP |= 1ul << 9;    //1: PD9 is configured for alternative function
@@ -202,28 +163,48 @@ void SPI3_Config(void){
 // Game related definition
 //------------------------------------------------------------------------------------------------------------------------------------
 
-void generate_food(){
-    /*
-        Brief: This function uses random to generate food on the map
-        Params: none 
-    */
+/**
+ * These are the variables used by the game
+ */
+typedef enum{
+    welcome_screen,
+    game_rules,
+    game_background,
+    main_game,
+    end_game
+} STATES;
 
-    int random_x_value = rand() % 127;
-    int random_y_value = rand() % 63;
-    sprintf(score_txt, "%d", random_value);
-    printS_5x7(48, 0, score_txt);
+
+STATES game_state;
+int i, key_pressed = 0, game_pad = 0;
+int snake_head_x_coor = 0, snake_head_y_coor = 0, dx = 0, dy = 0;
+int food_x_coor, food_y_coor;
+int snake_step = 4; // Determine how many pixels the snake moves in one step 
+int x_reset, y_reset;
+int hit;
+char score_txt[] = "0";
+int snake_width = 3; // Snake and food block width is defined by the size of 3 + 1 = 4 pixels
+
+
+/**
+* This function uses rand() to generate food on the map
+*/
+void generate_food(){
+    // Generate random food coordinates 
+    food_x_coor = rand() % (Xmax + snake_width - 1);
+    food_y_coor = rand() % (Ymax + snake_width - 1);
+
+    // Generate food with those coordinates
+    fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 1, 0);
 }
 
+
+/**
+ * This is the final main game control function
+ */
 void control_game(){
-    /*
-        Brief: This function controls the main behaviors of the game
-        Params: none
-    */
-
-    int object_speed = 3; // This defines the movement speed of the main object
-
     //draw objects
-    fill_Rectangle(x, y, x + 6, y + 6, 1, 0);
+    fill_Rectangle(snake_head_x_coor, snake_head_y_coor, snake_head_x_coor + snake_width, snake_head_y_coor + snake_width, 1, 0);
     //delay for vision
     while (game_pad == 0)
         game_pad = KeyPadScanning();
@@ -231,32 +212,27 @@ void control_game(){
 
 
     //erase the objects
-    fill_Rectangle(x, y, x + 6, y + 6, 0, 0);
+    fill_Rectangle(snake_head_x_coor, snake_head_y_coor, snake_head_x_coor + snake_width, snake_head_y_coor + snake_width, 0, 0);
 
 
     //check changes
     switch (game_pad){
-        //case 1: dx =+1; dy =-1; break;
         case 2:
             dx = 0;
-            dy = -object_speed;
+            dy = -1;
             break;
-        //case 3: dx = +1; dy = -1; break;
         case 4:
-            dx = -object_speed;
+            dx = -1;
             dy = 0;
             break;
-        //case 5: break;
         case 6:
-            dx = +object_speed;
+            dx = +1;
             dy = 0;
             break;
-        //case 7: dx= -1; dy= +1; break;
-        case 8:
+        case 5:
             dx = 0;
-            dy = +object_speed;
+            dy = +1;
             break;
-        //case 9: dx=+1; dy=+1; break;
         default:
             dx = dy = 0;
             break;
@@ -265,25 +241,21 @@ void control_game(){
 
 
     //update objects information (position, etc.)
-    x = x + (dx * x_steps);
-    y = y + (dy * y_steps);
+    snake_head_x_coor = snake_head_x_coor + (dx * snake_step);
+    snake_head_y_coor = snake_head_y_coor + (dy * snake_step);
     //boundary condition
     //wrap around on X
-    if (x < Xmin)
-        x = Xmax - 7;
-    if (x > Xmax - 7)
-        x = Xmin;
+    if (snake_head_x_coor < Xmin)
+        snake_head_x_coor = Xmax - snake_width + 1;
+    if (snake_head_x_coor > Xmax - snake_width + 1)
+        snake_head_x_coor = Xmin;
     //wrap around on Y
-    if (y < Ymin)
-        y = Ymax - 7;
-    if (y > Ymax - 7)
-        y = Ymin;
+    if (snake_head_y_coor < Ymin)
+        snake_head_y_coor = Ymax - snake_width + 1;
+    if (snake_head_y_coor > Ymax - 7)
+        snake_head_y_coor = Ymin;
     //score conditions
-    if ((x - 8 < 6) && (y - 8 < 6)){
-        hit++;
-        x = x_reset;
-        y = y_reset;
-    }
+    
     if (hit > 5){
         hit = 0;
         LCD_clear();
@@ -298,8 +270,6 @@ void control_game(){
 //------------------------------------------------------------------------------------------------------------------------------------
 int main(void){
     game_state = welcome_screen; // The initial state of the game
-    x_steps = 2;
-    y_steps = 2;
     x_reset = 64;
     y_reset = 32;
     hit = 0;
@@ -320,7 +290,13 @@ int main(void){
     //--------------------------------
     //LCD static content for testing and debugging 
     //--------------------------------
-    //generate_food();
+    // while (1){
+    //     clear_LCD();
+    //     generate_food();
+    //     for (i = 0; i < 5; i++){
+    //         CLK_SysTickDelay(SYSTICK_DLAY_us);
+    //     }
+    // }
 
     //--------------------------------
     //LCD dynamic content
@@ -329,9 +305,10 @@ int main(void){
         switch (game_state){
             case welcome_screen:
                 //welcome state code here
-                draw_LCD(monster_128x64);
-                for (i = 0; i < 3; i++)
+                draw_LCD(snake_game_intro);
+                for (i = 0; i < 5; i++){
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
+                }
                 LCD_clear();
                 game_state = game_rules; // state transition
                 break;
@@ -351,11 +328,9 @@ int main(void){
             case game_background:
                 // static display information should be here
                 sprintf(score_txt, "%d", hit);
+                printS_5x7(5, 0, "Score: ");
                 printS_5x7(48, 0, score_txt);
-                fill_Rectangle(0, 0, 0 + 6, 0 + 6, 1, 0);
-                fill_Rectangle(96, 8, 96 + 6, 8 + 6, 1, 0);
-                fill_Rectangle(8, 48, 8 + 6, 48 + 6, 1, 0);
-                fill_Rectangle(96, 48, 96 + 6, 48 + 6, 1, 0);
+                draw_Rectangle(Xmin, Ymin, Xmax, Ymax, 1, 0); // Draw the playable field boundary 
                 game_state = main_game;
             case main_game: 
                 /*
@@ -367,7 +342,8 @@ int main(void){
                 break;
             case end_game:
                 //end_game code here
-                printS_5x7(1, 32, "press any key to replay!");
+                //printS_5x7(1, 32, "press any key to replay!");
+                draw_LCD(gameover_128x64);
                 for (i = 0; i < 2; i++)
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
                 while (key_pressed == 0)
