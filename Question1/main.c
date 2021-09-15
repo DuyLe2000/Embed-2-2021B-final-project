@@ -11,14 +11,14 @@
 #define Ymax 64
 #define Xmin 1
 #define Ymin 1
-#define NO_INPUT -1;
-#define STAR -2;
+#define NO_INPUT -1
+#define STAR -2
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions declaration
 //------------------------------------------------------------------------------------------------------------------------------------
 void System_Config(void);
-void timer_Config(void);
+void timer_config(void);
 void SPI3_Config(void);
 void LCD_start(void);
 void LCD_command(unsigned char temp);
@@ -53,16 +53,8 @@ int main(void) {
     //System initialization
     //--------------------------------
     System_Config();
+    timer_config();
     KeyPadEnable();
-    // Config timer for debounce - TIMER0 in one shot mode
-    TIMER0->TCSR |= (1 << 26); // Reset timer
-    TIMER0->TCSR |= ~(3ul << 27); // One shot mode
-    TIMER0->TCSR &= ~(0xFFu << 0); // Set prescale to 0
-    TIMER0->TCSR &= ~(1u << 24);   
-    TIMER0->TCSR |= (1 << 16);
-
-    TIMER0->TCMPR = 0x5B8D80; // 500 ms
-
     //--------------------------------
     //SPI3 initialization
     //--------------------------------
@@ -88,30 +80,34 @@ int main(void) {
         switch (lock_state) {
             case option: {
                 // Option screen
-
-                // Reset all user input value
+                // Reset all user input value and timer
                 current_char = 0;
                 str_copy(key_display, "______");
                 for (int i = 0; i < 6; i++) {
                     key_delay[i] = NO_INPUT;
                 }
+                TIMER0->TCSR |= (1 << 26);
+                TIMER1->TCSR |= (1 << 26);
+                TIMER2->TCSR |= (1 << 26);
 
                 printS_5x7(1, 1, "EEET2481 - Door Lock System");
                 printS_5x7(1, 10, "Please select");
                 printS_5x7(1, 19, "1: Unlock | 2: Change key");
                 while (key_press != 1 && key_press != 2) {
-                    TIMER0->TCSR |= (1 << 30);
                     key_press = KeyPadScanning();
+                    TIMER0->TCSR |= (1 << 30);
                 }
 
                 if (key_press == 1) {
                     // Clear the screen
                     LCD_clear();
                     lock_state = unlock;
+                    TIMER1->TCSR |= (1 << 30);
                 } else if (key_press == 2) {
                     // Clear the screen
                     LCD_clear();
                     lock_state = change_key;
+                    TIMER1->TCSR |= (1 << 30);
                 }
                 key_press = 0;
                 break;
@@ -131,11 +127,23 @@ int main(void) {
                     break;
                 }
 
+                // Turning key already pressed into star
+                for (int i = 0; i < current_char; i++) {
+                    if (key_delay[i] == STAR) {
+                        continue;
+                    }
+                    if (key_delay[i] == TIMER1->TDR - 1 || TIMER1->TDR - key_delay[i] >= TIMER1->TCMPR) {
+                        key_display[i] = '*';
+                        key_delay[i] = STAR;
+                    }
+                }
+
                 key_press = KeyPadScanning();
                 if (key_press != 0 && !(TIMER0->TCSR & (1 << 25))) {
                     TIMER0->TCSR |= (1 << 30);
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
+                    key_delay[current_char] = TIMER1->TDR;
                     current_char++;
                 }
                 
@@ -148,6 +156,7 @@ int main(void) {
                         printC_5x7(36, 17, key_display[5]);
                         LCD_clear();
                         lock_state = wrong_key;
+                        TIMER2->TCSR |= (1 << 30);
                     }
                 }
                 break;
@@ -162,11 +171,23 @@ int main(void) {
                 printC_5x7(29, 17, key_display[4]);
                 printC_5x7(36, 17, key_display[5]);
 
+                // Turning key already pressed into star
+                for (int i = 0; i < current_char; i++) {
+                    if (key_delay[i] == STAR) {
+                        continue;
+                    }
+                    if (key_delay[i] == TIMER1->TDR - 1 || TIMER1->TDR - key_delay[i] >= TIMER1->TCMPR) {
+                        key_display[i] = '*';
+                        key_delay[i] = STAR;
+                    }
+                }
+
                 key_press = KeyPadScanning();
                 if (key_press != 0 && !(TIMER0->TCSR & (1 << 30))) {
                     TIMER0->TCSR |= (1 << 30);
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
+                    key_delay[current_char] = TIMER1->TDR;
                     current_char++;
                 }
                 key_press = 0;
@@ -201,6 +222,11 @@ int main(void) {
                 printS_5x7(1, 9, "The key is wrong");
                 printS_5x7(1, 17, "System restart in 1 second.");
                 printS_5x7(1, 15, "Thank you!");
+
+                if (!(TIMER2->TCSR & (1 << 30))) {
+                    LCD_clear();
+                    lock_state = option;
+                }
 
                 if (!(PB->PIN & (1 << 15))) {
                     LCD_clear();
@@ -336,10 +362,47 @@ void System_Config(void) {
     CLK->CLKDIV &= (~0x0Ful << 0);
     //enable clock of SPI3
     CLK->APBCLK |= 1ul << 15;
+
     // Set 12Mhz clock for timer 0
     CLK->APBCLK |= (1 << 2);
     CLK->CLKSEL1 &= ~(0b111 << 8);
+
+    // Set 12Mhz clock for timer 1
+    CLK->APBCLK |= (1 << 3);
+    CLK->CLKSEL1 &= ~(0b111 << 12);
+
+    // Set 12MHz clock for timer 2
+    CLK->APBCLK |= (1 << 4);
+    CLK->CLKSEL1 &= ~(0b111 << 16);
+
     SYS_LockReg(); // Lock protected registers
+}
+
+
+void timer_config(void) {
+    // Config timer for debounce - TIMER0 in one shot mode
+    TIMER0->TCSR |= (1 << 26); // Reset timer
+    TIMER0->TCSR |= ~(3ul << 27); // One shot mode
+    TIMER0->TCSR &= ~(0xFFu << 0); // Set prescale to 0
+    TIMER0->TCSR &= ~(1u << 24);   
+    TIMER0->TCSR |= (1 << 16);
+    TIMER0->TCMPR = 0x5B8D80 - 1; // 500 ms
+
+    // Config timer for protecting password - TIMER1 in periodic
+    TIMER1->TCSR |= (1 << 26); // Reset timer
+    TIMER1->TCSR |= ~(1ul << 27); // Periodic mode
+    TIMER1->TCSR &= ~(0xFFu << 0); // Set prescale to 0
+    TIMER1->TCSR &= ~(1u << 24);   
+    TIMER1->TCSR |= (1 << 16);
+    TIMER1->TCMPR = 0x249F00 - 1; // 500 ms
+
+    // Config timer for state transition - TIMER2 in one shot mode
+    TIMER2->TCSR |= (1 << 26); // Reset timer
+    TIMER2->TCSR |= ~(3ul << 27); // One shot mode
+    TIMER2->TCSR &= ~(0xFFu << 0); // Set prescale to 0
+    TIMER2->TCSR &= ~(1u << 24);   
+    TIMER2->TCSR |= (1 << 16);
+    TIMER2->TCMPR = 0xB71B00 - 1; // 1 s
 }
 
 
