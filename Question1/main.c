@@ -90,7 +90,7 @@ int main(void) {
                 TIMER1->TCSR |= (1 << 26);
                 TIMER2->TCSR |= (1 << 26);
 
-                printS_5x7(1, 1, "EEET2481 - Door Lock System");
+                printS_5x7(1, 1, "EEET2481-Door Lock System");
                 printS_5x7(1, 10, "Please select");
                 printS_5x7(1, 19, "1: Unlock | 2: Change key");
                 while (key_press != 1 && key_press != 2) {
@@ -113,7 +113,7 @@ int main(void) {
                 break;
             } case unlock: {
                 // Unlock enter key screen
-                printS_5x7(1, 1, "EEET2481 - Door Lock System");
+                printS_5x7(1, 1, "EEET2481-Door Lock System");
                 printS_5x7(1, 9, "Please input your key");
                 printC_5x7(1, 17, key_display[0]);
                 printC_5x7(8, 17, key_display[1]);
@@ -137,7 +137,7 @@ int main(void) {
                 //         key_delay[i] = STAR;
                 //     }
                 // }
-                if (TIMER1->TDR == TIMER1->TCMPR) {
+                if (TIMER1->TDR >= 0x249F00 - 2) {
                     key_display[current_char] = '*';
                 }
 
@@ -166,8 +166,8 @@ int main(void) {
                 break;
             } case change_key: {
                 // Change key enter screen
-                printS_5x7(1, 1, "EEET2481 - Door Lock System");
-                printS_5x7(1, 9, "Please input new 6-digit key");
+                printS_5x7(1, 1, "EEET2481-Door Lock System");
+                printS_5x7(1, 9, "Please input new key");
                 printC_5x7(1, 17, key_display[0]);
                 printC_5x7(8, 17, key_display[1]);
                 printC_5x7(15, 17, key_display[2]);
@@ -185,7 +185,7 @@ int main(void) {
                 //         key_delay[i] = STAR;
                 //     }
                 // }
-                if (TIMER1->TDR == TIMER1->TCMPR) {
+                if (TIMER1->TDR >= 0x249F00 - 2) {
                     key_display[current_char] = '*';
                 }
 
@@ -203,8 +203,8 @@ int main(void) {
                 if (current_char == 6) {
                     str_copy(password, user_input);
                     LCD_clear();
-                    printS_5x7(1, 1, "EEET2481 - Door Lock System");
-                    printS_5x7(1, 9, "Your key has been changed!");
+                    printS_5x7(1, 1, "EEET2481-Door Lock System");
+                    printS_5x7(1, 9, "Your key has been changed");
                     printS_5x7(1, 17, "THANK YOU!");
                     CLK_SysTickDelay(800000);
                     LCD_clear();
@@ -226,9 +226,9 @@ int main(void) {
                 break;
             case wrong_key:
                 // Unlock failed screen
-                printS_5x7(1, 1, "EEET2481 - Door Lock System");
+                printS_5x7(1, 1, "EEET2481-Door Lock System");
                 printS_5x7(1, 9, "The key is wrong");
-                printS_5x7(1, 17, "System restart in 1 second.");
+                printS_5x7(1, 17, "System restart in 1 second");
                 printS_5x7(1, 15, "Thank you!");
 
                 if (!(TIMER2->TCSR & (1 << 30))) {
