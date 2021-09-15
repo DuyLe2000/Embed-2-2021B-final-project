@@ -208,7 +208,10 @@ void generate_food(){
         Params: none 
     */
 
-    
+    int random_x_value = rand() % 127;
+    int random_y_value = rand() % 63;
+    sprintf(score_txt, "%d", random_value);
+    printS_5x7(48, 0, score_txt);
 }
 
 void control_game(){
@@ -315,8 +318,10 @@ int main(void){
     LCD_start();
     LCD_clear();
     //--------------------------------
-    //LCD static content
+    //LCD static content for testing and debugging 
     //--------------------------------
+    //generate_food();
+
     //--------------------------------
     //LCD dynamic content
     //--------------------------------

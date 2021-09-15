@@ -148,39 +148,30 @@ main.c(3): warning: In file included from...
 #include "ACMP.h"
          ^~~~~~~~
          "acmp.h"
-main.c(100): warning: unused variable 'key_delay' [-Wunused-variable]
-                int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
-                       ^
-main.c(144): warning: declaration shadows a local variable [-Wshadow]
-                int8_t current_char = 0;
-                       ^
-main.c(72): note: previous declaration is here
-    int8_t current_char = 0;
-           ^
-main.c(145): warning: declaration shadows a local variable [-Wshadow]
-                char key_display[6] = "______";
-                     ^
-main.c(73): note: previous declaration is here
-    char key_display[6] = "______";
-         ^
-main.c(146): warning: unused variable 'key_delay' [-Wunused-variable]
-                int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
-                       ^
-main.c(188): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+main.c(99): warning: empty expression statement has no effect; remove unnecessary ';' to silence this warning [-Wextra-semi-stmt]
+                    key_delay[i] = NO_INPUT;
+                                           ^
+main.c(213): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
             default:
             ^
-main.c(236): warning: '&' within '|' [-Wbitwise-op-parentheses]
+main.c(261): warning: '&' within '|' [-Wbitwise-op-parentheses]
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
                      ~ ~~~~~~~~~~~~~~~~~~^~~~~
-main.c(236): note: place parentheses around the '&' expression to silence this warning
+main.c(261): note: place parentheses around the '&' expression to silence this warning
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
                                          ^
                        (                      )
-34 warnings generated.
+main.c(344): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
+    CLK->CLKSEL1 &= ~(0b111 << 8);
+                      ^
+main.c(344): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    CLK->CLKSEL1 &= ~(0b111 << 8);
+                 ~~ ^~~~~~~~~~~~~
+33 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=2204 RO-data=732 RW-data=44 ZI-data=1120  
-".\Objects\Question1.axf" - 0 Error(s), 34 Warning(s).
+Program Size: Code=2512 RO-data=788 RW-data=44 ZI-data=1120  
+".\Objects\Question1.axf" - 0 Error(s), 33 Warning(s).
 
 <h2>Software Packages used:</h2>
 
