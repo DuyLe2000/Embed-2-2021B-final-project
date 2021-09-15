@@ -74,7 +74,7 @@ int main(void) {
 
     int8_t current_char = 0;
     char key_display[6] = "______";
-    int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
+    // int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
 
     while (1) {
         switch (lock_state) {
@@ -83,9 +83,9 @@ int main(void) {
                 // Reset all user input value and timer
                 current_char = 0;
                 str_copy(key_display, "______");
-                for (int i = 0; i < 6; i++) {
-                    key_delay[i] = NO_INPUT;
-                }
+                // for (int i = 0; i < 6; i++) {
+                //     key_delay[i] = NO_INPUT;
+                // }
                 TIMER0->TCSR |= (1 << 26);
                 TIMER1->TCSR |= (1 << 26);
                 TIMER2->TCSR |= (1 << 26);
@@ -128,14 +128,17 @@ int main(void) {
                 }
 
                 // Turning key already pressed into star
-                for (int i = 0; i < current_char; i++) {
-                    if (key_delay[i] == STAR) {
-                        continue;
-                    }
-                    if (key_delay[i] == TIMER1->TDR - 1 || TIMER1->TDR - key_delay[i] >= TIMER1->TCMPR) {
-                        key_display[i] = '*';
-                        key_delay[i] = STAR;
-                    }
+                // for (int i = 0; i < current_char; i++) {
+                //     if (key_delay[i] == STAR) {
+                //         continue;
+                //     }
+                //     if (key_delay[i] == TIMER1->TDR - 1 || TIMER1->TDR - key_delay[i] >= TIMER1->TCMPR) {
+                //         key_display[i] = '*';
+                //         key_delay[i] = STAR;
+                //     }
+                // }
+                if (TIMER1->TDR == TIMER1->TCMPR) {
+                    key_display[current_char] = '*';
                 }
 
                 key_press = KeyPadScanning();
@@ -143,7 +146,8 @@ int main(void) {
                     TIMER0->TCSR |= (1 << 30);
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
-                    key_delay[current_char] = TIMER1->TDR;
+                    // key_delay[current_char] = TIMER1->TDR;
+                    TIMER1->TCSR |= (1 << 30);
                     current_char++;
                 }
                 
@@ -172,14 +176,17 @@ int main(void) {
                 printC_5x7(36, 17, key_display[5]);
 
                 // Turning key already pressed into star
-                for (int i = 0; i < current_char; i++) {
-                    if (key_delay[i] == STAR) {
-                        continue;
-                    }
-                    if (key_delay[i] == TIMER1->TDR - 1 || TIMER1->TDR - key_delay[i] >= TIMER1->TCMPR) {
-                        key_display[i] = '*';
-                        key_delay[i] = STAR;
-                    }
+                // for (int i = 0; i < current_char; i++) {
+                //     if (key_delay[i] == STAR) {
+                //         continue;
+                //     }
+                //     if (key_delay[i] == TIMER1->TDR - 1 || TIMER1->TDR - key_delay[i] >= TIMER1->TCMPR) {
+                //         key_display[i] = '*';
+                //         key_delay[i] = STAR;
+                //     }
+                // }
+                if (TIMER1->TDR == TIMER1->TCMPR) {
+                    key_display[current_char] = '*';
                 }
 
                 key_press = KeyPadScanning();
@@ -187,7 +194,8 @@ int main(void) {
                     TIMER0->TCSR |= (1 << 30);
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
-                    key_delay[current_char] = TIMER1->TDR;
+                    // key_delay[current_char] = TIMER1->TDR;
+                    TIMER1->TCSR |= (1 << 30);
                     current_char++;
                 }
                 key_press = 0;
@@ -382,15 +390,15 @@ void System_Config(void) {
 void timer_config(void) {
     // Config timer for debounce - TIMER0 in one shot mode
     TIMER0->TCSR |= (1 << 26); // Reset timer
-    TIMER0->TCSR |= ~(3ul << 27); // One shot mode
+    TIMER0->TCSR &= ~(3ul << 27); // One shot mode
     TIMER0->TCSR &= ~(0xFFu << 0); // Set prescale to 0
     TIMER0->TCSR &= ~(1u << 24);   
     TIMER0->TCSR |= (1 << 16);
-    TIMER0->TCMPR = 0x5B8D80 - 1; // 500 ms
+    TIMER0->TCMPR = 0x6DDD00 - 1; // 600 ms
 
-    // Config timer for protecting password - TIMER1 in periodic
+    // Config timer for protecting password - TIMER1 in one shot mode
     TIMER1->TCSR |= (1 << 26); // Reset timer
-    TIMER1->TCSR |= (1ul << 27); // Periodic mode
+    TIMER1->TCSR &= ~(3ul << 27); // Oneshot mode
     TIMER1->TCSR &= ~(0xFFu << 0); // Set prescale to 0
     TIMER1->TCSR &= ~(1u << 24);   
     TIMER1->TCSR |= (1 << 16);
@@ -398,7 +406,7 @@ void timer_config(void) {
 
     // Config timer for state transition - TIMER2 in one shot mode
     TIMER2->TCSR |= (1 << 26); // Reset timer
-    TIMER2->TCSR |= ~(3ul << 27); // One shot mode
+    TIMER2->TCSR &= ~(3ul << 27); // One shot mode
     TIMER2->TCSR &= ~(0xFFu << 0); // Set prescale to 0
     TIMER2->TCSR &= ~(1u << 24);   
     TIMER2->TCSR |= (1 << 16);
