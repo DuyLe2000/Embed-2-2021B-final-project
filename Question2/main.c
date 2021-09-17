@@ -248,7 +248,7 @@ void generate_falling_food(){
         fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 1, 0);
 
         // Condition to stop falling when reached the bottom
-        if ((food_y_coor + falling_food_width) >= (SCREEN_Y_MAX - 1)){
+        if ((temp_y + falling_food_width) >= (SCREEN_Y_MAX - 1)){
             // Erase food 
             fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 0, 0);
             draw_playing_field();
