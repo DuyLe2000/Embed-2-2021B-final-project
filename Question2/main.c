@@ -9,6 +9,7 @@
 #include "picture.h"
 
 #define SYSTICK_DLAY_us 1000000
+#define FALLING_DLAY_us 800000
 #define SCREEN_X_MAX 127
 #define SCREEN_Y_MAX 63
 #define SCREEN_X_MIN 0
@@ -19,7 +20,7 @@
 void System_Config(void);
 void SPI3_Config(void);
 void LCD_start(void);
-void LCD_command(unsigned char temp);
+void LCD_command(unsigned char temp);                          
 void LCD_data(unsigned char temp);
 void LCD_clear(void);
 void LCD_SetAddress(int PageAddr, int ColumnAddr);
@@ -185,11 +186,22 @@ char score_txt[] = "0";
 const int snake_width = 5; // Snake and food block width is defined by the size of width + 1 
 int snake_step = snake_width + 1; // Determine how many pixels the snake moves in one step
 
+const int falling_food_x_origin = 80, falling_food_y_origin = SCREEN_Y_MIN + 1; // Initial coordinates of falling foods.
+int falling_food_width = 2; // This means the actual width rendered is +1 pixel
+int food_falling_pixel_rate = 2; // This define the difference in pixel the food falls
+int fall_food_generated = 0, static_food_generated = 0;
+
+/**
+ * This function draws to playing field
+ */
+void draw_playing_field(){
+    draw_Rectangle(SCREEN_X_MIN, SCREEN_Y_MIN, SCREEN_X_MAX, SCREEN_Y_MAX, 1, 0); // Draw the playable field boundary 
+}
 
 /**
 * This function uses rand() to generate food on the map
 */
-void generate_food(){
+void generate_static_food(){
     // Delete old food at old coordinates
     fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 0, 0);
 
@@ -208,19 +220,46 @@ void generate_food(){
 
     //Redraw the boundary. For some reason the boundary is erase together with the food that is close to the boundary
     draw_Rectangle(SCREEN_X_MIN, SCREEN_Y_MIN, SCREEN_X_MAX, SCREEN_Y_MAX, 1, 0);
+
+    // Update flag to indicate that the piece of food has been generated
+    static_food_generated = 1;
 }
 
 
 /**
- * This function updates the score based on the food eaten
+ * This functions generate and animate the falling of foods
  */
-// void update_score(){
-//     if ((snake_head_x_coor < ) 
-//         || ()
-//         || ){
-        
-//     }
-// }
+void generate_falling_food(){
+    int temp_x = falling_food_x_origin, temp_y = falling_food_y_origin;
+
+    fill_Rectangle(falling_food_x_origin, falling_food_y_origin, falling_food_x_origin + falling_food_width, falling_food_y_origin + falling_food_width, 1, 0);
+
+    while (1){
+        // // Render original food at original coordinates 
+        // fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 1, 0);
+
+        // Shows the food within this timeframe
+        CLK_SysTickDelay(FALLING_DLAY_us);
+
+        // Remove the old falling food at old location and render a new one at new location
+        fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 0, 0);
+        draw_playing_field();
+        temp_y += food_falling_pixel_rate; // Update food coordinates
+        fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 1, 0);
+
+        // Condition to stop falling when reached the bottom
+        if ((food_y_coor + falling_food_width) >= (SCREEN_Y_MAX - 1)){
+            // Erase food 
+            fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 0, 0);
+            draw_playing_field();
+            break;
+        }
+    }
+
+    // Update falling food flag
+    fall_food_generated = 1;
+}
+
 
 /**
  * This is the final main game control function
@@ -297,13 +336,16 @@ void control_game(){
         snake_head_y_coor = SCREEN_Y_MIN + 1;
     }
     
-    // // Generate food 
-    // while (1){
-    //     generate_food();
-    //     for (i = 0; i < 2; i++){
-    //         CLK_SysTickDelay(SYSTICK_DLAY_us);
-    //     }
-    // } 
+    // ----------------------------------------- Testing site ------------------------------------------------------------//
+
+    if (!fall_food_generated){
+        generate_falling_food();
+    }
+    // if (!static_food_generated){
+    //     generate_static_food();
+    // }
+
+    // ---------------------------------- End of testing site ------------------------------------------------------------//
 
 
     //score conditions
@@ -349,7 +391,7 @@ int main(void){
         switch (game_state){
             case welcome_screen:
                 //welcome state code here
-                draw_LCD(snake_game_intro);
+                draw_LCD(sky_fall_logo);
                 for (i = 0; i < 5; i++){
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
                 }
@@ -374,7 +416,7 @@ int main(void){
                 sprintf(score_txt, "%d", hit);
                 printS_5x7(5, 0, "Score: ");
                 printS_5x7(48, 0, score_txt);
-                draw_Rectangle(SCREEN_X_MIN, SCREEN_Y_MIN, SCREEN_X_MAX, SCREEN_Y_MAX, 1, 0); // Draw the playable field boundary 
+                draw_playing_field();
                 game_state = main_game;
             case main_game: 
                 /*
