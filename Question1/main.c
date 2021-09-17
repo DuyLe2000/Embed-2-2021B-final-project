@@ -6,14 +6,6 @@
 #include "LCD.h"
 #include "Draw2D.h"
 
-#define SYSTICK_DLAY_us 1000000
-#define Xmax 128
-#define Ymax 64
-#define Xmin 1
-#define Ymin 1
-#define NO_INPUT -1
-#define STAR -2
-
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions declaration
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -31,7 +23,6 @@ int str_compare(char *str1, char *str2);
 void str_copy(char *str1, char *str2);
 int str_len(char *str);
 
-
 //------------------------------------------------------------------------------------------------------------------------------------
 // Main program
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -48,6 +39,8 @@ int main(void) {
     STATES lock_state;
     char password[6] = "757333";
     char user_input[6] = "";
+    char key_display[6] = "______";
+    int8_t current_char = 0;
     uint8_t key_press = 0;
     //--------------------------------
     //System initialization
@@ -64,29 +57,16 @@ int main(void) {
     //--------------------------------
     LCD_start();
     LCD_clear();
-    //--------------------------------
-    //LCD static content
-    //--------------------------------
-    //--------------------------------
-    //LCD dynamic content
-    //--------------------------------
+
     lock_state = option;
-
-    int8_t current_char = 0;
-    char key_display[6] = "______";
-    // int8_t key_delay[6] = {-1, -1, -1 , -1, -1, -1};
-
     while (1) {
         switch (lock_state) {
             case option: {
                 // Option screen
                 // Reset all user input value and timer
+                key_press = 0;
                 current_char = 0;
                 str_copy(key_display, "______");
-                // for (int i = 0; i < 6; i++) {
-                //     key_delay[i] = NO_INPUT;
-                // }
-                TIMER0->TCSR |= (1 << 26);
                 TIMER1->TCSR |= (1 << 26);
                 TIMER2->TCSR |= (1 << 26);
 
@@ -95,21 +75,17 @@ int main(void) {
                 printS_5x7(0, 16, "1: Unlock | 2: Change key");
                 while (key_press != 1 && key_press != 2) {
                     key_press = KeyPadScanning();
-                    TIMER0->TCSR |= (1 << 30);
                 }
 
                 if (key_press == 1) {
-                    // Clear the screen
+                    // Set initial value for unlock state
                     LCD_clear();
                     lock_state = unlock;
-                    TIMER1->TCSR |= (1 << 30);
                 } else if (key_press == 2) {
-                    // Clear the screen
-                    LCD_clear();
+                    // Set initial value for change key state
+                    LCD_clear(); 
                     lock_state = change_key;
-                    TIMER1->TCSR |= (1 << 30);
                 }
-                key_press = 0;
                 break;
             } case unlock: {
                 // Unlock enter key screen
@@ -122,44 +98,36 @@ int main(void) {
                 printC_5x7(29, 16, key_display[4]);
                 printC_5x7(36, 16, key_display[5]);
 
+                // Reset to option state when SW_INT1 is pressed
                 if (!(PB->PIN & (1 << 15))) {
                     lock_state = option;
                     break;
                 }
+                
+                key_press = KeyPadScanning();
+                if (key_press != 0) {
+                    key_display[current_char] = key_press + '0';
+                    user_input[current_char] = key_press + '0';
+                    // Start counting to turn key already pressed into star
+                    TIMER1->TCSR |= (1 << 30);
+                    current_char++;
+                }
 
-                // Turning key already pressed into star
-                // for (int i = 0; i < current_char; i++) {
-                //     if (key_delay[i] == STAR) {
-                //         continue;
-                //     }
-                //     if (key_delay[i] == TIMER1->TDR - 1 || TIMER1->TDR - key_delay[i] >= TIMER1->TCMPR) {
-                //         key_display[i] = '*';
-                //         key_delay[i] = STAR;
-                //     }
-                // }
+                // Turning key already pressed into star after 200ms. Each key pressed is always at least 600ms apart due to debounce
+                // Therefor, the previous character will turn to star before the next key pressed
                 if (!(TIMER1->TCSR & (1 << 30)) && current_char != 0) {
                     key_display[current_char - 1] = '*';
                 }
 
-                key_press = KeyPadScanning();
-                if (key_press != 0 && !(TIMER0->TCSR & (1 << 30))) {
-                    TIMER0->TCSR |= (1 << 30);
-                    key_display[current_char] = key_press + '0';
-                    user_input[current_char] = key_press + '0';
-                    // key_delay[current_char] = TIMER1->TDR;
-                    TIMER1->TCSR |= (1 << 30);
-                    current_char++;
-                }
-                
+                // After 6 key are pressed, transition to appropriate state
                 if (current_char == 6) {
                     if (str_compare(user_input, password)) {
-                        printC_5x7(36, 17, key_display[5]);
                         LCD_clear();
                         lock_state = welcome;
                     } else {
-                        printC_5x7(36, 17, key_display[5]);
                         LCD_clear();
                         lock_state = wrong_key;
+                        // Start TIMER2 so that wrong key state only last for 1 second
                         TIMER2->TCSR |= (1 << 30);
                     }
                 }
@@ -175,30 +143,24 @@ int main(void) {
                 printC_5x7(29, 16, key_display[4]);
                 printC_5x7(36, 16, key_display[5]);
 
-                // Turning key already pressed into star
-                // for (int i = 0; i < current_char; i++) {
-                //     if (key_delay[i] == STAR) {
-                //         continue;
-                //     }
-                //     if (key_delay[i] == TIMER1->TDR - 1 || TIMER1->TDR - key_delay[i] >= TIMER1->TCMPR) {
-                //         key_display[i] = '*';
-                //         key_delay[i] = STAR;
-                //     }
-                // }
+                // Reset to option state when SW_INT1 is pressed
+                if (!(PB->PIN & (1 << 15))) {
+                    lock_state = option;
+                }
+
+                // Turning key already pressed into star after 200ms. Each key pressed is always at least 600ms apart due to debounce
+                // Therefor, the previous character will turn to star before the next key pressed
                 if (!(TIMER1->TCSR & (1 << 30)) && current_char != 0) {
                     key_display[current_char - 1] = '*';
                 }
 
                 key_press = KeyPadScanning();
-                if (key_press != 0 && !(TIMER0->TCSR & (1 << 30))) {
-                    TIMER0->TCSR |= (1 << 30);
+                if (key_press != 0) {
                     key_display[current_char] = key_press + '0';
                     user_input[current_char] = key_press + '0';
-                    // key_delay[current_char] = TIMER1->TDR;
                     TIMER1->TCSR |= (1 << 30);
                     current_char++;
                 }
-                key_press = 0;
 
                 if (current_char == 6) {
                     str_copy(password, user_input);
@@ -206,18 +168,15 @@ int main(void) {
                     printS_5x7(1, 0, "EEET2481-Door Lock System");
                     printS_5x7(1, 8, "Your key has been changed");
                     printS_5x7(1, 16, "THANK YOU!");
-                    CLK_SysTickDelay(800000);
+                    TIMER2->TCSR |= (1 << 30);
+                    while (TIMER2->TCSR & (1 << 30));
                     LCD_clear();
                     lock_state = option;
                 }
-
-                if (!(PB->PIN & (1 << 15))) {
-                    lock_state = option;
-                }
-				break;
+                break;
             } case welcome:
                 // Unlock successful screen
-                printS_5x7(0, 0, "EEET2481 - Door Lock System");
+                printS_5x7(0, 0, "EEET2481-Door Lock System");
                 printS_5x7(0, 8, "Welcome");
                 if (!(PB->PIN & (1 << 15))) {
                     LCD_clear();
@@ -228,14 +187,14 @@ int main(void) {
                 // Unlock failed screen
                 printS_5x7(0, 0, "EEET2481-Door Lock System");
                 printS_5x7(0, 8, "The key is wrong");
-                printS_5x7(0, 16, "System restart in 1 second");
+                printS_5x7(0, 16, "System restart in 1 sec");
                 printS_5x7(0, 24, "Thank you!");
 
                 if (!(TIMER2->TCSR & (1 << 30))) {
                     LCD_clear();
                     lock_state = option;
                 }
-
+                
                 if (!(PB->PIN & (1 << 15))) {
                     LCD_clear();
                     lock_state = option;
@@ -306,43 +265,55 @@ void KeyPadEnable(void) {
 
 
 uint8_t KeyPadScanning(void) {
-    PA0 = 1;
-    PA1 = 1;
-    PA2 = 0;
-    PA3 = 1;
-    PA4 = 1;
-    PA5 = 1;
-    if (PA3 == 0)
-        return 1;
-    if (PA4 == 0)
-        return 4;
-    if (PA5 == 0)
-        return 7;
-    PA0 = 1;
-    PA1 = 0;
-    PA2 = 1;
-    PA3 = 1;
-    PA4 = 1;
-    PA5 = 1;
-    if (PA3 == 0)
-        return 2;
-    if (PA4 == 0)
-        return 5;
-    if (PA5 == 0)
-        return 8;
-    PA0 = 0;
-    PA1 = 1;
-    PA2 = 1;
-    PA3 = 1;
-    PA4 = 1;
-    PA5 = 1;
-    if (PA3 == 0)
-        return 3;
-    if (PA4 == 0)
-        return 6;
-    if (PA5 == 0)
-        return 9;
-    
+    /*
+        Add debounce. Each key can only be pressed after 600 ms
+    */
+    PA0 = 1; PA1 = 1; PA2 = 0; PA3 = 1; PA4 = 1; PA5 = 1;
+    if (!(TIMER0->TCSR & (1 << 30))) {
+        if (PA3 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 1;
+        }
+        if (PA4 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 4;
+        }
+        if (PA5 == 0){
+            TIMER0->TCSR |= (1 << 30);
+            return 7;
+        }
+    }
+    PA0 = 1; PA1 = 0; PA2 = 1; PA3 = 1; PA4 = 1; PA5 = 1;
+    if (!(TIMER0->TCSR & (1 << 30))) {
+        if (PA3 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 2;
+        }
+        if (PA4 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 5;
+        }
+        if (PA5 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 8;
+        }
+
+    }
+    PA0 = 0; PA1 = 1; PA2 = 1; PA3 = 1; PA4 = 1; PA5 = 1;
+    if (!(TIMER0->TCSR & (1 << 30))) {
+        if (PA3 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 3;
+        }
+        if (PA4 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 6;
+        }
+        if (PA5 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 9;
+        }
+    }
     return 0;
 }
 
@@ -398,7 +369,7 @@ void timer_config(void) {
 
     // Config timer for protecting password - TIMER1 in one shot mode
     TIMER1->TCSR |= (1 << 26); // Reset timer
-    TIMER1->TCSR &= ~(3ul << 27); // Oneshot mode
+    TIMER1->TCSR &= ~(3ul << 27); // One shot mode
     TIMER1->TCSR &= ~(0xFFu << 0); // Set prescale to 0
     TIMER1->TCSR &= ~(1u << 24);   
     TIMER1->TCSR |= (1 << 16);
@@ -408,7 +379,8 @@ void timer_config(void) {
     TIMER2->TCSR |= (1 << 26); // Reset timer
     TIMER2->TCSR &= ~(3ul << 27); // One shot mode
     TIMER2->TCSR &= ~(0xFFu << 0); // Set prescale to 0
-    TIMER2->TCSR &= ~(1u << 24);   
+    TIMER2->TCSR &= ~(1u << 24);
+    TIMER2->TCSR &= ~(1u << 29);    
     TIMER2->TCSR |= (1 << 16);
     TIMER2->TCMPR = 0xB71B00 - 1; // 1 s
 }
