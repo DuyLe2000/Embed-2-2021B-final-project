@@ -10,10 +10,35 @@
 
 #define SYSTICK_DLAY_us 1000000
 #define FALLING_DLAY_us 800000
+
 #define SCREEN_X_MAX 127
 #define SCREEN_Y_MAX 63
 #define SCREEN_X_MIN 0
 #define SCREEN_Y_MIN 8
+
+// Timer CMPR value
+#define DEBOUNCE_DELAY 2399999 // 200 ms
+#define EASY_FALL_DELAY 9599999 // 800ms
+#define MEDIUM_FALL_DELAY 8399999 // 700 ms
+#define HARD_FALL_DELAY 5999999 // 500 ms
+
+// Game related definition
+#define MAX_BOX_AMOUNT 3
+#define BOX_START_Y 9
+#define BOX_START_X 80
+#define BOX_WIDTH 2 // Actual width is 3
+#define BOX_MOVE_RATE 2
+#define MIN_BOX_START_X 1
+#define MAX_BOX_START_X 125
+#define MIN_BOX_START_Y 0
+#define MAX_BOX_START_Y 7
+
+#define PLAYER_HEIGHT 2 // Actual height is 3
+#define PLAYER_WIDTH 7 // Actual width is 6
+#define PLAYER_INITIAL_X 1
+#define PLAYER_INITIAL_Y 59
+#define PLAYER_STEP 6
+
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions declaration
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -26,6 +51,7 @@ void LCD_clear(void);
 void LCD_SetAddress(int PageAddr, int ColumnAddr);
 void KeyPadEnable(void);
 int KeyPadScanning(void);
+void Timer_Config(void);
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions definition
@@ -77,42 +103,55 @@ void KeyPadEnable(void){
     GPIO_SetMode(PA, BIT5, GPIO_MODE_QUASI);
 }
 int KeyPadScanning(void){
-    PA0 = 1;
-    PA1 = 1;
-    PA2 = 0;
-    PA3 = 1;
-    PA4 = 1;
-    PA5 = 1;
-    if (PA3 == 0)
-        return 1;
-    if (PA4 == 0)
-        return 4;
-    if (PA5 == 0)
-        return 7;
-    PA0 = 1;
-    PA1 = 0;
-    PA2 = 1;
-    PA3 = 1;
-    PA4 = 1;
-    PA5 = 1;
-    if (PA3 == 0)
-        return 2;
-    if (PA4 == 0)
-        return 5;
-    if (PA5 == 0)
-        return 8;
-    PA0 = 0;
-    PA1 = 1;
-    PA2 = 1;
-    PA3 = 1;
-    PA4 = 1;
-    PA5 = 1;
-    if (PA3 == 0)
-        return 3;
-    if (PA4 == 0)
-        return 6;
-    if (PA5 == 0)
-        return 9;
+    /*
+        Add debounce. Each key can only be pressed after 600 ms
+    */
+    PA0 = 1; PA1 = 1; PA2 = 0; PA3 = 1; PA4 = 1; PA5 = 1;
+    if (!(TIMER0->TCSR & (1 << 30))) {
+        if (PA3 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 1;
+        }
+        if (PA4 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 4;
+        }
+        if (PA5 == 0){
+            TIMER0->TCSR |= (1 << 30);
+            return 7;
+        }
+    }
+    PA0 = 1; PA1 = 0; PA2 = 1; PA3 = 1; PA4 = 1; PA5 = 1;
+    if (!(TIMER0->TCSR & (1 << 30))) {
+        if (PA3 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 2;
+        }
+        if (PA4 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 5;
+        }
+        if (PA5 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 8;
+        }
+
+    }
+    PA0 = 0; PA1 = 1; PA2 = 1; PA3 = 1; PA4 = 1; PA5 = 1;
+    if (!(TIMER0->TCSR & (1 << 30))) {
+        if (PA3 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 3;
+        }
+        if (PA4 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 6;
+        }
+        if (PA5 == 0) {
+            TIMER0->TCSR |= (1 << 30);
+            return 9;
+        }
+    }
     return 0;
 }
 void System_Config(void){
@@ -141,6 +180,14 @@ void System_Config(void){
     CLK->CLKDIV &= (~0x0Ful << 0);
     //enable clock of SPI3
     CLK->APBCLK |= 1ul << 15;
+
+    // Set 12Mhz clock for timer 0
+    CLK->APBCLK |= (1 << 2);
+    CLK->CLKSEL1 &= ~(0b111 << 8);
+
+    // Set 12Mhz clock for timer 1
+    CLK->APBCLK |= (1 << 3);
+    CLK->CLKSEL1 &= ~(0b111 << 12);
     SYS_LockReg(); // Lock protected registers
 }
 void SPI3_Config(void){
@@ -159,6 +206,23 @@ void SPI3_Config(void){
     SPI3->CNTRL |= (1ul << 2);   //1: Transmit at negative edge of SPI CLK
     SPI3->DIVIDER = 0;           // SPI clock divider. SPI clock = HCLK / ((DIVIDER+1)*2). HCLK = 50 MHz
 }
+void Timer_Config(void) {
+    // Config timer for debounce - TIMER0 in one shot mode
+    TIMER0->TCSR |= (1 << 26); // Reset timer
+    TIMER0->TCSR &= ~(3ul << 27); // One shot mode
+    TIMER0->TCSR &= ~(0xFFu << 0); // Set prescale to 0
+    TIMER0->TCSR &= ~(1u << 24);   
+    TIMER0->TCSR |= (1 << 16);
+    TIMER0->TCMPR = DEBOUNCE_DELAY;
+
+    // Config timer for falling box - TIMER1 in periodic
+    TIMER1->TCSR |= (1 << 26); // Reset timer
+    TIMER1->TCSR &= ~(3ul << 27); // Oneshot mode
+    TIMER1->TCSR &= ~(0xFFu << 0); // Set prescale to 0
+    TIMER1->TCSR &= ~(1u << 24);
+    TIMER1->TCSR |= (1 << 16);
+    TIMER1->TCMPR = HARD_FALL_DELAY;
+}
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Game related definition
@@ -167,7 +231,7 @@ void SPI3_Config(void){
 /**
  * These are the variables used by the game
  */
-typedef enum{
+typedef enum {
     welcome_screen,
     game_rules,
     game_background,
@@ -175,202 +239,198 @@ typedef enum{
     end_game
 } STATES;
 
+typedef struct coordinate_s {
+    int x;
+    int y;
+} coordinate;
+
+typedef struct player_info_s {
+    int x;
+    int y;
+    int dx;
+    int dy;
+    int step;
+} player_info;
+
+coordinate box[MAX_BOX_AMOUNT];
+int box_count = 1;
+
+player_info player;
 
 STATES game_state;
-int i, key_pressed = 0, game_pad = 0;
-int snake_head_x_coor = 0, snake_head_y_coor = 55, dx = 0, dy = 0;
-int food_x_coor, food_y_coor;
-int x_reset, y_reset;
-int hit;
+int key_pressed = 0, game_pad = 0;
+
+int score;
 char score_txt[] = "0";
-const int snake_width = 5; // Snake and food block width is defined by the size of width + 1 
-int snake_step = snake_width + 1; // Determine how many pixels the snake moves in one step
 
-const int falling_food_x_origin = 80, falling_food_y_origin = SCREEN_Y_MIN + 1; // Initial coordinates of falling foods.
-int falling_food_width = 2; // This means the actual width rendered is +1 pixel
-int food_falling_pixel_rate = 2; // This define the difference in pixel the food falls
-int fall_food_generated = 0, static_food_generated = 0;
+void draw_player() {
+    /**
+     * Draw player character at their current position
+    */
+    fill_Rectangle(player.x, player.y, player.x + PLAYER_WIDTH, player.y + PLAYER_HEIGHT, 1, 0);
+}
 
-/**
- * This function draws to playing field
- */
-void draw_playing_field(){
+void erase_player() {
+    /**
+     * Erase player character at their current position
+    */
+    fill_Rectangle(player.x, player.y, player.x + PLAYER_WIDTH, player.y + PLAYER_HEIGHT, 0, 0);
+}
+
+void draw_box(coordinate current_box) {
+    /**
+     * Draw box inside the playing field
+    */
+    if (current_box.y > SCREEN_Y_MIN) {
+        fill_Rectangle(current_box.x, current_box.y, current_box.x + BOX_WIDTH, current_box.y + BOX_WIDTH, 1, 0);
+    }
+}
+
+void erase_box(coordinate current_box) {
+    /**
+     * Erase box inside the playing field
+    */
+    if (current_box.y > SCREEN_Y_MIN) {
+        fill_Rectangle(current_box.x, current_box.y, current_box.x + BOX_WIDTH, current_box.y + BOX_WIDTH, 0, 0);
+    }
+}
+
+void update_score() {
+    /**
+     * Update player score when box collide with player
+    */
+    score++;
+    sprintf(score_txt, "%d", score);
+    printS_5x7(5, 0, "Score: ");
+    printS_5x7(48, 0, score_txt);
+}
+
+void collision_detection() {
+    /**
+     * Detect collision between box and player
+    */
+    for (int i = 0; i < box_count; i++) {
+        if (box[i].x + BOX_WIDTH >= player.x && box[i].x <= player.x + PLAYER_WIDTH 
+                && box[i].y < player.y + PLAYER_HEIGHT && box[i].y + BOX_WIDTH >= player.y) {
+            erase_box(box[i]);
+            box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
+            box[i].y = rand() % (MIN_BOX_START_X + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y;
+            update_score();
+        }
+    }
+}
+
+void draw_playing_field() {
+    /**
+     * Draw the border of the playing field
+    */
     draw_Rectangle(SCREEN_X_MIN, SCREEN_Y_MIN, SCREEN_X_MAX, SCREEN_Y_MAX, 1, 0); // Draw the playable field boundary 
 }
 
-/**
-* This function uses rand() to generate food on the map
-*/
-void generate_static_food(){
-    // Delete old food at old coordinates
-    fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 0, 0);
-
-    // Generate random food coordinates 
-    // rand() in range: rand() % (max_number + 1 - minimum_number) + minimum_number
-    int max_x = (SCREEN_X_MAX - 1) - (snake_width - 1);
-    int min_x = SCREEN_X_MIN + 1;
-    int max_y = (SCREEN_Y_MAX - 1) - (snake_width - 1);
-    int min_y = SCREEN_Y_MIN + 1;
-
-    food_x_coor = rand() % (max_x + 1 - min_x) + min_x;
-    food_y_coor = rand() % (max_y + 1 - min_y) + min_y;
-
-    // Generate food with new coordinates
-    fill_Rectangle(food_x_coor, food_y_coor, food_x_coor + snake_width, food_y_coor + snake_width, 1, 0);
-
-    //Redraw the boundary. For some reason the boundary is erase together with the food that is close to the boundary
-    draw_Rectangle(SCREEN_X_MIN, SCREEN_Y_MIN, SCREEN_X_MAX, SCREEN_Y_MAX, 1, 0);
-
-    // Update flag to indicate that the piece of food has been generated
-    static_food_generated = 1;
-}
-
-
-/**
- * This functions generate and animate the falling of foods
- */
-void generate_falling_food(){
-    int temp_x = falling_food_x_origin, temp_y = falling_food_y_origin;
-
-    fill_Rectangle(falling_food_x_origin, falling_food_y_origin, falling_food_x_origin + falling_food_width, falling_food_y_origin + falling_food_width, 1, 0);
-
-    while (1){
-        // // Render original food at original coordinates 
-        // fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 1, 0);
-
-        // Shows the food within this timeframe
-        CLK_SysTickDelay(FALLING_DLAY_us);
-
+void box_controller() {
+    /**
+     * Control box movement and generation
+    */
+    for (int i = 0; i < box_count; i++) {
         // Remove the old falling food at old location and render a new one at new location
-        fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 0, 0);
-        draw_playing_field();
-        temp_y += food_falling_pixel_rate; // Update food coordinates
-        fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 1, 0);
+        erase_box(box[i]);
+    
+        box[i].y += BOX_MOVE_RATE; // Update food coordinates
 
         // Condition to stop falling when reached the bottom
-        if ((temp_y + falling_food_width) >= (SCREEN_Y_MAX - 1)){
-            // Erase food 
-            fill_Rectangle(temp_x, temp_y, temp_x + falling_food_width, temp_y + falling_food_width, 0, 0);
-            draw_playing_field();
+        if ((box[i].y + BOX_WIDTH) >= (SCREEN_Y_MAX - 1)) {
+            game_state = end_game;
             break;
         }
+        draw_box(box[i]);
+        collision_detection();
     }
-
-    // Update falling food flag
-    fall_food_generated = 1;
 }
 
-
-/**
- * This is the final main game control function
- */
-void control_game(){
-    // Draw the initial snake head
-    fill_Rectangle(snake_head_x_coor, snake_head_y_coor, snake_head_x_coor + snake_width, snake_head_y_coor + snake_width, 1, 0);
-    //delay for vision
-    while (game_pad == 0)
-        game_pad = KeyPadScanning();
-    CLK_SysTickDelay(170000);
-
-
-    // Erase snake head upon movement
-    fill_Rectangle(snake_head_x_coor, snake_head_y_coor, snake_head_x_coor + snake_width, snake_head_y_coor + snake_width, 0, 0);
-
-
-    // Check direction changes
-    switch (game_pad){
-        case 2:
-            dx = 0;
-            dy = -1;
-            break;
-        case 4:
-            dx = -1;
-            dy = 0;
-            break;
-        case 6:
-            dx = +1;
-            dy = 0;
-            break;
-        case 5:
-            dx = 0;
-            dy = +1;
-            break;
-        default:
-            dx = dy = 0;
-            break;
-    }   
-    game_pad = 0;
-
-
-    //update objects information (position, etc.)
-    snake_head_x_coor = snake_head_x_coor + (dx * snake_step);
-    snake_head_y_coor = snake_head_y_coor + (dy * snake_step);
-
-
-    // //boundary condition for edge continuation
-    // //wrap around on X
-    // if (snake_head_x_coor < SCREEN_X_MIN)
-    //     snake_head_x_coor = SCREEN_X_MAX - snake_width + 1;
-    // if (snake_head_x_coor > SCREEN_X_MAX - snake_width + 1)
-    //     snake_head_x_coor = SCREEN_X_MIN;
-    // //wrap around on Y
-    // if (snake_head_y_coor < SCREEN_Y_MIN)
-    //     snake_head_y_coor = SCREEN_Y_MAX - snake_width + 1;
-    // if (snake_head_y_coor > SCREEN_Y_MAX - 7)
-    //     snake_head_y_coor = SCREEN_Y_MIN;
-
-
-    // Boundary condition for edge prevention
-    // Stops at X edge
-    if (snake_head_x_coor < SCREEN_X_MIN + 1){
-        snake_head_x_coor = SCREEN_X_MIN + 1;
+void progress_controller() {
+    if (score == 2 && box_count == 1) {
+        box_count++;
+        box[1].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
+        box[1].y = rand() % (MIN_BOX_START_X + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y - 32;
+    } else if (score == 5 && box_count == 2) {
+        box_count++;
+        box[2].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
+        box[2].y = rand() % (MIN_BOX_START_X + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y - 80;
     }
-    if (snake_head_x_coor >= SCREEN_X_MAX - 1 - snake_width){
-        snake_head_x_coor = SCREEN_X_MAX - 1 - snake_width;
-    }
-    // Stops at Y edge
-    if (snake_head_y_coor > SCREEN_Y_MAX - 1 - snake_width){
-        snake_head_y_coor = SCREEN_Y_MAX - 1 - snake_width;
-    }
-    if (snake_head_y_coor < SCREEN_Y_MIN + 1){
-        snake_head_y_coor = SCREEN_Y_MIN + 1;
-    }
-    
-    // ----------------------------------------- Testing site ------------------------------------------------------------//
+}
 
-    if (!fall_food_generated){
-        generate_falling_food();
+void control_game() {
+    /**
+     * Game controller
+    */
+    draw_playing_field();
+    draw_player();
+    game_pad = KeyPadScanning();
+    if (game_pad == 4 || game_pad == 6) {
+        // Erase snake head upon movement
+        erase_player();
+
+        // Check direction changes
+        switch (game_pad) {
+            case 4:
+                player.dx = -1;
+                player.dy = 0;
+                break;
+            case 6:
+                player.dx = +1;
+                player.dy = 0;
+                break;
+            default:
+                player.dx = player.dy = 0;
+                break;
+        }
+
+        // Update objects information (position, etc.)
+        player.x += player.dx * player.step;
+
+        // Boundary condition for edge prevention
+        // Stops at X edge
+        if (player.x < SCREEN_X_MIN + 1) {
+            player.x = SCREEN_X_MIN + 1;
+        } else if (player.x >= SCREEN_X_MAX - 1 - PLAYER_WIDTH) { 
+            player.x = SCREEN_X_MAX - 1 - PLAYER_WIDTH;
+        }
+        draw_player();
     }
-    // if (!static_food_generated){
-    //     generate_static_food();
-    // }
 
-    // ---------------------------------- End of testing site ------------------------------------------------------------//
-
-
-    //score conditions
-    if (hit > 5){
-        hit = 0;
-        LCD_clear();
-        game_state = end_game;
+    if (!(TIMER1->TCSR & (1 << 30))) {
+        box_controller();
+        TIMER1->TCSR |= (1 << 30);
     }
-    else
-        game_state = game_background;
+
+    progress_controller();
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Main program
 //------------------------------------------------------------------------------------------------------------------------------------
-int main(void){
+int main(void) {
     game_state = welcome_screen; // The initial state of the game
-    x_reset = 64;
-    y_reset = 32;
-    hit = 0;
+    score = 0;
+
+    player.x = PLAYER_INITIAL_X;
+    player.y = PLAYER_INITIAL_Y;
+    player.dx = 0;
+    player.dy = 0;
+    player.step = PLAYER_STEP;
+
+    box_count = 1;
+
+    for (int i = 0; i < MAX_BOX_AMOUNT; i++) {
+        box[i].y = BOX_START_Y;
+        box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
+    }
     //--------------------------------
     //System initialization
     //--------------------------------
     System_Config();
     KeyPadEnable();
+    Timer_Config();
     //--------------------------------
     //SPI3 initialization
     //--------------------------------
@@ -392,7 +452,7 @@ int main(void){
             case welcome_screen:
                 //welcome state code here
                 draw_LCD(sky_fall_logo);
-                for (i = 0; i < 5; i++){
+                for (int i = 0; i < 5; i++){
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
                 }
                 LCD_clear();
@@ -413,24 +473,28 @@ int main(void){
                 break;
             case game_background:
                 // static display information should be here
-                sprintf(score_txt, "%d", hit);
+                sprintf(score_txt, "%d", score);
                 printS_5x7(5, 0, "Score: ");
                 printS_5x7(48, 0, score_txt);
                 draw_playing_field();
                 game_state = main_game;
+                // fill_Rectangle(snake_head_x_coor, snake_head_y_coor, snake_head_x_coor + snake_width, snake_head_y_coor + snake_width, 1, 0);
+                TIMER1->TCSR |= (1 << 30);
+                draw_box(box[0]);
+                // fill_Rectangle(falling_food_x_origin, falling_food_y_origin, falling_food_x_origin + falling_food_width, falling_food_y_origin + falling_food_width, 1, 0);
             case main_game: 
                 /*
                     The main control of the game
                     is now defined in the function below
                     for easier development, testing and implementation
                 */  
-                control_game(); 
+                control_game();
                 break;
             case end_game:
                 //end_game code here
                 //printS_5x7(1, 32, "press any key to replay!");
                 draw_LCD(gameover_128x64);
-                for (i = 0; i < 2; i++)
+                for (int i = 0; i < 2; i++)
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
                 while (key_pressed == 0)
                     key_pressed = KeyPadScanning();

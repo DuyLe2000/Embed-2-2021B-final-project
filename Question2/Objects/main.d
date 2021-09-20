@@ -1,7 +1,8 @@
-./objects/main.o: main.c C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+./objects/main.o: main.c \
+  C:\Tom\Keil\ MDK\Program\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Library\NUC100Series\Include\NUC100Series.h \
   ..\Library\CMSIS\Include\core_cm0.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\Tom\Keil\ MDK\Program\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Library\CMSIS\Include\core_cmInstr.h \
   ..\Library\CMSIS\Include\core_cmFunc.h \
   ..\Library\NUC100Series\Include\system_NUC100Series.h \

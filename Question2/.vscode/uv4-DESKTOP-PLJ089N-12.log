@@ -1,0 +1,399 @@
+*** Using Compiler 'V6.14', folder: 'C:\Tom\Keil MDK\Program\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...../Library/CMSIS/Include\core_cm0.h(116): warning: In file included from...../Library/CMSIS/Include\core_cmInstr.h(406): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int32_t' (aka 'int') [-Wsign-conversion]
+  return(result);
+  ~~~~~~ ^~~~~~
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...../Library/CMSIS/Include\core_cm0.h(574): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    SCB->SHP[_SHP_IDX(IRQn)] = (SCB->SHP[_SHP_IDX(IRQn)] & ~(0xFF << _BIT_SHIFT(IRQn))) |
+                                                         ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Library/CMSIS/Include\core_cm0.h(577): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    NVIC->IP[_IP_IDX(IRQn)] = (NVIC->IP[_IP_IDX(IRQn)] & ~(0xFF << _BIT_SHIFT(IRQn))) |
+                                                       ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Library/CMSIS/Include\core_cm0.h(608): warning: function 'NVIC_SystemReset' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(11321): warning: anonymous unions are a C11 extension [-Wc11-extensions]
+    union
+    ^
+../Library/NUC100Series/Include\NUC100Series.h(13605): warning: non-portable path to file '"sys.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SYS.h"
+         ^~~~~~~
+         "sys.h"
+../Library/NUC100Series/Include\NUC100Series.h(13606): warning: non-portable path to file '"adc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "ADC.h"
+         ^~~~~~~
+         "adc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13607): warning: non-portable path to file '"fmc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "FMC.h"
+         ^~~~~~~
+         "fmc.h"
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13607): warning: In file included from...../Library/StdDriver/Include\FMC.h(314): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+    FMC->ISPADR = (u8index << 2);      /* Set UID Address. It must be word alignment. */
+                ~  ~~~~~~~~^~~~
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13608): warning: non-portable path to file '"gpio.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "GPIO.h"
+         ^~~~~~~~
+         "gpio.h"
+../Library/NUC100Series/Include\NUC100Series.h(13609): warning: non-portable path to file '"i2c.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "I2C.h"
+         ^~~~~~~
+         "i2c.h"
+../Library/NUC100Series/Include\NUC100Series.h(13610): warning: non-portable path to file '"pwm.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PWM.h"
+         ^~~~~~~
+         "pwm.h"
+../Library/NUC100Series/Include\NUC100Series.h(13611): warning: non-portable path to file '"spi.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SPI.h"
+         ^~~~~~~
+         "spi.h"
+../Library/NUC100Series/Include\NUC100Series.h(13612): warning: non-portable path to file '"crc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CRC.h"
+         ^~~~~~~
+         "crc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13613): warning: non-portable path to file '"timer.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "TIMER.h"
+         ^~~~~~~~~
+         "timer.h"
+../Library/NUC100Series/Include\NUC100Series.h(13614): warning: non-portable path to file '"wdt.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "WDT.h"
+         ^~~~~~~
+         "wdt.h"
+../Library/NUC100Series/Include\NUC100Series.h(13615): warning: non-portable path to file '"wwdt.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "WWDT.h"
+         ^~~~~~~~
+         "wwdt.h"
+../Library/NUC100Series/Include\NUC100Series.h(13616): warning: non-portable path to file '"rtc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "RTC.h"
+         ^~~~~~~
+         "rtc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13617): warning: non-portable path to file '"uart.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "UART.h"
+         ^~~~~~~~
+         "uart.h"
+../Library/NUC100Series/Include\NUC100Series.h(13618): warning: non-portable path to file '"i2s.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "I2S.h"
+         ^~~~~~~
+         "i2s.h"
+../Library/NUC100Series/Include\NUC100Series.h(13619): warning: non-portable path to file '"can.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CAN.h"
+         ^~~~~~~
+         "can.h"
+../Library/NUC100Series/Include\NUC100Series.h(13620): warning: non-portable path to file '"usbd.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "USBD.h"
+         ^~~~~~~~
+         "usbd.h"
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13620): warning: In file included from...../Library/StdDriver/Include\USBD.h(638): warning: variable 'u32CfgAddr' may be uninitialized when used here [-Wconditional-uninitialized]
+    return ((*((__IO uint32_t *)(u32CfgAddr))) & USBD_CFGP_SSTALL);
+                                 ^~~~~~~~~~
+../Library/StdDriver/Include\USBD.h(622): note: initialize the variable 'u32CfgAddr' to silence this warning
+    uint32_t u32CfgAddr;
+                       ^
+                        = 0
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13621): warning: non-portable path to file '"pdma.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PDMA.h"
+         ^~~~~~~~
+         "pdma.h"
+../Library/NUC100Series/Include\NUC100Series.h(13622): warning: non-portable path to file '"sc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "SC.h"
+         ^~~~~~
+         "sc.h"
+../Library/NUC100Series/Include\NUC100Series.h(13623): warning: non-portable path to file '"ps2.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "PS2.h"
+         ^~~~~~~
+         "ps2.h"
+../Library/NUC100Series/Include\NUC100Series.h(13624): warning: non-portable path to file '"clk.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "CLK.h"
+         ^~~~~~~
+         "clk.h"
+../Library/NUC100Series/Include\NUC100Series.h(13625): warning: non-portable path to file '"acmp.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+#include "ACMP.h"
+         ^~~~~~~~
+         "acmp.h"
+main.c(9): warning: In file included from..../picture.h(4): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char monster_128x64[128 * 64] = {
+                     ^
+./picture.h(4): warning: no previous extern declaration for non-static variable 'monster_128x64' [-Wmissing-variable-declarations]
+./picture.h(4): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char monster_128x64[128 * 64] = {
+       ^
+./picture.h(14): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char gameover_128x64[] = {
+                     ^
+./picture.h(14): warning: no previous extern declaration for non-static variable 'gameover_128x64' [-Wmissing-variable-declarations]
+./picture.h(14): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char gameover_128x64[] = {
+       ^
+./picture.h(24): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char car_128x64[] = {
+                     ^
+./picture.h(24): warning: no previous extern declaration for non-static variable 'car_128x64' [-Wmissing-variable-declarations]
+./picture.h(24): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char car_128x64[] = {
+       ^
+./picture.h(91): warning: no previous extern declaration for non-static variable 'snake_game_intro' [-Wmissing-variable-declarations]
+const unsigned char snake_game_intro [] = {
+                    ^
+./picture.h(91): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+const unsigned char snake_game_intro [] = {
+      ^
+./picture.h(158): warning: no previous extern declaration for non-static variable 'sky_fall_logo' [-Wmissing-variable-declarations]
+const unsigned char sky_fall_logo[]  = {
+                    ^
+./picture.h(158): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+const unsigned char sky_fall_logo[]  = {
+      ^
+./picture.h(223): warning: no newline at end of file [-Wnewline-eof]
+};
+  ^
+main.c(85): warning: implicit conversion loses integer precision: 'int' to 'unsigned char' [-Wimplicit-int-conversion]
+    LCD_command(0xB0 | PageAddr);
+    ~~~~~~~~~~~ ~~~~~^~~~~~~~~~
+main.c(86): warning: '&' within '|' [-Wbitwise-op-parentheses]
+    LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
+                     ~ ~~~~~~~~~~~~~~~~~~^~~~~
+main.c(86): note: place parentheses around the '&' expression to silence this warning
+    LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
+                                         ^
+                       (                      )
+main.c(178): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
+    CLK->CLKSEL1 &= ~(0b111 << 8);
+                      ^
+main.c(178): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    CLK->CLKSEL1 &= ~(0b111 << 8);
+                 ~~ ^~~~~~~~~~~~~
+main.c(182): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
+    CLK->CLKSEL1 &= ~(0b111 << 12);
+                      ^
+main.c(182): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+    CLK->CLKSEL1 &= ~(0b111 << 12);
+                 ~~ ^~~~~~~~~~~~~~
+main.c(240): warning: no previous extern declaration for non-static variable 'box_count' [-Wmissing-variable-declarations]
+int box_count = 1;
+    ^
+main.c(240): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int box_count = 1;
+^
+main.c(243): warning: no previous extern declaration for non-static variable 'key_pressed' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+       ^
+main.c(243): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
+^
+main.c(243): warning: no previous extern declaration for non-static variable 'game_pad' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+                        ^
+main.c(243): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
+^
+main.c(244): warning: no previous extern declaration for non-static variable 'snake_head_x_coor' [-Wmissing-variable-declarations]
+int snake_head_x_coor = 1, snake_head_y_coor = 57, dx = 0, dy = 0;
+    ^
+main.c(244): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int snake_head_x_coor = 1, snake_head_y_coor = 57, dx = 0, dy = 0;
+^
+main.c(244): warning: no previous extern declaration for non-static variable 'snake_head_y_coor' [-Wmissing-variable-declarations]
+int snake_head_x_coor = 1, snake_head_y_coor = 57, dx = 0, dy = 0;
+                           ^
+main.c(244): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int snake_head_x_coor = 1, snake_head_y_coor = 57, dx = 0, dy = 0;
+^
+main.c(244): warning: no previous extern declaration for non-static variable 'dx' [-Wmissing-variable-declarations]
+int snake_head_x_coor = 1, snake_head_y_coor = 57, dx = 0, dy = 0;
+                                                   ^
+main.c(244): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int snake_head_x_coor = 1, snake_head_y_coor = 57, dx = 0, dy = 0;
+^
+main.c(244): warning: no previous extern declaration for non-static variable 'dy' [-Wmissing-variable-declarations]
+int snake_head_x_coor = 1, snake_head_y_coor = 57, dx = 0, dy = 0;
+                                                           ^
+main.c(244): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int snake_head_x_coor = 1, snake_head_y_coor = 57, dx = 0, dy = 0;
+^
+main.c(248): warning: no previous extern declaration for non-static variable 'score_txt' [-Wmissing-variable-declarations]
+char score_txt[] = "0";
+     ^
+main.c(248): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char score_txt[] = "0";
+^
+main.c(249): warning: no previous extern declaration for non-static variable 'snake_width' [-Wmissing-variable-declarations]
+const int snake_width = 5; // Snake and food block width is defined by the size of width + 1 
+          ^
+main.c(249): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+const int snake_width = 5; // Snake and food block width is defined by the size of width + 1 
+      ^
+main.c(250): warning: no previous extern declaration for non-static variable 'snake_step' [-Wmissing-variable-declarations]
+int snake_step = snake_width + 1; // Determine how many pixels the snake moves in one step
+    ^
+main.c(250): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int snake_step = snake_width + 1; // Determine how many pixels the snake moves in one step
+^
+main.c(252): warning: no previous extern declaration for non-static variable 'falling_food_x_origin' [-Wmissing-variable-declarations]
+const int falling_food_x_origin = 80, falling_food_y_origin = SCREEN_Y_MIN + 1; // Initial coordinates of falling foods.
+          ^
+main.c(252): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+const int falling_food_x_origin = 80, falling_food_y_origin = SCREEN_Y_MIN + 1; // Initial coordinates of falling foods.
+      ^
+main.c(252): warning: no previous extern declaration for non-static variable 'falling_food_y_origin' [-Wmissing-variable-declarations]
+const int falling_food_x_origin = 80, falling_food_y_origin = SCREEN_Y_MIN + 1; // Initial coordinates of falling foods.
+                                      ^
+main.c(252): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+const int falling_food_x_origin = 80, falling_food_y_origin = SCREEN_Y_MIN + 1; // Initial coordinates of falling foods.
+      ^
+main.c(253): warning: no previous extern declaration for non-static variable 'falling_food_width' [-Wmissing-variable-declarations]
+int falling_food_width = 2; // This means the actual width rendered is +1 pixel
+    ^
+main.c(253): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int falling_food_width = 2; // This means the actual width rendered is +1 pixel
+^
+main.c(254): warning: no previous extern declaration for non-static variable 'food_falling_pixel_rate' [-Wmissing-variable-declarations]
+int food_falling_pixel_rate = 2; // This define the difference in pixel the food falls
+    ^
+main.c(254): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int food_falling_pixel_rate = 2; // This define the difference in pixel the food falls
+^
+main.c(255): warning: no previous extern declaration for non-static variable 'fall_food_generated' [-Wmissing-variable-declarations]
+int fall_food_generated = 0, static_food_generated = 0;
+    ^
+main.c(255): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int fall_food_generated = 0, static_food_generated = 0;
+^
+main.c(255): warning: no previous extern declaration for non-static variable 'static_food_generated' [-Wmissing-variable-declarations]
+int fall_food_generated = 0, static_food_generated = 0;
+                             ^
+main.c(255): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int fall_food_generated = 0, static_food_generated = 0;
+^
+main.c(257): warning: no previous extern declaration for non-static variable 'temp_x' [-Wmissing-variable-declarations]
+int temp_x = 0;
+    ^
+main.c(257): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int temp_x = 0;
+^
+main.c(258): warning: no previous extern declaration for non-static variable 'temp_y' [-Wmissing-variable-declarations]
+int temp_y = 0;
+    ^
+main.c(258): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int temp_y = 0;
+^
+main.c(260): warning: no previous prototype for function 'draw_player' [-Wmissing-prototypes]
+void draw_player() {
+     ^
+main.c(260): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void draw_player() {
+^
+static 
+main.c(264): warning: no previous prototype for function 'erase_player' [-Wmissing-prototypes]
+void erase_player() {
+     ^
+main.c(264): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void erase_player() {
+^
+static 
+main.c(270): warning: no previous prototype for function 'draw_playing_field' [-Wmissing-prototypes]
+void draw_playing_field(){
+     ^
+main.c(270): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void draw_playing_field(){
+^
+static 
+main.c(288): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+    food_x_coor = rand() % (max_x + 1 - min_x) + min_x;
+                  ^
+main.c(277): warning: no previous prototype for function 'generate_static_food' [-Wmissing-prototypes]
+void generate_static_food(){
+     ^
+main.c(277): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void generate_static_food(){
+^
+static 
+main.c(317): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+            box[i].x = rand() % (MAX_BOX_X_RAND + 1 - MIN_BOX_X_RAND) + MIN_BOX_X_RAND;
+                       ^
+main.c(305): warning: no previous prototype for function 'generate_falling_food' [-Wmissing-prototypes]
+void generate_falling_food(){
+     ^
+main.c(305): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void generate_falling_food(){
+^
+static 
+main.c(327): warning: no previous prototype for function 'control_game' [-Wmissing-prototypes]
+void control_game(){
+     ^
+main.c(327): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void control_game(){
+^
+static 
+main.c(412): warning: passing 'const unsigned char [1024]' to parameter of type 'unsigned char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                draw_LCD(sky_fall_logo);
+                         ^~~~~~~~~~~~~
+../Library/NUC1xx-LB_002/Include\LCD.h(40): note: passing argument to parameter 'buffer' here
+extern void draw_LCD(unsigned char *buffer);
+                                    ^
+main.c(464): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+            default:
+            ^
+main.c(444): warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+            case main_game: 
+            ^
+main.c(444): note: insert '__attribute__((fallthrough));' to silence this warning
+            case main_game: 
+            ^
+            __attribute__((fallthrough)); 
+main.c(444): note: insert 'break;' to avoid fall-through
+            case main_game: 
+            ^
+            break; 
+main.c(239): warning: no previous extern declaration for non-static variable 'box' [-Wmissing-variable-declarations]
+coordinate box[MAX_BOX_AMOUNT];
+           ^
+main.c(239): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+coordinate box[MAX_BOX_AMOUNT];
+^
+main.c(242): warning: no previous extern declaration for non-static variable 'game_state' [-Wmissing-variable-declarations]
+STATES game_state;
+       ^
+main.c(242): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+STATES game_state;
+^
+main.c(243): warning: no previous extern declaration for non-static variable 'i' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+    ^
+main.c(243): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
+^
+main.c(245): warning: no previous extern declaration for non-static variable 'food_x_coor' [-Wmissing-variable-declarations]
+int food_x_coor, food_y_coor;
+    ^
+main.c(245): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int food_x_coor, food_y_coor;
+^
+main.c(245): warning: no previous extern declaration for non-static variable 'food_y_coor' [-Wmissing-variable-declarations]
+int food_x_coor, food_y_coor;
+                 ^
+main.c(245): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int food_x_coor, food_y_coor;
+^
+main.c(246): warning: no previous extern declaration for non-static variable 'x_reset' [-Wmissing-variable-declarations]
+int x_reset, y_reset;
+    ^
+main.c(246): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x_reset, y_reset;
+^
+main.c(246): warning: no previous extern declaration for non-static variable 'y_reset' [-Wmissing-variable-declarations]
+int x_reset, y_reset;
+             ^
+main.c(246): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int x_reset, y_reset;
+^
+main.c(247): warning: no previous extern declaration for non-static variable 'hit' [-Wmissing-variable-declarations]
+int hit;
+    ^
+main.c(247): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int hit;
+^
+80 warnings generated.
+compiling main.c...
+linking...
+Program Size: Code=3972 RO-data=1728 RW-data=1096 ZI-data=2448  
+".\Objects\Question2.axf" - 0 Error(s), 80 Warning(s).
+Build Time Elapsed:  00:00:01

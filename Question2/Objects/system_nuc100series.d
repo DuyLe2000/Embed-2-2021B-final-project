@@ -1,6 +1,6 @@
 ./objects/system_nuc100series.o: \
   ..\Library\NUC100Series\Source\system_NUC100Series.c \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\Tom\Keil\ MDK\Program\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Library\NUC100Series\Include\NUC100Series.h \
   ..\Library\CMSIS\Include\core_cm0.h \
   ..\Library\CMSIS\Include\core_cmInstr.h \

@@ -1,41 +1,9 @@
-<html>
-<body>
-<pre>
-<h1>µVision Build Log</h1>
-<h2>Tool Versions:</h2>
-IDE-Version: µVision V5.30.0.0
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: dang tom, RMIT, LIC=----
- 
-Tool Versions:
-Toolchain:       MDK-Lite  Version: 5.30.0.0
-Toolchain Path:  C:\Tom\Keil MDK\Program\ARM\ARMCLANG\Bin
-C Compiler:      ArmClang.exe V6.14
-Assembler:       Armasm.exe V6.14
-Linker/Locator:  ArmLink.exe V6.14
-Library Manager: ArmAr.exe V6.14
-Hex Converter:   FromElf.exe V6.14
-CPU DLL:         SARMCM3.DLL V5.30.0.0
-Dialog DLL:      DARMCM1.DLL V1.19.3.0
-Target DLL:      NULink\Nu_Link.dll V3.02
-Dialog DLL:      TARMCM1.DLL V1.14.2.0
- 
-<h2>Project:</h2>
-c:\Tom\RMIT\OneDrive - RMIT University\9. Embedded System Design and Implementation\Assignment\Final Assignment\Embed-2-2021B-final-project\Question2\Question2.uvprojx
-Project File Date:  09/20/2021
-
-<h2>Output:</h2>
 *** Using Compiler 'V6.14', folder: 'C:\Tom\Keil MDK\Program\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-main.c(3): warning: In file included from...
-../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...
-../Library/CMSIS/Include\core_cm0.h(116): warning: In file included from...
-../Library/CMSIS/Include\core_cmInstr.h(406): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int32_t' (aka 'int') [-Wsign-conversion]
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...../Library/CMSIS/Include\core_cm0.h(116): warning: In file included from...../Library/CMSIS/Include\core_cmInstr.h(406): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int32_t' (aka 'int') [-Wsign-conversion]
   return(result);
   ~~~~~~ ^~~~~~
-main.c(3): warning: In file included from...
-../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...
-../Library/CMSIS/Include\core_cm0.h(574): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(150): warning: In file included from...../Library/CMSIS/Include\core_cm0.h(574): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
     SCB->SHP[_SHP_IDX(IRQn)] = (SCB->SHP[_SHP_IDX(IRQn)] & ~(0xFF << _BIT_SHIFT(IRQn))) |
                                                          ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
 ../Library/CMSIS/Include\core_cm0.h(577): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
@@ -44,8 +12,7 @@ main.c(3): warning: In file included from...
 ../Library/CMSIS/Include\core_cm0.h(608): warning: function 'NVIC_SystemReset' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
 {
 ^
-main.c(3): warning: In file included from...
-../Library/NUC100Series/Include\NUC100Series.h(11321): warning: anonymous unions are a C11 extension [-Wc11-extensions]
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(11321): warning: anonymous unions are a C11 extension [-Wc11-extensions]
     union
     ^
 ../Library/NUC100Series/Include\NUC100Series.h(13605): warning: non-portable path to file '"sys.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
@@ -60,13 +27,10 @@ main.c(3): warning: In file included from...
 #include "FMC.h"
          ^~~~~~~
          "fmc.h"
-main.c(3): warning: In file included from...
-../Library/NUC100Series/Include\NUC100Series.h(13607): warning: In file included from...
-../Library/StdDriver/Include\FMC.h(314): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13607): warning: In file included from...../Library/StdDriver/Include\FMC.h(314): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
     FMC->ISPADR = (u8index << 2);      /* Set UID Address. It must be word alignment. */
                 ~  ~~~~~~~~^~~~
-main.c(3): warning: In file included from...
-../Library/NUC100Series/Include\NUC100Series.h(13608): warning: non-portable path to file '"gpio.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13608): warning: non-portable path to file '"gpio.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
 #include "GPIO.h"
          ^~~~~~~~
          "gpio.h"
@@ -118,17 +82,14 @@ main.c(3): warning: In file included from...
 #include "USBD.h"
          ^~~~~~~~
          "usbd.h"
-main.c(3): warning: In file included from...
-../Library/NUC100Series/Include\NUC100Series.h(13620): warning: In file included from...
-../Library/StdDriver/Include\USBD.h(638): warning: variable 'u32CfgAddr' may be uninitialized when used here [-Wconditional-uninitialized]
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13620): warning: In file included from...../Library/StdDriver/Include\USBD.h(638): warning: variable 'u32CfgAddr' may be uninitialized when used here [-Wconditional-uninitialized]
     return ((*((__IO uint32_t *)(u32CfgAddr))) & USBD_CFGP_SSTALL);
                                  ^~~~~~~~~~
 ../Library/StdDriver/Include\USBD.h(622): note: initialize the variable 'u32CfgAddr' to silence this warning
     uint32_t u32CfgAddr;
                        ^
                         = 0
-main.c(3): warning: In file included from...
-../Library/NUC100Series/Include\NUC100Series.h(13621): warning: non-portable path to file '"pdma.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+main.c(3): warning: In file included from...../Library/NUC100Series/Include\NUC100Series.h(13621): warning: non-portable path to file '"pdma.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
 #include "PDMA.h"
          ^~~~~~~~
          "pdma.h"
@@ -148,8 +109,7 @@ main.c(3): warning: In file included from...
 #include "ACMP.h"
          ^~~~~~~~
          "acmp.h"
-main.c(9): warning: In file included from...
-./picture.h(4): warning: 'extern' variable has an initializer [-Wextern-initializer]
+main.c(9): warning: In file included from..../picture.h(4): warning: 'extern' variable has an initializer [-Wextern-initializer]
 extern unsigned char monster_128x64[128 * 64] = {
                      ^
 ./picture.h(4): warning: no previous extern declaration for non-static variable 'monster_128x64' [-Wmissing-variable-declarations]
@@ -213,123 +173,129 @@ int box_count = 1;
 main.c(256): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 int box_count = 1;
 ^
-main.c(261): warning: no previous extern declaration for non-static variable 'key_pressed' [-Wmissing-variable-declarations]
-int key_pressed = 0, game_pad = 0;
-    ^
-main.c(261): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int key_pressed = 0, game_pad = 0;
+main.c(257): warning: no previous extern declaration for non-static variable 'box_count_str' [-Wmissing-variable-declarations]
+char box_count_str[] = "0";
+     ^
+main.c(257): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char box_count_str[] = "0";
 ^
-main.c(261): warning: no previous extern declaration for non-static variable 'game_pad' [-Wmissing-variable-declarations]
-int key_pressed = 0, game_pad = 0;
-                     ^
-main.c(261): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-int key_pressed = 0, game_pad = 0;
+main.c(262): warning: no previous extern declaration for non-static variable 'key_pressed' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+       ^
+main.c(262): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
 ^
-main.c(264): warning: no previous extern declaration for non-static variable 'score_txt' [-Wmissing-variable-declarations]
+main.c(262): warning: no previous extern declaration for non-static variable 'game_pad' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+                        ^
+main.c(262): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
+^
+main.c(265): warning: no previous extern declaration for non-static variable 'score_txt' [-Wmissing-variable-declarations]
 char score_txt[] = "0";
      ^
-main.c(264): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+main.c(265): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 char score_txt[] = "0";
 ^
-main.c(266): warning: no previous prototype for function 'draw_player' [-Wmissing-prototypes]
+main.c(267): warning: no previous prototype for function 'draw_player' [-Wmissing-prototypes]
 void draw_player() {
      ^
-main.c(266): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(267): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void draw_player() {
 ^
 static 
-main.c(273): warning: no previous prototype for function 'erase_player' [-Wmissing-prototypes]
+main.c(274): warning: no previous prototype for function 'erase_player' [-Wmissing-prototypes]
 void erase_player() {
      ^
-main.c(273): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(274): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void erase_player() {
 ^
 static 
-main.c(280): warning: no previous prototype for function 'draw_box' [-Wmissing-prototypes]
+main.c(281): warning: no previous prototype for function 'draw_box' [-Wmissing-prototypes]
 void draw_box(coordinate current_box) {
      ^
-main.c(280): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(281): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void draw_box(coordinate current_box) {
 ^
 static 
-main.c(289): warning: no previous prototype for function 'erase_box' [-Wmissing-prototypes]
+main.c(290): warning: no previous prototype for function 'erase_box' [-Wmissing-prototypes]
 void erase_box(coordinate current_box) {
      ^
-main.c(289): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(290): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void erase_box(coordinate current_box) {
 ^
 static 
-main.c(298): warning: no previous prototype for function 'update_score' [-Wmissing-prototypes]
+main.c(299): warning: no previous prototype for function 'update_score' [-Wmissing-prototypes]
 void update_score() {
      ^
-main.c(298): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(299): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void update_score() {
 ^
 static 
-main.c(316): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+main.c(317): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
             box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
                        ^
-main.c(308): warning: no previous prototype for function 'collision_detection' [-Wmissing-prototypes]
+main.c(309): warning: no previous prototype for function 'collision_detection' [-Wmissing-prototypes]
 void collision_detection() {
      ^
-main.c(308): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(309): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void collision_detection() {
 ^
 static 
-main.c(323): warning: no previous prototype for function 'draw_playing_field' [-Wmissing-prototypes]
+main.c(324): warning: no previous prototype for function 'draw_playing_field' [-Wmissing-prototypes]
 void draw_playing_field() {
      ^
-main.c(323): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(324): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void draw_playing_field() {
 ^
 static 
-main.c(330): warning: no previous prototype for function 'box_controller' [-Wmissing-prototypes]
+main.c(331): warning: no previous prototype for function 'box_controller' [-Wmissing-prototypes]
 void box_controller() {
      ^
-main.c(330): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(331): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void box_controller() {
 ^
 static 
-main.c(353): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
-        box[1].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
-                   ^
-main.c(357): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
-        box[2].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
-                   ^
-main.c(350): warning: no previous prototype for function 'progress_controller' [-Wmissing-prototypes]
+main.c(354): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+        rand();
+        ^
+main.c(359): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+        rand();
+        ^
+main.c(351): warning: no previous prototype for function 'progress_controller' [-Wmissing-prototypes]
 void progress_controller() {
      ^
-main.c(350): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(351): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void progress_controller() {
 ^
 static 
-main.c(362): warning: no previous prototype for function 'control_game' [-Wmissing-prototypes]
+main.c(365): warning: no previous prototype for function 'control_game' [-Wmissing-prototypes]
 void control_game() {
      ^
-main.c(362): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(365): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void control_game() {
 ^
 static 
-main.c(426): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+main.c(429): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
         box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
                    ^
-main.c(454): warning: passing 'const unsigned char [1024]' to parameter of type 'unsigned char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+main.c(457): warning: passing 'const unsigned char [1024]' to parameter of type 'unsigned char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
                 draw_LCD(sky_fall_logo);
                          ^~~~~~~~~~~~~
 ../Library/NUC1xx-LB_002/Include\LCD.h(40): note: passing argument to parameter 'buffer' here
 extern void draw_LCD(unsigned char *buffer);
                                     ^
-main.c(505): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+main.c(508): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
             default:
             ^
-main.c(485): warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+main.c(488): warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
             case main_game: 
             ^
-main.c(485): note: insert '__attribute__((fallthrough));' to silence this warning
+main.c(488): note: insert '__attribute__((fallthrough));' to silence this warning
             case main_game: 
             ^
             __attribute__((fallthrough)); 
-main.c(485): note: insert 'break;' to avoid fall-through
+main.c(488): note: insert 'break;' to avoid fall-through
             case main_game: 
             ^
             break; 
@@ -339,43 +305,33 @@ coordinate box[MAX_BOX_AMOUNT];
 main.c(255): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 coordinate box[MAX_BOX_AMOUNT];
 ^
-main.c(258): warning: no previous extern declaration for non-static variable 'player' [-Wmissing-variable-declarations]
+main.c(259): warning: no previous extern declaration for non-static variable 'player' [-Wmissing-variable-declarations]
 player_info player;
             ^
-main.c(258): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+main.c(259): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 player_info player;
 ^
-main.c(260): warning: no previous extern declaration for non-static variable 'game_state' [-Wmissing-variable-declarations]
+main.c(261): warning: no previous extern declaration for non-static variable 'game_state' [-Wmissing-variable-declarations]
 STATES game_state;
        ^
-main.c(260): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+main.c(261): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 STATES game_state;
 ^
-main.c(263): warning: no previous extern declaration for non-static variable 'score' [-Wmissing-variable-declarations]
+main.c(262): warning: no previous extern declaration for non-static variable 'i' [-Wmissing-variable-declarations]
+int i, key_pressed = 0, game_pad = 0;
+    ^
+main.c(262): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int i, key_pressed = 0, game_pad = 0;
+^
+main.c(264): warning: no previous extern declaration for non-static variable 'score' [-Wmissing-variable-declarations]
 int score;
     ^
-main.c(263): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+main.c(264): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 int score;
 ^
-68 warnings generated.
+70 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=4184 RO-data=1740 RW-data=1076 ZI-data=2432  
-".\Objects\Question2.axf" - 0 Error(s), 68 Warning(s).
-
-<h2>Software Packages used:</h2>
-
-Package Vendor: Nuvoton
-                https://www.nuvoton.com/enu/Documents/KEILSoftwarePack/Nuvoton.NuMicro_DFP.1.3.12.pack
-                Nuvoton.NuMicro_DFP.1.3.12
-                Nuvoton ARM Cortex-M NuMicro Family Device Support
-
-<h2>Collection of Component include folders:</h2>
-  .\RTE\_Target_1
-  C:\Tom\Keil MDK\Pack\Nuvoton\NuMicro_DFP\1.3.12\Device\NUC100\Include
-
-<h2>Collection of Component Files used:</h2>
+Program Size: Code=4224 RO-data=1740 RW-data=1076 ZI-data=2440  
+".\Objects\Question2.axf" - 0 Error(s), 70 Warning(s).
 Build Time Elapsed:  00:00:01
-</pre>
-</body>
-</html>
