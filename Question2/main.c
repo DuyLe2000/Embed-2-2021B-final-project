@@ -18,9 +18,7 @@
 
 // Timer CMPR value
 #define DEBOUNCE_DELAY 2399999 // 200 ms
-#define EASY_FALL_DELAY 9599999 // 800ms
-#define MEDIUM_FALL_DELAY 8399999 // 700 ms
-#define HARD_FALL_DELAY 5999999 // 500 ms
+#define FALL_DELAY 7199999 // 600ms
 
 // Game related definition
 #define MAX_BOX_AMOUNT 3
@@ -29,15 +27,37 @@
 #define BOX_WIDTH 2 // Actual width is 3
 #define BOX_MOVE_RATE 2
 #define MIN_BOX_START_X 1
-#define MAX_BOX_START_X 125
-#define MIN_BOX_START_Y 0
-#define MAX_BOX_START_Y 7
+#define MAX_BOX_START_X 124
+#define MIN_BOX_START_Y 9
+#define MAX_BOX_START_Y 9
 
-#define PLAYER_HEIGHT 2 // Actual height is 3
-#define PLAYER_WIDTH 7 // Actual width is 6
+#define PLAYER_HEIGHT 1 // Actual height is 2
+#define PLAYER_WIDTH 5 // Actual width is 6
 #define PLAYER_INITIAL_X 1
-#define PLAYER_INITIAL_Y 59
+#define PLAYER_INITIAL_Y 60 // 59
 #define PLAYER_STEP 6
+
+typedef enum {
+    welcome_screen,
+    game_rules,
+    game_initialize,
+    main_game,
+    pause,
+    end_game
+} STATES;
+
+typedef struct coordinate_s {
+    int x;
+    int y;
+} coordinate;
+
+typedef struct player_info_s {
+    int x;
+    int y;
+    int dx;
+    int dy;
+    int step;
+} player_info;
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions declaration
@@ -52,6 +72,18 @@ void LCD_SetAddress(int PageAddr, int ColumnAddr);
 void KeyPadEnable(void);
 int KeyPadScanning(void);
 void Timer_Config(void);
+
+void draw_player(void);
+void erase_player(void);
+void draw_box(coordinate current_box);
+void erase_box(coordinate current_box);
+void update_score(void);
+void collision_detection(void);
+void draw_playing_field(void);
+void box_controller(void);
+void progress_controller(void);
+void control_game(void);
+void pause_game(void);
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions definition
@@ -221,7 +253,7 @@ void Timer_Config(void) {
     TIMER1->TCSR &= ~(0xFFu << 0); // Set prescale to 0
     TIMER1->TCSR &= ~(1u << 24);
     TIMER1->TCSR |= (1 << 16);
-    TIMER1->TCMPR = HARD_FALL_DELAY;
+    TIMER1->TCMPR = FALL_DELAY;
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -231,37 +263,18 @@ void Timer_Config(void) {
 /**
  * These are the variables used by the game
  */
-typedef enum {
-    welcome_screen,
-    game_rules,
-    game_background,
-    main_game,
-    end_game
-} STATES;
+static coordinate box[MAX_BOX_AMOUNT];
+static int box_count = 1;
 
-typedef struct coordinate_s {
-    int x;
-    int y;
-} coordinate;
+static player_info player;
 
-typedef struct player_info_s {
-    int x;
-    int y;
-    int dx;
-    int dy;
-    int step;
-} player_info;
+static STATES game_state;
+static int key_pressed = 0, game_pad = 0;
 
-coordinate box[MAX_BOX_AMOUNT];
-int box_count = 1;
-
-player_info player;
-
-STATES game_state;
-int key_pressed = 0, game_pad = 0;
-
-int score;
-char score_txt[] = "0";
+static int score;
+static char score_txt[] = "0";
+static int high_score;
+static char high_score_txt[] = "0";
 
 void draw_player() {
     /**
@@ -314,7 +327,8 @@ void collision_detection() {
                 && box[i].y < player.y + PLAYER_HEIGHT && box[i].y + BOX_WIDTH >= player.y) {
             erase_box(box[i]);
             box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
-            box[i].y = rand() % (MIN_BOX_START_X + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y;
+            box[i].y = rand() % (MIN_BOX_START_Y + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y;
+            draw_box(box[i]);
             update_score();
         }
     }
@@ -340,22 +354,22 @@ void box_controller() {
         // Condition to stop falling when reached the bottom
         if ((box[i].y + BOX_WIDTH) >= (SCREEN_Y_MAX - 1)) {
             game_state = end_game;
-            break;
+            return;
         }
         draw_box(box[i]);
-        collision_detection();
     }
+    collision_detection();
 }
 
 void progress_controller() {
     if (score == 2 && box_count == 1) {
         box_count++;
         box[1].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
-        box[1].y = rand() % (MIN_BOX_START_X + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y - 32;
+        box[1].y = rand() % (MIN_BOX_START_Y + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y - 28;
     } else if (score == 5 && box_count == 2) {
         box_count++;
         box[2].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
-        box[2].y = rand() % (MIN_BOX_START_X + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y - 80;
+        box[2].y = rand() % (MIN_BOX_START_Y + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y - 14;
     }
 }
 
@@ -363,6 +377,7 @@ void control_game() {
     /**
      * Game controller
     */
+    progress_controller();
     draw_playing_field();
     draw_player();
     game_pad = KeyPadScanning();
@@ -396,14 +411,27 @@ void control_game() {
             player.x = SCREEN_X_MAX - 1 - PLAYER_WIDTH;
         }
         draw_player();
+    } else if (game_pad == 1) {
+        TIMER1->TCSR &= ~(1 << 30);
+        game_state = pause;
+        return;
     }
 
     if (!(TIMER1->TCSR & (1 << 30))) {
         box_controller();
         TIMER1->TCSR |= (1 << 30);
     }
+}
 
-    progress_controller();
+void pause_game() {
+    printS_5x7(90, 0, "Paused!");
+    game_pad = KeyPadScanning();
+    while (game_pad != 1) {
+        game_pad = KeyPadScanning();
+    }
+    printS_5x7(90, 0, "       ");
+    game_state = main_game;
+    TIMER1->TCSR |= (1 << 30);
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -413,18 +441,6 @@ int main(void) {
     game_state = welcome_screen; // The initial state of the game
     score = 0;
 
-    player.x = PLAYER_INITIAL_X;
-    player.y = PLAYER_INITIAL_Y;
-    player.dx = 0;
-    player.dy = 0;
-    player.step = PLAYER_STEP;
-
-    box_count = 1;
-
-    for (int i = 0; i < MAX_BOX_AMOUNT; i++) {
-        box[i].y = BOX_START_Y;
-        box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
-    }
     //--------------------------------
     //System initialization
     //--------------------------------
@@ -440,13 +456,7 @@ int main(void) {
     //--------------------------------
     LCD_start();
     LCD_clear();
-    //--------------------------------
-    //LCD static content for testing and debugging 
-    //--------------------------------
 
-    //--------------------------------
-    //LCD dynamic content
-    //--------------------------------
     while (1){
         switch (game_state){
             case welcome_screen:
@@ -461,34 +471,48 @@ int main(void) {
             case game_rules:
                 // game_rules state code here
                 printS_5x7(1, 0, "Use Keypad to control");
-                printS_5x7(1, 8, "2: UP 4: LEFT");
-                printS_5x7(1, 16, "6: RIGHT 8: DOWN");
-                printS_5x7(1, 32, "Eat all boxes to win");
+                printS_5x7(1, 8, "4: LEFT 6: RIGHT");
+                printS_5x7(1, 16, "1: PAUSE/UNPAUSE");
+                printS_5x7(1, 32, "Catch as many box as");
+                printS_5x7(1, 40, "possible");
                 printS_5x7(1, 56, "press any key to continue!");
                 while (key_pressed == 0)
                     key_pressed = KeyPadScanning();
                 key_pressed = 0;
                 LCD_clear();
-                game_state = game_background;
+                game_state = game_initialize;
                 break;
-            case game_background:
-                // static display information should be here
+            case game_initialize:
+                // Game initialization
+                // Game state initialization
+                player.x = PLAYER_INITIAL_X;
+                player.y = PLAYER_INITIAL_Y;
+                player.dx = 0;
+                player.dy = 0;
+                player.step = PLAYER_STEP;
+                score = 0;
+                box_count = 1;
+                for (int i = 0; i < MAX_BOX_AMOUNT; i++) {
+                    box[i].y = BOX_START_Y;
+                    box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
+                }
+
+                // Drawing static content out side of playing area
+                clear_LCD();
                 sprintf(score_txt, "%d", score);
                 printS_5x7(5, 0, "Score: ");
                 printS_5x7(48, 0, score_txt);
                 draw_playing_field();
-                game_state = main_game;
-                // fill_Rectangle(snake_head_x_coor, snake_head_y_coor, snake_head_x_coor + snake_width, snake_head_y_coor + snake_width, 1, 0);
+
+                TIMER1->TCSR |= (1 << 26);
                 TIMER1->TCSR |= (1 << 30);
-                draw_box(box[0]);
-                // fill_Rectangle(falling_food_x_origin, falling_food_y_origin, falling_food_x_origin + falling_food_width, falling_food_y_origin + falling_food_width, 1, 0);
+                game_state = main_game;
+                break;
             case main_game: 
-                /*
-                    The main control of the game
-                    is now defined in the function below
-                    for easier development, testing and implementation
-                */  
                 control_game();
+                break;
+            case pause:
+                pause_game();                
                 break;
             case end_game:
                 //end_game code here
@@ -496,6 +520,20 @@ int main(void) {
                 draw_LCD(gameover_128x64);
                 for (int i = 0; i < 2; i++)
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
+                
+                clear_LCD();
+                if (score > high_score) {
+                    score = high_score;
+                    printS_5x7(12, 40, "New high score!");
+                }
+                sprintf(high_score_txt, "%d", high_score);
+                sprintf(score_txt, "%d", score);
+                printS_5x7(10, 16, "High Score: ");
+                printS_5x7(78, 16, high_score_txt);
+                printS_5x7(10, 24, "Score: ");
+                printS_5x7(53, 24, score_txt);
+                printS_5x7(1, 56, "press any key to continue!");
+
                 while (key_pressed == 0)
                     key_pressed = KeyPadScanning();
                 key_pressed = 0;
