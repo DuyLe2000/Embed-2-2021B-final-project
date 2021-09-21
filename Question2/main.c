@@ -268,6 +268,9 @@ void Timer_Config(void) {
 static coordinate box[MAX_BOX_AMOUNT];
 static int box_count = 1;
 
+static coordinate dead_box;
+static int dead_box_spawn = 0;
+
 static player_info player;
 
 static STATES game_state;
@@ -310,6 +313,15 @@ void erase_box(coordinate current_box) {
     }
 }
 
+void draw_dead_box(coordinate current_box) {
+    /**
+     * Draw dead box inside the playing field
+    */
+    if (current_box.y > SCREEN_Y_MIN) {
+        draw_Rectangle(current_box.x, current_box.y, current_box.x + BOX_WIDTH, current_box.y + BOX_WIDTH, 1, 0);
+    }
+}
+
 void update_score() {
     /**
      * Update player score when box collide with player
@@ -332,6 +344,14 @@ void collision_detection() {
             box[i].y = rand() % (MIN_BOX_START_Y + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y;
             draw_box(box[i]);
             update_score();
+        }
+    }
+
+    if (dead_box_spawn) {
+        if (dead_box.x + BOX_WIDTH >= player.x && dead_box.x <= player.x + PLAYER_WIDTH 
+                && dead_box.y < player.y + PLAYER_HEIGHT && dead_box.y + BOX_WIDTH >= player.y) {
+            game_state = end_game;
+            return;
         }
     }
 }
@@ -360,6 +380,20 @@ void box_controller() {
         }
         draw_box(box[i]);
     }
+
+    if (dead_box_spawn == 1) {
+        erase_box(dead_box);
+    
+        dead_box.y += BOX_MOVE_RATE; // Update food coordinates
+
+        // Condition to stop falling when reached the bottom
+        if ((dead_box.y + BOX_WIDTH) >= (SCREEN_Y_MAX - 1)) {
+            dead_box.x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
+            dead_box.y = rand() % (MIN_BOX_START_Y + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y;
+        }
+        draw_dead_box(dead_box);
+    }
+
     collision_detection();
 }
 
@@ -372,6 +406,12 @@ void progress_controller() {
         box_count++;
         box[2].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
         box[2].y = rand() % (MIN_BOX_START_Y + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y - 14;
+    }
+
+    if (score == 2 && dead_box_spawn == 0) {
+        dead_box_spawn = 1;
+        dead_box.x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
+        dead_box.y = rand() % (MIN_BOX_START_Y + 1 - MAX_BOX_START_Y) + MIN_BOX_START_Y - 14;
     }
 }
 
@@ -502,6 +542,7 @@ int main(void) {
                 player.dy = 0;
                 player.step = PLAYER_STEP;
                 box_count = 1;
+                dead_box_spawn = 0;
                 for (int i = 0; i < MAX_BOX_AMOUNT; i++) {
                     box[i].y = BOX_START_Y;
                     box[i].x = BOX_START_X;
@@ -534,7 +575,7 @@ int main(void) {
                 sprintf(high_score_txt, "%d", high_score);
                 sprintf(score_txt, "%d", score);
                 printS_5x7(10, 16, "High Score: ");
-                printS_5x7(78, 16, high_score_txt);
+                printS_5x7(80, 16, high_score_txt);
                 printS_5x7(10, 24, "Score: ");
                 printS_5x7(53, 24, score_txt);
                 printS_5x7(1, 56, "press any key to continue!");
