@@ -3,21 +3,17 @@
         {
             "name": "Target 1",
             "includePath": [
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\CMSIS\\Include",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\NUC1xx-LB_002\\Include",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\NUC100Series\\Include",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\NuMakerLib\\Include",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\StdDriver\\Include",
-                "C:\\Tom\\Keil MDK\\Program\\ARM\\ARMCLANG\\include",
-                "C:\\Tom\\Keil MDK\\Program\\ARM\\ARMCLANG\\include\\arm_linux",
-                "C:\\Tom\\Keil MDK\\Program\\ARM\\ARMCLANG\\include\\arm_linux_compat",
-                "C:\\Tom\\Keil MDK\\Program\\ARM\\ARMCLANG\\include\\libcxx",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\NUC100Series\\Source",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\NUC100Series\\Source\\ARM",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\NuMakerLib\\Source",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\StdDriver\\Source",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Library\\NUC1xx-LB_002\\Source",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project\\Question2"
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\CMSIS\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\NUC1xx-LB_002\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\NUC100Series\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\NuMakerLib\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\StdDriver\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\NUC100Series\\Source",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\NUC100Series\\Source\\ARM",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\NuMakerLib\\Source",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\StdDriver\\Source",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Library\\NUC1xx-LB_002\\Source",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder\\Question2"
             ],
             "defines": [
                 "__alignof__(x)=",

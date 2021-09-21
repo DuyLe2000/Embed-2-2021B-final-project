@@ -425,7 +425,7 @@ void control_game() {
     draw_player();
     game_pad = KeyPadScanning();
     if (game_pad == 4 || game_pad == 6) {
-        // Erase snake head upon movement
+        // Erase player character upon movement
         erase_player();
 
         // Check direction changes

@@ -3,21 +3,17 @@
         {
             "name": "Target 1",
             "includePath": [
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\CMSIS\\Include",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\NUC1xx-LB_002\\Include",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\NUC100Series\\Include",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\NuMakerLib\\Include",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\StdDriver\\Include",
-                "C:\\Tom\\Keil MDK\\Program\\ARM\\ARMCLANG\\include",
-                "C:\\Tom\\Keil MDK\\Program\\ARM\\ARMCLANG\\include\\arm_linux",
-                "C:\\Tom\\Keil MDK\\Program\\ARM\\ARMCLANG\\include\\arm_linux_compat",
-                "C:\\Tom\\Keil MDK\\Program\\ARM\\ARMCLANG\\include\\libcxx",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\NUC100Series\\Source",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\NUC100Series\\Source\\ARM",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\StdDriver\\Source",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\NUC1xx-LB_002\\Source",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\2_Tutorial Keil Projects\\0_Library\\NuMakerLib\\Source",
-                "c:\\Tom\\RMIT\\OneDrive - RMIT University\\9. Embedded System Design and Implementation\\Assignment\\Final Assignment\\Embed-2-2021B-final-project"
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\CMSIS\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\NUC1xx-LB_002\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\NUC100Series\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\NuMakerLib\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\StdDriver\\Include",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\NUC100Series\\Source",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\NUC100Series\\Source\\ARM",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\StdDriver\\Source",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\NUC1xx-LB_002\\Source",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\2_Tutorial Keil Projects\\0_Library\\NuMakerLib\\Source",
+                "c:\\Users\\Duy\\Desktop\\RMIT\\Sem 9\\1_Embed 2 D and I\\3_Assignments\\4. Final\\Code folder"
             ],
             "defines": [
                 "__alignof__(x)=",

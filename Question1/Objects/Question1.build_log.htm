@@ -22,7 +22,7 @@ Dialog DLL:      TARMCM1.DLL V1.14.2.0
  
 <h2>Project:</h2>
 C:\Users\Duy\Desktop\RMIT\Sem 9\1_Embed 2 D and I\3_Assignments\4. Final\Code folder\Question1\Question1.uvprojx
-Project File Date:  09/15/2021
+Project File Date:  09/21/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.14', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
@@ -148,38 +148,38 @@ main.c(3): warning: In file included from...
 #include "ACMP.h"
          ^~~~~~~~
          "acmp.h"
-main.c(244): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+main.c(203): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
             default:
             ^
-main.c(292): warning: '&' within '|' [-Wbitwise-op-parentheses]
+main.c(251): warning: '&' within '|' [-Wbitwise-op-parentheses]
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
                      ~ ~~~~~~~~~~~~~~~~~~^~~~~
-main.c(292): note: place parentheses around the '&' expression to silence this warning
+main.c(251): note: place parentheses around the '&' expression to silence this warning
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
                                          ^
                        (                      )
-main.c(376): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
+main.c(347): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
     CLK->CLKSEL1 &= ~(0b111 << 8);
                       ^
-main.c(376): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+main.c(347): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
     CLK->CLKSEL1 &= ~(0b111 << 8);
                  ~~ ^~~~~~~~~~~~~
-main.c(380): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
+main.c(351): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
     CLK->CLKSEL1 &= ~(0b111 << 12);
                       ^
-main.c(380): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+main.c(351): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
     CLK->CLKSEL1 &= ~(0b111 << 12);
                  ~~ ^~~~~~~~~~~~~~
-main.c(384): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
+main.c(355): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
     CLK->CLKSEL1 &= ~(0b111 << 16);
                       ^
-main.c(384): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+main.c(355): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
     CLK->CLKSEL1 &= ~(0b111 << 16);
                  ~~ ^~~~~~~~~~~~~~
 36 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=2788 RO-data=804 RW-data=44 ZI-data=1120  
+Program Size: Code=2720 RO-data=756 RW-data=0 ZI-data=1120  
 ".\Objects\Question1.axf" - 0 Error(s), 36 Warning(s).
 
 <h2>Software Packages used:</h2>
