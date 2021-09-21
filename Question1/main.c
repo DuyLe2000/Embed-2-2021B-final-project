@@ -6,6 +6,8 @@
 #include "LCD.h"
 #include "Draw2D.h"
 
+#define CLK_CHOICE 12 // 12 MHz or 50 MHz
+
 //------------------------------------------------------------------------------------------------------------------------------------
 // Functions declaration
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -326,6 +328,9 @@ void System_Config(void) {
     while (!(CLK->CLKSTATUS & (1ul << 1)));
     CLK->PWRCON |= (0x01ul << 0);
     while (!(CLK->CLKSTATUS & (1ul << 0)));
+    
+    CLK->CLKSEL0 &= (~(0x07ul << 0));
+#if CLK_CHOICE == 50   
     //PLL configuration starts
     CLK->PLLCON &= ~(1ul << 19); //0: PLL input is HXT
     CLK->PLLCON &= ~(1ul << 16); //PLL in normal mode
@@ -335,8 +340,10 @@ void System_Config(void) {
     while (!(CLK->CLKSTATUS & (0x01ul << 2)));
     //PLL configuration ends
     //clock source selection
-    CLK->CLKSEL0 &= (~(0x07ul << 0));
     CLK->CLKSEL0 |= (0x02ul << 0); // 50 Mhz
+#else 
+    CLK->CLKSEL0 &= ~(0x03ul << 0); // 12 Mhz
+#endif
     //clock frequency division
     CLK->CLKDIV &= (~0x0Ful << 0);
     //enable clock of SPI3

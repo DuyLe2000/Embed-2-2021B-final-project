@@ -10,6 +10,7 @@
 
 #define SYSTICK_DLAY_us 1000000
 #define FALLING_DLAY_us 800000
+#define CLK_CHOICE 12 // 12 or 50 MHz
 
 #define SCREEN_X_MAX 127
 #define SCREEN_Y_MAX 63
@@ -23,7 +24,7 @@
 // Game related definition
 #define MAX_BOX_AMOUNT 3
 #define BOX_START_Y 9
-#define BOX_START_X 80
+#define BOX_START_X 20
 #define BOX_WIDTH 2 // Actual width is 3
 #define BOX_MOVE_RATE 2
 #define MIN_BOX_START_X 1
@@ -191,23 +192,24 @@ void System_Config(void){
     // Enable clock sources
     //LXT - External Low frequency Crystal 32 kHz
     CLK->PWRCON |= (0x01ul << 1);
-    while (!(CLK->CLKSTATUS & (1ul << 1)))
-        ;
+    while (!(CLK->CLKSTATUS & (1ul << 1)));
     CLK->PWRCON |= (0x01ul << 0);
-    while (!(CLK->CLKSTATUS & (1ul << 0)))
-        ;
-    //PLL configuration starts
+    while (!(CLK->CLKSTATUS & (1ul << 0)));
+    CLK->CLKSEL0 &= (~(0x07ul << 0));
+
+#if CLK_CHOICE == 50
+    //PLL configuration
     CLK->PLLCON &= ~(1ul << 19); //0: PLL input is HXT
     CLK->PLLCON &= ~(1ul << 16); //PLL in normal mode
     CLK->PLLCON &= (~(0x01FFul << 0));
     CLK->PLLCON |= 48;
     CLK->PLLCON &= ~(1ul << 18); //0: enable PLLOUT
-    while (!(CLK->CLKSTATUS & (0x01ul << 2)))
-        ;
-    //PLL configuration ends
-    //clock source selection
-    CLK->CLKSEL0 &= (~(0x07ul << 0));
+    while (!(CLK->CLKSTATUS & (0x01ul << 2)));
     CLK->CLKSEL0 |= (0x02ul << 0);
+#else
+    CLK->CLKSEL0 &= ~(0x03ul << 0);
+#endif
+
     //clock frequency division
     CLK->CLKDIV &= (~0x0Ful << 0);
     //enable clock of SPI3
@@ -379,6 +381,7 @@ void control_game() {
     */
     progress_controller();
     draw_playing_field();
+    //fill_Rectangle(SCREEN_X_MIN + 1, SCREEN_Y_MIN + 1, SCREEN_X_MAX - 1, SCREEN_Y_MAX - 1, 0, 0);
     draw_player();
     game_pad = KeyPadScanning();
     if (game_pad == 4 || game_pad == 6) {
@@ -440,6 +443,7 @@ void pause_game() {
 int main(void) {
     game_state = welcome_screen; // The initial state of the game
     score = 0;
+    high_score = 0;
 
     //--------------------------------
     //System initialization
@@ -462,7 +466,7 @@ int main(void) {
             case welcome_screen:
                 //welcome state code here
                 draw_LCD(sky_fall_logo);
-                for (int i = 0; i < 5; i++){
+                for (int i = 0; i < 3; i++){
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
                 }
                 LCD_clear();
@@ -485,23 +489,23 @@ int main(void) {
             case game_initialize:
                 // Game initialization
                 // Game state initialization
+                // Drawing static content out side of playing area
+                score = 0;
+                clear_LCD();
+                sprintf(score_txt, "%d", score);
+                printS_5x7(5, 0, "Score: ");
+                printS_5x7(48, 0, score_txt);
+
                 player.x = PLAYER_INITIAL_X;
                 player.y = PLAYER_INITIAL_Y;
                 player.dx = 0;
                 player.dy = 0;
                 player.step = PLAYER_STEP;
-                score = 0;
                 box_count = 1;
                 for (int i = 0; i < MAX_BOX_AMOUNT; i++) {
                     box[i].y = BOX_START_Y;
-                    box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
+                    box[i].x = BOX_START_X;
                 }
-
-                // Drawing static content out side of playing area
-                clear_LCD();
-                sprintf(score_txt, "%d", score);
-                printS_5x7(5, 0, "Score: ");
-                printS_5x7(48, 0, score_txt);
                 draw_playing_field();
 
                 TIMER1->TCSR |= (1 << 26);
@@ -518,12 +522,13 @@ int main(void) {
                 //end_game code here
                 //printS_5x7(1, 32, "press any key to replay!");
                 draw_LCD(gameover_128x64);
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 2; i++) {
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
+                }
                 
                 clear_LCD();
                 if (score > high_score) {
-                    score = high_score;
+                    high_score = score;
                     printS_5x7(12, 40, "New high score!");
                 }
                 sprintf(high_score_txt, "%d", high_score);
