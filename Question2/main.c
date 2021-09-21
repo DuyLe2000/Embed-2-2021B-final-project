@@ -523,7 +523,7 @@ int main(void) {
                 
                 clear_LCD();
                 if (score > high_score) {
-                    score = high_score;
+                    high_score = score;
                     printS_5x7(12, 40, "New high score!");
                 }
                 sprintf(high_score_txt, "%d", high_score);
