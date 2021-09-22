@@ -9,7 +9,6 @@
 #include "picture.h"
 
 #define SYSTICK_DLAY_us 1000000
-#define FALLING_DLAY_us 800000
 #define CLK_CHOICE 12 // 12 or 50 MHz
 
 #define SCREEN_X_MAX 127
