@@ -542,7 +542,7 @@ int main(void) {
                 player.dy = 0;
                 player.step = PLAYER_STEP;
                 box_count = 1;
-                dead_box_spawn = 0;
+                dead_box_spawn = 0;    
                 for (int i = 0; i < MAX_BOX_AMOUNT; i++) {
                     box[i].y = BOX_START_Y;
                     box[i].x = BOX_START_X;

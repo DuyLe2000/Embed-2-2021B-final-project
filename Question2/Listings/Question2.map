@@ -399,7 +399,7 @@ Section Cross References
     main.o(.text.main) refers to main.o(.data.gameover_128x64) for gameover_128x64
     main.o(.text.main) refers to main.o(.data..L_MergedGlobals) for [Anonymous Symbol]
     main.o(.text.main) refers to main.o(.rodata.str1.1) for .L.str
-    main.o(.text.main) refers to main.o(.rodata.sky_fall_logo) for sky_fall_logo
+    main.o(.text.main) refers to main.o(.data.sky_fall_logo) for sky_fall_logo
     main.o(.ARM.exidx.text.main) refers (Special) to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
     main.o(.ARM.exidx.text.main) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
     main.o(.ARM.exidx.text.main) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
@@ -412,21 +412,12 @@ Section Cross References
     main.o(.ARM.exidx.text.CLK_SysTickDelay) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
     main.o(.ARM.exidx.text.CLK_SysTickDelay) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
     main.o(.ARM.exidx.text.CLK_SysTickDelay) refers to main.o(.text.CLK_SysTickDelay) for [Anonymous Symbol]
-    main.o(.data.monster_128x64) refers (Special) to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
-    main.o(.data.monster_128x64) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
-    main.o(.data.monster_128x64) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
     main.o(.data.gameover_128x64) refers (Special) to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
     main.o(.data.gameover_128x64) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
     main.o(.data.gameover_128x64) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
-    main.o(.data.car_128x64) refers (Special) to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
-    main.o(.data.car_128x64) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
-    main.o(.data.car_128x64) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
-    main.o(.rodata.snake_game_intro) refers (Special) to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
-    main.o(.rodata.snake_game_intro) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
-    main.o(.rodata.snake_game_intro) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
-    main.o(.rodata.sky_fall_logo) refers (Special) to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
-    main.o(.rodata.sky_fall_logo) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
-    main.o(.rodata.sky_fall_logo) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
+    main.o(.data.sky_fall_logo) refers (Special) to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
+    main.o(.data.sky_fall_logo) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
+    main.o(.data.sky_fall_logo) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
     main.o(.rodata.str1.1) refers (Special) to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
     main.o(.rodata.str1.1) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
     main.o(.rodata.str1.1) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
@@ -784,12 +775,9 @@ Removing Unused input sections from the image.
     Removing main.o(.ARM.exidx.text.pause_game), (8 bytes).
     Removing main.o(.ARM.exidx.text.main), (8 bytes).
     Removing main.o(.ARM.exidx.text.CLK_SysTickDelay), (8 bytes).
-    Removing main.o(.data.monster_128x64), (8192 bytes).
-    Removing main.o(.data.car_128x64), (1024 bytes).
-    Removing main.o(.rodata.snake_game_intro), (1024 bytes).
     Removing main.o(.ARM.use_no_argv), (4 bytes).
 
-200 unused section(s) (total 18370 bytes) removed from the image.
+197 unused section(s) (total 8130 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1036,35 +1024,35 @@ Image Symbol Table
     __arm_cp.15_3                            0x000012c0   Number         4  main.o(.text.update_score)
     Font5x7                                  0x000012c4   Data         480  lcd.o(.rodata.Font5x7)
     [Anonymous Symbol]                       0x000012c4   Section        0  lcd.o(.rodata.Font5x7)
-    .L.str.1                                 0x000018a4   Data           8  main.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x000018a4   Section        0  main.o(.rodata.str1.1)
-    .L.str.9                                 0x000018ac   Data          27  main.o(.rodata.str1.1)
-    .L.str                                   0x000018c7   Data           3  main.o(.rodata.str1.1)
+    .L.str.1                                 0x000014a4   Data           8  main.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x000014a4   Section        0  main.o(.rodata.str1.1)
+    .L.str.9                                 0x000014ac   Data          27  main.o(.rodata.str1.1)
+    .L.str                                   0x000014c7   Data           3  main.o(.rodata.str1.1)
     [Anonymous Symbol]                       0x20000000   Section        0  system_nuc100series.o(.data..L_MergedGlobals)
     score_txt                                0x2000002c   Data           2  main.o(.data..L_MergedGlobals)
     [Anonymous Symbol]                       0x2000002c   Section        0  main.o(.data..L_MergedGlobals)
     high_score_txt                           0x2000002e   Data           2  main.o(.data..L_MergedGlobals)
     box_count                                0x20000030   Data           4  main.o(.data..L_MergedGlobals)
-    .bss                                     0x20000438   Section      228  rand.o(.bss)
-    .bss                                     0x2000051c   Section       96  libspace.o(.bss)
-    dead_box_spawn                           0x2000057c   Data           1  main.o(.bss..L_MergedGlobals.12)
-    [Anonymous Symbol]                       0x2000057c   Section        0  main.o(.bss..L_MergedGlobals.12)
-    game_state                               0x2000057d   Data           1  main.o(.bss..L_MergedGlobals.12)
-    player.1                                 0x20000580   Data           1  main.o(.bss..L_MergedGlobals.12)
-    player.4                                 0x20000584   Data           1  main.o(.bss..L_MergedGlobals.12)
-    score                                    0x20000588   Data           4  main.o(.bss..L_MergedGlobals.12)
-    game_pad                                 0x2000058c   Data           4  main.o(.bss..L_MergedGlobals.12)
-    high_score                               0x20000590   Data           4  main.o(.bss..L_MergedGlobals.12)
-    key_pressed                              0x20000594   Data           4  main.o(.bss..L_MergedGlobals.12)
-    player.0                                 0x20000598   Data           4  main.o(.bss..L_MergedGlobals.12)
-    dead_box.0                               0x2000059c   Data           4  main.o(.bss..L_MergedGlobals.12)
-    dead_box.1                               0x200005a0   Data           4  main.o(.bss..L_MergedGlobals.12)
-    box                                      0x200005a4   Data          24  main.o(.bss..L_MergedGlobals.12)
-    Heap_Mem                                 0x200009c0   Data           0  startup_nuc100series.o(HEAP)
-    Stack_Mem                                0x200009c0   Data        1024  startup_nuc100series.o(STACK)
-    HEAP                                     0x200009c0   Section        0  startup_nuc100series.o(HEAP)
-    STACK                                    0x200009c0   Section     1024  startup_nuc100series.o(STACK)
-    __initial_sp                             0x20000dc0   Data           0  startup_nuc100series.o(STACK)
+    .bss                                     0x20000838   Section      228  rand.o(.bss)
+    .bss                                     0x2000091c   Section       96  libspace.o(.bss)
+    dead_box_spawn                           0x2000097c   Data           1  main.o(.bss..L_MergedGlobals.12)
+    [Anonymous Symbol]                       0x2000097c   Section        0  main.o(.bss..L_MergedGlobals.12)
+    game_state                               0x2000097d   Data           1  main.o(.bss..L_MergedGlobals.12)
+    player.1                                 0x20000980   Data           1  main.o(.bss..L_MergedGlobals.12)
+    player.4                                 0x20000984   Data           1  main.o(.bss..L_MergedGlobals.12)
+    score                                    0x20000988   Data           4  main.o(.bss..L_MergedGlobals.12)
+    game_pad                                 0x2000098c   Data           4  main.o(.bss..L_MergedGlobals.12)
+    high_score                               0x20000990   Data           4  main.o(.bss..L_MergedGlobals.12)
+    key_pressed                              0x20000994   Data           4  main.o(.bss..L_MergedGlobals.12)
+    player.0                                 0x20000998   Data           4  main.o(.bss..L_MergedGlobals.12)
+    dead_box.0                               0x2000099c   Data           4  main.o(.bss..L_MergedGlobals.12)
+    dead_box.1                               0x200009a0   Data           4  main.o(.bss..L_MergedGlobals.12)
+    box                                      0x200009a4   Data          24  main.o(.bss..L_MergedGlobals.12)
+    Heap_Mem                                 0x20000dc0   Data           0  startup_nuc100series.o(HEAP)
+    Stack_Mem                                0x20000dc0   Data        1024  startup_nuc100series.o(STACK)
+    HEAP                                     0x20000dc0   Section        0  startup_nuc100series.o(HEAP)
+    STACK                                    0x20000dc0   Section     1024  startup_nuc100series.o(STACK)
+    __initial_sp                             0x200011c0   Data           0  startup_nuc100series.o(STACK)
 
     Global Symbols
 
@@ -1255,18 +1243,18 @@ Image Symbol Table
     printS_5x7                               0x000011e5   Thumb Code    40  lcd.o(.text.printS_5x7)
     progress_controller                      0x0000120d   Thumb Code   124  main.o(.text.progress_controller)
     update_score                             0x00001289   Thumb Code    60  main.o(.text.update_score)
-    sky_fall_logo                            0x000014a4   Data        1024  main.o(.rodata.sky_fall_logo)
-    Region$$Table$$Base                      0x000018cc   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x000018ec   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Base                      0x000014cc   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x000014ec   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_nuc100series.o(.data..L_MergedGlobals)
     CyclesPerUs                              0x20000004   Data           4  system_nuc100series.o(.data..L_MergedGlobals)
     PllClock                                 0x20000008   Data           4  system_nuc100series.o(.data..L_MergedGlobals)
     gau32ClkSrcTbl                           0x2000000c   Data          32  system_nuc100series.o(.data..L_MergedGlobals)
     gameover_128x64                          0x20000034   Data        1024  main.o(.data.gameover_128x64)
-    _random_number_data                      0x20000438   Data         228  rand.o(.bss)
-    __libspace_start                         0x2000051c   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x2000057c   Data           0  libspace.o(.bss)
-    DisplayBuffer                            0x200005bc   Data        1024  lcd.o(.bss.DisplayBuffer)
+    sky_fall_logo                            0x20000434   Data        1024  main.o(.data.sky_fall_logo)
+    _random_number_data                      0x20000838   Data         228  rand.o(.bss)
+    __libspace_start                         0x2000091c   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x2000097c   Data           0  libspace.o(.bss)
+    DisplayBuffer                            0x200009bc   Data        1024  lcd.o(.bss.DisplayBuffer)
 
 
 
@@ -1276,83 +1264,83 @@ Memory Map of the image
 
   Image Entry point : 0x00000195
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00001d20, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x00001ae4])
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00001d20, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x0000178c])
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000018ec, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000014ec, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000000   0x000000c0   Data   RO           16    RESET               startup_nuc100series.o
-    0x000000c0   0x000000c0   0x00000008   Code   RO          359  * !!!main             c_p.l(__main.o)
-    0x000000c8   0x000000c8   0x0000003c   Code   RO          547    !!!scatter          c_p.l(__scatter.o)
-    0x00000104   0x00000104   0x0000001c   Code   RO          549    !!handler_zi        c_p.l(__scatter_zi.o)
-    0x00000120   0x00000120   0x00000002   Code   RO          345    .ARM.Collect$$_printf_percent$$00000000  c_p.l(_printf_percent.o)
-    0x00000122   0x00000122   0x0000000a   Code   RO          344    .ARM.Collect$$_printf_percent$$00000009  c_p.l(_printf_d.o)
-    0x0000012c   0x0000012c   0x00000004   Code   RO          372    .ARM.Collect$$_printf_percent$$00000017  c_p.l(_printf_percent_end.o)
-    0x00000130   0x00000130   0x00000002   Code   RO          461    .ARM.Collect$$libinit$$00000000  c_p.l(libinit.o)
-    0x00000132   0x00000132   0x00000000   Code   RO          376    .ARM.Collect$$libinit$$00000002  c_p.l(libinit2.o)
-    0x00000132   0x00000132   0x00000000   Code   RO          378    .ARM.Collect$$libinit$$00000004  c_p.l(libinit2.o)
-    0x00000132   0x00000132   0x00000000   Code   RO          381    .ARM.Collect$$libinit$$0000000A  c_p.l(libinit2.o)
-    0x00000132   0x00000132   0x00000000   Code   RO          383    .ARM.Collect$$libinit$$0000000C  c_p.l(libinit2.o)
-    0x00000132   0x00000132   0x00000004   Code   RO          384    .ARM.Collect$$libinit$$0000000D  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          385    .ARM.Collect$$libinit$$0000000E  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          388    .ARM.Collect$$libinit$$00000011  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          390    .ARM.Collect$$libinit$$00000013  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          392    .ARM.Collect$$libinit$$00000015  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          394    .ARM.Collect$$libinit$$00000017  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          396    .ARM.Collect$$libinit$$00000019  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          398    .ARM.Collect$$libinit$$0000001B  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          400    .ARM.Collect$$libinit$$0000001D  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          402    .ARM.Collect$$libinit$$0000001F  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          404    .ARM.Collect$$libinit$$00000021  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          406    .ARM.Collect$$libinit$$00000023  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          408    .ARM.Collect$$libinit$$00000025  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          412    .ARM.Collect$$libinit$$0000002C  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          414    .ARM.Collect$$libinit$$0000002E  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          416    .ARM.Collect$$libinit$$00000030  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000000   Code   RO          418    .ARM.Collect$$libinit$$00000032  c_p.l(libinit2.o)
-    0x00000136   0x00000136   0x00000002   Code   RO          419    .ARM.Collect$$libinit$$00000033  c_p.l(libinit2.o)
-    0x00000138   0x00000138   0x00000002   Code   RO          512    .ARM.Collect$$libshutdown$$00000000  c_p.l(libshutdown.o)
-    0x0000013a   0x0000013a   0x00000000   Code   RO          528    .ARM.Collect$$libshutdown$$00000002  c_p.l(libshutdown2.o)
-    0x0000013a   0x0000013a   0x00000000   Code   RO          530    .ARM.Collect$$libshutdown$$00000004  c_p.l(libshutdown2.o)
-    0x0000013a   0x0000013a   0x00000000   Code   RO          533    .ARM.Collect$$libshutdown$$00000007  c_p.l(libshutdown2.o)
-    0x0000013a   0x0000013a   0x00000000   Code   RO          536    .ARM.Collect$$libshutdown$$0000000A  c_p.l(libshutdown2.o)
-    0x0000013a   0x0000013a   0x00000000   Code   RO          538    .ARM.Collect$$libshutdown$$0000000C  c_p.l(libshutdown2.o)
-    0x0000013a   0x0000013a   0x00000000   Code   RO          541    .ARM.Collect$$libshutdown$$0000000F  c_p.l(libshutdown2.o)
-    0x0000013a   0x0000013a   0x00000002   Code   RO          542    .ARM.Collect$$libshutdown$$00000010  c_p.l(libshutdown2.o)
-    0x0000013c   0x0000013c   0x00000000   Code   RO          361    .ARM.Collect$$rtentry$$00000000  c_p.l(__rtentry.o)
-    0x0000013c   0x0000013c   0x00000000   Code   RO          421    .ARM.Collect$$rtentry$$00000002  c_p.l(__rtentry2.o)
-    0x0000013c   0x0000013c   0x00000006   Code   RO          433    .ARM.Collect$$rtentry$$00000004  c_p.l(__rtentry4.o)
-    0x00000142   0x00000142   0x00000000   Code   RO          423    .ARM.Collect$$rtentry$$00000009  c_p.l(__rtentry2.o)
-    0x00000142   0x00000142   0x00000004   Code   RO          424    .ARM.Collect$$rtentry$$0000000A  c_p.l(__rtentry2.o)
-    0x00000146   0x00000146   0x00000000   Code   RO          426    .ARM.Collect$$rtentry$$0000000C  c_p.l(__rtentry2.o)
-    0x00000146   0x00000146   0x00000008   Code   RO          427    .ARM.Collect$$rtentry$$0000000D  c_p.l(__rtentry2.o)
-    0x0000014e   0x0000014e   0x00000002   Code   RO          470    .ARM.Collect$$rtexit$$00000000  c_p.l(rtexit.o)
-    0x00000150   0x00000150   0x00000000   Code   RO          492    .ARM.Collect$$rtexit$$00000002  c_p.l(rtexit2.o)
-    0x00000150   0x00000150   0x00000004   Code   RO          493    .ARM.Collect$$rtexit$$00000003  c_p.l(rtexit2.o)
-    0x00000154   0x00000154   0x00000006   Code   RO          494    .ARM.Collect$$rtexit$$00000004  c_p.l(rtexit2.o)
+    0x000000c0   0x000000c0   0x00000008   Code   RO          356  * !!!main             c_p.l(__main.o)
+    0x000000c8   0x000000c8   0x0000003c   Code   RO          544    !!!scatter          c_p.l(__scatter.o)
+    0x00000104   0x00000104   0x0000001c   Code   RO          546    !!handler_zi        c_p.l(__scatter_zi.o)
+    0x00000120   0x00000120   0x00000002   Code   RO          342    .ARM.Collect$$_printf_percent$$00000000  c_p.l(_printf_percent.o)
+    0x00000122   0x00000122   0x0000000a   Code   RO          341    .ARM.Collect$$_printf_percent$$00000009  c_p.l(_printf_d.o)
+    0x0000012c   0x0000012c   0x00000004   Code   RO          369    .ARM.Collect$$_printf_percent$$00000017  c_p.l(_printf_percent_end.o)
+    0x00000130   0x00000130   0x00000002   Code   RO          458    .ARM.Collect$$libinit$$00000000  c_p.l(libinit.o)
+    0x00000132   0x00000132   0x00000000   Code   RO          373    .ARM.Collect$$libinit$$00000002  c_p.l(libinit2.o)
+    0x00000132   0x00000132   0x00000000   Code   RO          375    .ARM.Collect$$libinit$$00000004  c_p.l(libinit2.o)
+    0x00000132   0x00000132   0x00000000   Code   RO          378    .ARM.Collect$$libinit$$0000000A  c_p.l(libinit2.o)
+    0x00000132   0x00000132   0x00000000   Code   RO          380    .ARM.Collect$$libinit$$0000000C  c_p.l(libinit2.o)
+    0x00000132   0x00000132   0x00000004   Code   RO          381    .ARM.Collect$$libinit$$0000000D  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          382    .ARM.Collect$$libinit$$0000000E  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          385    .ARM.Collect$$libinit$$00000011  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          387    .ARM.Collect$$libinit$$00000013  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          389    .ARM.Collect$$libinit$$00000015  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          391    .ARM.Collect$$libinit$$00000017  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          393    .ARM.Collect$$libinit$$00000019  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          395    .ARM.Collect$$libinit$$0000001B  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          397    .ARM.Collect$$libinit$$0000001D  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          399    .ARM.Collect$$libinit$$0000001F  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          401    .ARM.Collect$$libinit$$00000021  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          403    .ARM.Collect$$libinit$$00000023  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          405    .ARM.Collect$$libinit$$00000025  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          409    .ARM.Collect$$libinit$$0000002C  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          411    .ARM.Collect$$libinit$$0000002E  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          413    .ARM.Collect$$libinit$$00000030  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000000   Code   RO          415    .ARM.Collect$$libinit$$00000032  c_p.l(libinit2.o)
+    0x00000136   0x00000136   0x00000002   Code   RO          416    .ARM.Collect$$libinit$$00000033  c_p.l(libinit2.o)
+    0x00000138   0x00000138   0x00000002   Code   RO          509    .ARM.Collect$$libshutdown$$00000000  c_p.l(libshutdown.o)
+    0x0000013a   0x0000013a   0x00000000   Code   RO          525    .ARM.Collect$$libshutdown$$00000002  c_p.l(libshutdown2.o)
+    0x0000013a   0x0000013a   0x00000000   Code   RO          527    .ARM.Collect$$libshutdown$$00000004  c_p.l(libshutdown2.o)
+    0x0000013a   0x0000013a   0x00000000   Code   RO          530    .ARM.Collect$$libshutdown$$00000007  c_p.l(libshutdown2.o)
+    0x0000013a   0x0000013a   0x00000000   Code   RO          533    .ARM.Collect$$libshutdown$$0000000A  c_p.l(libshutdown2.o)
+    0x0000013a   0x0000013a   0x00000000   Code   RO          535    .ARM.Collect$$libshutdown$$0000000C  c_p.l(libshutdown2.o)
+    0x0000013a   0x0000013a   0x00000000   Code   RO          538    .ARM.Collect$$libshutdown$$0000000F  c_p.l(libshutdown2.o)
+    0x0000013a   0x0000013a   0x00000002   Code   RO          539    .ARM.Collect$$libshutdown$$00000010  c_p.l(libshutdown2.o)
+    0x0000013c   0x0000013c   0x00000000   Code   RO          358    .ARM.Collect$$rtentry$$00000000  c_p.l(__rtentry.o)
+    0x0000013c   0x0000013c   0x00000000   Code   RO          418    .ARM.Collect$$rtentry$$00000002  c_p.l(__rtentry2.o)
+    0x0000013c   0x0000013c   0x00000006   Code   RO          430    .ARM.Collect$$rtentry$$00000004  c_p.l(__rtentry4.o)
+    0x00000142   0x00000142   0x00000000   Code   RO          420    .ARM.Collect$$rtentry$$00000009  c_p.l(__rtentry2.o)
+    0x00000142   0x00000142   0x00000004   Code   RO          421    .ARM.Collect$$rtentry$$0000000A  c_p.l(__rtentry2.o)
+    0x00000146   0x00000146   0x00000000   Code   RO          423    .ARM.Collect$$rtentry$$0000000C  c_p.l(__rtentry2.o)
+    0x00000146   0x00000146   0x00000008   Code   RO          424    .ARM.Collect$$rtentry$$0000000D  c_p.l(__rtentry2.o)
+    0x0000014e   0x0000014e   0x00000002   Code   RO          467    .ARM.Collect$$rtexit$$00000000  c_p.l(rtexit.o)
+    0x00000150   0x00000150   0x00000000   Code   RO          489    .ARM.Collect$$rtexit$$00000002  c_p.l(rtexit2.o)
+    0x00000150   0x00000150   0x00000004   Code   RO          490    .ARM.Collect$$rtexit$$00000003  c_p.l(rtexit2.o)
+    0x00000154   0x00000154   0x00000006   Code   RO          491    .ARM.Collect$$rtexit$$00000004  c_p.l(rtexit2.o)
     0x0000015a   0x0000015a   0x00000002   PAD
-    0x0000015c   0x0000015c   0x00000038   Code   RO          346    .emb_text           c_p.l(rand.o)
+    0x0000015c   0x0000015c   0x00000038   Code   RO          343    .emb_text           c_p.l(rand.o)
     0x00000194   0x00000194   0x00000064   Code   RO           17  * .text               startup_nuc100series.o
-    0x000001f8   0x000001f8   0x00000028   Code   RO          318    .text               c_p.l(noretval__2sprintf.o)
-    0x00000220   0x00000220   0x0000006c   Code   RO          320    .text               c_p.l(__printf.o)
-    0x0000028c   0x0000028c   0x0000006c   Code   RO          322    .text               c_p.l(_printf_dec.o)
-    0x000002f8   0x000002f8   0x0000003c   Code   RO          347    .text               c_p.l(rand.o)
-    0x00000334   0x00000334   0x00000044   Code   RO          351    .text               c_p.l(strlen.o)
-    0x00000378   0x00000378   0x0000016c   Code   RO          353    .text               c_p.l(aeabi_sdiv.o)
-    0x000004e4   0x000004e4   0x00000006   Code   RO          357    .text               c_p.l(heapauxi.o)
-    0x000004ea   0x000004ea   0x000000b0   Code   RO          366    .text               c_p.l(_printf_intcommon.o)
+    0x000001f8   0x000001f8   0x00000028   Code   RO          315    .text               c_p.l(noretval__2sprintf.o)
+    0x00000220   0x00000220   0x0000006c   Code   RO          317    .text               c_p.l(__printf.o)
+    0x0000028c   0x0000028c   0x0000006c   Code   RO          319    .text               c_p.l(_printf_dec.o)
+    0x000002f8   0x000002f8   0x0000003c   Code   RO          344    .text               c_p.l(rand.o)
+    0x00000334   0x00000334   0x00000044   Code   RO          348    .text               c_p.l(strlen.o)
+    0x00000378   0x00000378   0x0000016c   Code   RO          350    .text               c_p.l(aeabi_sdiv.o)
+    0x000004e4   0x000004e4   0x00000006   Code   RO          354    .text               c_p.l(heapauxi.o)
+    0x000004ea   0x000004ea   0x000000b0   Code   RO          363    .text               c_p.l(_printf_intcommon.o)
     0x0000059a   0x0000059a   0x00000002   PAD
-    0x0000059c   0x0000059c   0x00000030   Code   RO          368    .text               c_p.l(_printf_char_common.o)
-    0x000005cc   0x000005cc   0x0000000a   Code   RO          370    .text               c_p.l(_sputc.o)
-    0x000005d6   0x000005d6   0x00000028   Code   RO          373    .text               c_p.l(rtudiv10.o)
-    0x000005fe   0x000005fe   0x0000003e   Code   RO          443    .text               c_p.l(sys_stackheap_outer.o)
-    0x0000063c   0x0000063c   0x00000010   Code   RO          446    .text               c_p.l(exit.o)
-    0x0000064c   0x0000064c   0x00000008   Code   RO          466    .text               c_p.l(libspace.o)
-    0x00000654   0x00000654   0x0000000c   Code   RO          484    .text               c_p.l(sys_exit.o)
-    0x00000660   0x00000660   0x00000002   Code   RO          488    .text               c_p.l(use_no_semi.o)
-    0x00000662   0x00000662   0x00000000   Code   RO          490    .text               c_p.l(indicate_semi.o)
-    0x00000662   0x00000662   0x00000056   Code   RO          545    .text               c_p.l(__dczerorl2.o)
+    0x0000059c   0x0000059c   0x00000030   Code   RO          365    .text               c_p.l(_printf_char_common.o)
+    0x000005cc   0x000005cc   0x0000000a   Code   RO          367    .text               c_p.l(_sputc.o)
+    0x000005d6   0x000005d6   0x00000028   Code   RO          370    .text               c_p.l(rtudiv10.o)
+    0x000005fe   0x000005fe   0x0000003e   Code   RO          440    .text               c_p.l(sys_stackheap_outer.o)
+    0x0000063c   0x0000063c   0x00000010   Code   RO          443    .text               c_p.l(exit.o)
+    0x0000064c   0x0000064c   0x00000008   Code   RO          463    .text               c_p.l(libspace.o)
+    0x00000654   0x00000654   0x0000000c   Code   RO          481    .text               c_p.l(sys_exit.o)
+    0x00000660   0x00000660   0x00000002   Code   RO          485    .text               c_p.l(use_no_semi.o)
+    0x00000662   0x00000662   0x00000000   Code   RO          487    .text               c_p.l(indicate_semi.o)
+    0x00000662   0x00000662   0x00000056   Code   RO          542    .text               c_p.l(__dczerorl2.o)
     0x000006b8   0x000006b8   0x0000002c   Code   RO          296    .text.CLK_SysTickDelay  main.o
     0x000006e4   0x000006e4   0x0000002a   Code   RO           32    .text.GPIO_SetMode  gpio.o
     0x0000070e   0x0000070e   0x00000002   PAD
@@ -1395,32 +1383,32 @@ Memory Map of the image
     0x0000120c   0x0000120c   0x0000007c   Code   RO          288    .text.progress_controller  main.o
     0x00001288   0x00001288   0x0000003c   Code   RO          280    .text.update_score  main.o
     0x000012c4   0x000012c4   0x000001e0   Data   RO          223    .rodata.Font5x7     lcd.o
-    0x000014a4   0x000014a4   0x00000400   Data   RO          302    .rodata.sky_fall_logo  main.o
-    0x000018a4   0x000018a4   0x00000026   Data   RO          303    .rodata.str1.1      main.o
-    0x000018ca   0x000018ca   0x00000002   PAD
-    0x000018cc   0x000018cc   0x00000020   Data   RO          544    Region$$Table       anon$$obj.o
+    0x000014a4   0x000014a4   0x00000026   Data   RO          300    .rodata.str1.1      main.o
+    0x000014ca   0x000014ca   0x00000002   PAD
+    0x000014cc   0x000014cc   0x00000020   Data   RO          541    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x000018ec, Size: 0x00000434, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000001f8])
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x000014ec, Size: 0x00000834, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000002a0])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000   COMPRESSED   0x0000002c   Data   RW            6    .data..L_MergedGlobals  system_nuc100series.o
-    0x2000002c   COMPRESSED   0x00000008   Data   RW          305    .data..L_MergedGlobals  main.o
-    0x20000034   COMPRESSED   0x00000400   Data   RW          299    .data.gameover_128x64  main.o
+    0x2000002c   COMPRESSED   0x00000008   Data   RW          302    .data..L_MergedGlobals  main.o
+    0x20000034   COMPRESSED   0x00000400   Data   RW          298    .data.gameover_128x64  main.o
+    0x20000434   COMPRESSED   0x00000400   Data   RW          299    .data.sky_fall_logo  main.o
 
 
-    Execution Region ER_ZI (Exec base: 0x20000438, Load base: 0x00001ae4, Size: 0x00000988, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x20000838, Load base: 0x0000178c, Size: 0x00000988, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000438        -       0x000000e4   Zero   RW          348    .bss                c_p.l(rand.o)
-    0x2000051c        -       0x00000060   Zero   RW          467    .bss                c_p.l(libspace.o)
-    0x2000057c        -       0x00000040   Zero   RW          306    .bss..L_MergedGlobals.12  main.o
-    0x200005bc        -       0x00000400   Zero   RW          222    .bss.DisplayBuffer  lcd.o
-    0x200009bc   0x00001ae4   0x00000004   PAD
-    0x200009c0        -       0x00000000   Zero   RW           15    HEAP                startup_nuc100series.o
-    0x200009c0        -       0x00000400   Zero   RW           14    STACK               startup_nuc100series.o
+    0x20000838        -       0x000000e4   Zero   RW          345    .bss                c_p.l(rand.o)
+    0x2000091c        -       0x00000060   Zero   RW          464    .bss                c_p.l(libspace.o)
+    0x2000097c        -       0x00000040   Zero   RW          303    .bss..L_MergedGlobals.12  main.o
+    0x200009bc        -       0x00000400   Zero   RW          222    .bss.DisplayBuffer  lcd.o
+    0x20000dbc   0x0000178c   0x00000004   PAD
+    0x20000dc0        -       0x00000000   Zero   RW           15    HEAP                startup_nuc100series.o
+    0x20000dc0        -       0x00000400   Zero   RW           14    STACK               startup_nuc100series.o
 
 
 ==============================================================================
@@ -1433,12 +1421,12 @@ Image component sizes
        236          0          0          0          0       3970   draw2d.o
         42          0          0          0          0       1492   gpio.o
        498         12        480          0       1024      16449   lcd.o
-      2294        290       1062       1032         64       8317   main.o
+      2294        290         38       2056         64       8189   main.o
        100         46        192          0       1024        736   startup_nuc100series.o
          2          0          0         44          0       2208   system_nuc100series.o
 
     ----------------------------------------------------------------------
-      3184        348       1768       1076       2116      33172   Object Totals
+      3184        348        744       2100       2116      33044   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         12          0          2          0          4          0   (incl. Padding)
 
@@ -1500,15 +1488,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      4612        418       1768       1076       2440      33916   Grand Totals
-      4612        418       1768        504       2440      33916   ELF Image Totals (compressed)
-      4612        418       1768        504          0          0   ROM Totals
+      4612        418        744       2100       2440      33788   Grand Totals
+      4612        418        744        672       2440      33788   ELF Image Totals (compressed)
+      4612        418        744        672          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 6380 (   6.23kB)
-    Total RW  Size (RW Data + ZI Data)              3516 (   3.43kB)
-    Total ROM Size (Code + RO Data + RW Data)       6884 (   6.72kB)
+    Total RO  Size (Code + RO Data)                 5356 (   5.23kB)
+    Total RW  Size (RW Data + ZI Data)              4540 (   4.43kB)
+    Total ROM Size (Code + RO Data + RW Data)       6028 (   5.89kB)
 
 ==============================================================================
 
