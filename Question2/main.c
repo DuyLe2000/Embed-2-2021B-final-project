@@ -421,7 +421,6 @@ void control_game() {
     */
     progress_controller();
     draw_playing_field();
-    //fill_Rectangle(SCREEN_X_MIN + 1, SCREEN_Y_MIN + 1, SCREEN_X_MAX - 1, SCREEN_Y_MAX - 1, 0, 0);
     draw_player();
     game_pad = KeyPadScanning();
     if (game_pad == 4 || game_pad == 6) {
