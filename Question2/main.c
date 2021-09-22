@@ -136,7 +136,7 @@ void KeyPadEnable(void){
 }
 int KeyPadScanning(void){
     /*
-        Add debounce. Each key can only be pressed after 600 ms
+        Add debounce. If a key is held down, it repeats itself after 200ms
     */
     PA0 = 1; PA1 = 1; PA2 = 0; PA3 = 1; PA4 = 1; PA5 = 1;
     if (!(TIMER0->TCSR & (1 << 30))) {
