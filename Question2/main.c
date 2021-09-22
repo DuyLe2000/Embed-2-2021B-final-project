@@ -9,7 +9,6 @@
 #include "picture.h"
 
 #define SYSTICK_DLAY_us 1000000
-#define FALLING_DLAY_us 800000
 #define CLK_CHOICE 12 // 12 or 50 MHz
 
 #define SCREEN_X_MAX 127
@@ -137,7 +136,7 @@ void KeyPadEnable(void){
 }
 int KeyPadScanning(void){
     /*
-        Add debounce. Each key can only be pressed after 600 ms
+        Add debounce. If a key is held down, it repeats itself after 200ms
     */
     PA0 = 1; PA1 = 1; PA2 = 0; PA3 = 1; PA4 = 1; PA5 = 1;
     if (!(TIMER0->TCSR & (1 << 30))) {
@@ -421,7 +420,6 @@ void control_game() {
     */
     progress_controller();
     draw_playing_field();
-    //fill_Rectangle(SCREEN_X_MIN + 1, SCREEN_Y_MIN + 1, SCREEN_X_MAX - 1, SCREEN_Y_MAX - 1, 0, 0);
     draw_player();
     game_pad = KeyPadScanning();
     if (game_pad == 4 || game_pad == 6) {
@@ -517,7 +515,7 @@ int main(void) {
                 printS_5x7(1, 0, "Use Keypad to control");
                 printS_5x7(1, 8, "4: LEFT 6: RIGHT");
                 printS_5x7(1, 16, "1: PAUSE/UNPAUSE");
-                printS_5x7(1, 32, "Catch as many box as");
+                printS_5x7(1, 32, "Catch as many boxes as");
                 printS_5x7(1, 40, "possible");
                 printS_5x7(1, 56, "press any key to continue!");
                 while (key_pressed == 0)
@@ -542,7 +540,7 @@ int main(void) {
                 player.dy = 0;
                 player.step = PLAYER_STEP;
                 box_count = 1;
-                dead_box_spawn = 0;
+                dead_box_spawn = 0;    
                 for (int i = 0; i < MAX_BOX_AMOUNT; i++) {
                     box[i].y = BOX_START_Y;
                     box[i].x = BOX_START_X;
@@ -561,7 +559,6 @@ int main(void) {
                 break;
             case end_game:
                 //end_game code here
-                //printS_5x7(1, 32, "press any key to replay!");
                 draw_LCD(gameover_128x64);
                 for (int i = 0; i < 2; i++) {
                     CLK_SysTickDelay(SYSTICK_DLAY_us);

@@ -150,102 +150,77 @@ main.c(3): warning: In file included from...
          "acmp.h"
 main.c(9): warning: In file included from...
 ./picture.h(4): warning: 'extern' variable has an initializer [-Wextern-initializer]
-extern unsigned char monster_128x64[128 * 64] = {
+extern unsigned char gameover_128x64[] = {
                      ^
-./picture.h(4): warning: no previous extern declaration for non-static variable 'monster_128x64' [-Wmissing-variable-declarations]
+./picture.h(4): warning: no previous extern declaration for non-static variable 'gameover_128x64' [-Wmissing-variable-declarations]
 ./picture.h(4): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-extern unsigned char monster_128x64[128 * 64] = {
-       ^
-./picture.h(14): warning: 'extern' variable has an initializer [-Wextern-initializer]
-extern unsigned char gameover_128x64[] = {
-                     ^
-./picture.h(14): warning: no previous extern declaration for non-static variable 'gameover_128x64' [-Wmissing-variable-declarations]
-./picture.h(14): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 extern unsigned char gameover_128x64[] = {
        ^
-./picture.h(24): warning: 'extern' variable has an initializer [-Wextern-initializer]
-extern unsigned char car_128x64[] = {
+./picture.h(15): warning: 'extern' variable has an initializer [-Wextern-initializer]
+extern unsigned char sky_fall_logo[]  = {
                      ^
-./picture.h(24): warning: no previous extern declaration for non-static variable 'car_128x64' [-Wmissing-variable-declarations]
-./picture.h(24): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-extern unsigned char car_128x64[] = {
+./picture.h(15): warning: no previous extern declaration for non-static variable 'sky_fall_logo' [-Wmissing-variable-declarations]
+./picture.h(15): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+extern unsigned char sky_fall_logo[]  = {
        ^
-./picture.h(91): warning: no previous extern declaration for non-static variable 'snake_game_intro' [-Wmissing-variable-declarations]
-const unsigned char snake_game_intro [] = {
-                    ^
-./picture.h(91): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-const unsigned char snake_game_intro [] = {
-      ^
-./picture.h(158): warning: no previous extern declaration for non-static variable 'sky_fall_logo' [-Wmissing-variable-declarations]
-const unsigned char sky_fall_logo[]  = {
-                    ^
-./picture.h(158): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-const unsigned char sky_fall_logo[]  = {
-      ^
-./picture.h(223): warning: no newline at end of file [-Wnewline-eof]
+./picture.h(80): warning: no newline at end of file [-Wnewline-eof]
 };
   ^
-main.c(126): warning: implicit conversion loses integer precision: 'int' to 'unsigned char' [-Wimplicit-int-conversion]
+main.c(125): warning: implicit conversion loses integer precision: 'int' to 'unsigned char' [-Wimplicit-int-conversion]
     LCD_command(0xB0 | PageAddr);
     ~~~~~~~~~~~ ~~~~~^~~~~~~~~~
-main.c(127): warning: '&' within '|' [-Wbitwise-op-parentheses]
+main.c(126): warning: '&' within '|' [-Wbitwise-op-parentheses]
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
                      ~ ~~~~~~~~~~~~~~~~~~^~~~~
-main.c(127): note: place parentheses around the '&' expression to silence this warning
+main.c(126): note: place parentheses around the '&' expression to silence this warning
     LCD_command(0x10 | (ColumnAddr >> 4) & 0xF);
                                          ^
                        (                      )
-main.c(220): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
+main.c(219): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
     CLK->CLKSEL1 &= ~(0b111 << 8);
                       ^
-main.c(220): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+main.c(219): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
     CLK->CLKSEL1 &= ~(0b111 << 8);
                  ~~ ^~~~~~~~~~~~~
-main.c(224): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
+main.c(223): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
     CLK->CLKSEL1 &= ~(0b111 << 12);
                       ^
-main.c(224): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+main.c(223): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
     CLK->CLKSEL1 &= ~(0b111 << 12);
                  ~~ ^~~~~~~~~~~~~~
-main.c(316): warning: no previous prototype for function 'draw_dead_box' [-Wmissing-prototypes]
+main.c(315): warning: no previous prototype for function 'draw_dead_box' [-Wmissing-prototypes]
 void draw_dead_box(coordinate current_box) {
      ^
-main.c(316): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(315): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void draw_dead_box(coordinate current_box) {
 ^
 static 
-main.c(343): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+main.c(342): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
             box[i].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
                        ^
-main.c(391): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+main.c(390): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
             dead_box.x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
                          ^
-main.c(403): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+main.c(402): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
         box[1].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
                    ^
-main.c(407): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+main.c(406): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
         box[2].x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
                    ^
-main.c(413): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
+main.c(412): warning: implicit declaration of function 'rand' is invalid in C99 [-Wimplicit-function-declaration]
         dead_box.x = rand() % (MAX_BOX_START_X + 1 - MIN_BOX_START_X) + MIN_BOX_START_X;
                      ^
-main.c(458): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+main.c(456): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
         TIMER1->TCSR &= ~(1 << 30);
                      ~~ ^~~~~~~~~~
-main.c(508): warning: passing 'const unsigned char [1024]' to parameter of type 'unsigned char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
-                draw_LCD(sky_fall_logo);
-                         ^~~~~~~~~~~~~
-../Library/NUC1xx-LB_002/Include\LCD.h(40): note: passing argument to parameter 'buffer' here
-extern void draw_LCD(unsigned char *buffer);
-                                    ^
-main.c(589): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+main.c(586): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
             default:
             ^
-52 warnings generated.
+47 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=4612 RO-data=1768 RW-data=1076 ZI-data=2440  
-".\Objects\Question2.axf" - 0 Error(s), 52 Warning(s).
+Program Size: Code=4612 RO-data=744 RW-data=2100 ZI-data=2440  
+".\Objects\Question2.axf" - 0 Error(s), 47 Warning(s).
 
 <h2>Software Packages used:</h2>
 
