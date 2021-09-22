@@ -517,7 +517,7 @@ int main(void) {
                 printS_5x7(1, 0, "Use Keypad to control");
                 printS_5x7(1, 8, "4: LEFT 6: RIGHT");
                 printS_5x7(1, 16, "1: PAUSE/UNPAUSE");
-                printS_5x7(1, 32, "Catch as many box as");
+                printS_5x7(1, 32, "Catch as many boxes as");
                 printS_5x7(1, 40, "possible");
                 printS_5x7(1, 56, "press any key to continue!");
                 while (key_pressed == 0)
