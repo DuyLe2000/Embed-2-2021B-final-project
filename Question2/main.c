@@ -561,7 +561,6 @@ int main(void) {
                 break;
             case end_game:
                 //end_game code here
-                //printS_5x7(1, 32, "press any key to replay!");
                 draw_LCD(gameover_128x64);
                 for (int i = 0; i < 2; i++) {
                     CLK_SysTickDelay(SYSTICK_DLAY_us);
